@@ -165,7 +165,7 @@ class HomeController extends Controller
         return $currency;
     }
     public function TestingPurpose(){
-        $type = 6;
+        $type = 2;
 //        dd($type);
         try{
             switch ($type){
@@ -195,8 +195,10 @@ class HomeController extends Controller
                 //testing utilities create order number
                 case 2:
                     // Order number generator
-                    $today = Carbon::today();
-                    $prepend = "INV/". $today->year. $today->month. $today->day;
+//                    $today = Carbon::today();
+//                    $prepend = "INV/". $today->year. $today->month. $today->day;
+                    $today = Carbon::now('Asia/Jakarta')->format('Ymd');
+                    $prepend = "INV/". $today;
 //                dd($prepend);
                     $nextNo = Utilities::GetNextOrderNumber($prepend);
                     $orderNumber = Utilities::GenerateOrderNumber($prepend, $nextNo);
@@ -252,7 +254,8 @@ class HomeController extends Controller
 
                 //testing SEND EMAIL ORDER CONFIRMATION
                 case 6:
-                    $order = Order::find(29);
+
+                    $order = Order::find(120);
                     $user = User::find($order->user_id);
                     $orderProducts = OrderProduct::where('order_id', $order->id)->get();
 

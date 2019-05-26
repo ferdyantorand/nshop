@@ -60,6 +60,7 @@
             serverSide: true,
             pageLength: 25,
             ajax: '{!! route('datatables.orders') !!}',
+            order: [ [1, 'desc'] ],
             columns: [
                 { data: 'created_at', name: 'created_at', class: 'text-center', orderable: false, searchable: false,
                     render: function ( data, type, row ){

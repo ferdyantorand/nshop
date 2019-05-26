@@ -71,7 +71,7 @@ Route::post('/order/transfer_confirmation', 'Frontend\OrderController@SubmitBank
 // miscellaneous
 Route::get('/test-location', 'Frontend\HomeController@getLocation')->name('getLocation');
 Route::get('/test-province', 'Frontend\HomeController@getProvince')->name('getProvince');
-Route::get('/testing', 'Frontend\HomeController@TestingPurpose')->name('testing');
+Route::get('/testing-func', 'Frontend\HomeController@TestingPurpose')->name('testing');
 
 
 // ADMIN ROUTE

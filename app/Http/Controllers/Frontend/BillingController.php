@@ -491,8 +491,10 @@ class BillingController extends Controller
             //dd($tmpDate);
 
             // Order number generator
-            $today = Carbon::today();
-            $prepend = "INV/". $today->year. $today->month. $today->day;
+//            $today = Carbon::today();
+//            $prepend = "INV/". $today->year. $today->month. $today->day;
+            $today = Carbon::now('Asia/Jakarta')->format('Ymd');
+            $prepend = "INV/". $today;
 
             $nextNo = Utilities::GetNextOrderNumber($prepend);
             $orderNumber = Utilities::GenerateOrderNumber($prepend, $nextNo);

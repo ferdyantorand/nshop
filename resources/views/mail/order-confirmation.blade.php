@@ -102,6 +102,9 @@
                                         Hello {{$user->first_name}} {{$user->last_name}},<br>
                                         Your payment has been received. We are pleased to inform you that your order has been confirmed and is underway.
                                         Please allow 2-3 business days before dispatch, while we personalize your order.
+
+                                        {{--Your order is now secured and will be processed on the 10th of June since our workshop is closed during the Lebaran Holiday.--}}
+
                                         You can check the status of your order by logging into your account.
                                         If you have any questions regarding your order, please contact us at hi@nama-official.com Monday-Friday, 9am-5pm WIB.
                                     </p>

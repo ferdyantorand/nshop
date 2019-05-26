@@ -59,6 +59,7 @@
             serverSide: true,
             pageLength: 25,
             ajax: '{!! route('datatables.order-shipped') !!}',
+            order: [ [1, 'desc'], [0, 'desc'] ],
             columns: [
                 { data: 'created_at', name: 'created_at', class: 'text-center', orderable: false, searchable: false,
                     render: function ( data, type, row ){

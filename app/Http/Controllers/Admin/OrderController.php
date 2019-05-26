@@ -33,7 +33,8 @@ class OrderController extends Controller
     }
 
     public function getIndex(Request $request){
-        $users = Order::all();
+        $users = Order::where('order_status_id', '>', 0)
+            ->orderBy('order_number', 'desc')->get();
         return DataTables::of($users)
             ->setTransformer(new OrderTransformer())
             ->addIndexColumn()
@@ -41,7 +42,10 @@ class OrderController extends Controller
     }
 
     public function getIndexBankTransfer(Request $request){
-        $users = OrderBankTransfer::whereIn('status', [0,1])->orderBy('status', 'asc')->get();
+        $users = OrderBankTransfer::whereIn('status', [0,1])
+            ->orderBy('status', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->get();
         return DataTables::of($users)
             ->setTransformer(new OrderBankTransferTransformer())
             ->addIndexColumn()

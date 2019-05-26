@@ -23,11 +23,11 @@
                             <tr>
                                 <th>Date</th>
                                 <th>Order Number</th>
+                                <th>Status</th>
                                 <th>Customer</th>
                                 <th>Bank Account Number</th>
                                 <th>Bank Account Name</th>
                                 <th>Bank Name</th>
-                                <th>Status</th>
                                 <th>Amount</th>
                                 <th></th>
                             </tr>
@@ -60,6 +60,7 @@
             serverSide: true,
             pageLength: 25,
             ajax: '{!! route('datatables.order-bank-trfs') !!}',
+            order: [ [2, 'desc'], [1, 'desc'] ],
             columns: [
                 { data: 'created_at', name: 'created_at', class: 'text-center', orderable: false, searchable: false,
                     render: function ( data, type, row ){
@@ -70,11 +71,11 @@
                     }
                 },
                 { data: 'order_number', name: 'order_number' },
+                { data: 'status', name: 'status', class: 'text-center'},
                 { data: 'customer', name: 'customer' },
                 { data: 'bank_acc_no', name: 'bank_acc_no', class: 'text-center'},
                 { data: 'bank_acc_name', name: 'bank_acc_name', class: 'text-center'},
                 { data: 'bank_name', name: 'bank_name', class: 'text-center'},
-                { data: 'status', name: 'status', class: 'text-center'},
                 { data: 'amount', name: 'amount', class: 'text-center'},
                 { data: 'action', name: 'action', orderable: false, searchable: false, class: 'text-center'}
             ],
