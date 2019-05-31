@@ -100,19 +100,24 @@
                                     <p>Thank you for your purchase!</p>
                                     <p>
                                         Hello {{$user->first_name}} {{$user->last_name}},<br>
-                                        Your payment has been received. We are pleased to inform you that your order has been confirmed and is underway.
-                                        Please allow 2-3 business days before dispatch, while we personalize your order.
-
-                                        {{--Your order is now secured and will be processed on the 10th of June since our workshop is closed during the Lebaran Holiday.--}}
+                                        {{--Your payment has been received. We are pleased to inform you that your order has been confirmed and is underway.--}}
+                                        {{--Please allow 2-3 business days before dispatch, while we personalize your order.<br>--}}
+                                        {{--You can check the status of your order by logging into your account.--}}
+                                        {{--If you have any questions regarding your order, please contact us at hi@nama-official.com Monday-Friday, 9am-5pm WIB.--}}
+                                        Your order is now secured and will be processed on the 10th of June since our workshop is closed during the Lebaran Holiday.<br>
 
                                         You can check the status of your order by logging into your account.
-                                        If you have any questions regarding your order, please contact us at hi@nama-official.com Monday-Friday, 9am-5pm WIB.
+                                        If you have any questions regarding your order, please contact us at hi@nama-official.com Monday-Friday.
                                     </p>
                                 @elseif($order->order_status_id == 8)
                                     <p>Thank you for your purchase!</p>
                                     <p>
                                         Hello {{$user->first_name}} {{$user->last_name}},<br>
-                                        Thank you for your order!
+                                        Thank you for your order!<br>
+                                        Your order is now secured and will be processed on the 10th of June since our workshop is closed during the Lebaran Holiday.<br>
+
+                                        You can check the status of your order by logging into your account.
+                                        If you have any questions regarding your order, please contact us at hi@nama-official.com Monday-Friday.
                                     </p>
                                 @elseif($order->order_status_id == 7)
                                     <p>
