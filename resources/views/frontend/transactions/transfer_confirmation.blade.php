@@ -28,7 +28,7 @@
                                     </p>
                                     <h4>
                                         Bank Central Asia (BCA)<br>
-                                        006 612 1555  a.n Caroline
+                                        006 999 1515  a.n PT. Nama Karya Bersama
                                     </h4>
                                     <p>TOTAL PAYMENT = {{env('KURS_IDR')}} {{$order->grand_total_string}}</p>
                                 </div>

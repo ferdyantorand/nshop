@@ -214,6 +214,8 @@
         // });
 
         $(document).on('click', '#pay-button', function (e) {
+            $('#pay-button').attr("disabled", true);
+
             var orderId = "{{$order->id}}";
             // var paymentMethod = $('.payment_method').val();
             var paymentMethod = $("input[name='payment_method']:checked").val();
@@ -258,6 +260,7 @@
                             });
                         } else {
                             snap.hide();
+                            $('#pay-button').attr("disabled", false);
                         }
                     }
                 });
@@ -280,6 +283,7 @@
                             result = JSON.parse(result);
                         if (result.success) {
                             snapToken = result.success;
+                            // $('#pay-button').attr("disabled", false);
                             window.location = snapToken;
                         }
                     }
@@ -321,7 +325,7 @@
             var voucherCodeApplied = $('#voucher_applied').val();
             // alert(name);
             if(voucherCode != ""){
-                if(voucherCodeApplied == voucherCode){
+                if(voucherCodeApplied.toUpperCase() == voucherCode.toUpperCase()){
                     $('#voucher_response').text("Voucher already applied");
                 }
                 else{
@@ -347,7 +351,7 @@
                                 // alert(grandTotal);
                                 if(voucherData != 0){
                                     var newTotal = grandTotal - voucherData;
-                                    $('#grand_total').val(newTotal);
+                                    // $('#grand_total').val(newTotal);
                                     $('#grand_total_span').text(rupiahFormat(newTotal));
                                     $('#voucher_amount').val(voucherData);
                                     $('#voucher_amount_span').text(rupiahFormat(voucherData));

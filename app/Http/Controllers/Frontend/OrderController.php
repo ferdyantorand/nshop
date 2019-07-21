@@ -66,6 +66,14 @@ class OrderController extends Controller
             $user = $orderDB->user;
             $dateTimeNow = Carbon::now('Asia/Jakarta');
 
+            //checking if user already submit transfer bank
+            $newOrderBankTransferExist = OrderBankTransfer::where('user_id', $orderDB->user_id)
+                ->where('order_id', $orderDB->id)
+                ->first();
+            if(!empty($newOrderBankTransferExist)){
+                return Redirect::route('orders');
+            }
+
             //create order transfer bank database
             $newOrderBankTransfer = OrderBankTransfer::create([
                 'user_id' => $orderDB->user_id,

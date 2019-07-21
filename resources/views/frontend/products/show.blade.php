@@ -95,46 +95,166 @@
                             </div>
                             @php($display='none')
                             @if($product->is_customize == 1)
-                                @php($display='block')
-                                <div class="row">
-                                    <div class="col-xs-6 col-sm-6 col-md-6 text--left">
-                                        <H4>Customization</H4>
+                                @if($product->category_id != 9)
+                                    @php($display='block')
+                                    <div class="row">
+                                        <div class="col-xs-6 col-sm-6 col-md-6 text--left">
+                                            <H4>Customization</H4>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-6 col-md-6 text--right">
+                                            <button type="button" class="btn btn-toggle active" data-toggle="button" aria-pressed="true" onclick="onToggleCustomize();">
+                                                <div class="handle"></div>
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="col-xs-6 col-sm-6 col-md-6 text--right">
-                                        <button type="button" class="btn btn-toggle active" data-toggle="button" aria-pressed="true" onclick="onToggleCustomize();">
-                                            <div class="handle"></div>
-                                        </button>
-                                    </div>
-                                </div>
+                                @endif
                             @endif
                             <input type="hidden" id="customize-toggle" name="customize-toggle" value="true" />
 
                             <div id="customize-section" class="row customize-section" style="display:{{$display}}">
                                 <div class="col-md-12 bg-white bg-white-mobile" style="padding-bottom: 25px;">
-                                    <p style="font-weight: bold">Enter Text (max 3 characters) <button id="emoji-picker">☺</button></p>
+                                    <p style="font-weight: bold">Enter Text (max 3 characters)
+
+                                        {{--@if(auth()->guard('web')->check())--}}
+                                            {{--@if(auth()->guard('web')->user()->email == "yansen626@gmail.com")--}}
+                                                {{--<button id="emoji-picker">--}}
+                                                    {{--<img src="{{ asset('images/emoji/smiley.png') }}" height="20" width="20">--}}
+                                                {{--</button>--}}
+                                            {{--@endif--}}
+                                        {{--@endif--}}
+                                        <button id="emoji-picker">
+                                            <img src="{{ asset('images/emoji/smiley.png') }}" height="20" width="20">
+                                        </button>
+                                    </p>
                                     <input type="hidden" id="emoji_show" value="false">
 
                                     <form>
-                                        <input type="text" class="form-control auto-blur"
-                                               name="custom-text" id="custom-text" placeholder="TEXT HERE" maxlength="3"
-                                               onfocusout="ChangePosition()" style="text-transform:uppercase" />
+                                        {{--<input type="text" class="form-control auto-blur"--}}
+                                               {{--name="custom-text" id="custom-text" placeholder="TEXT HERE" maxlength="3"--}}
+                                               {{--onfocusout="ChangePosition()" style="text-transform:uppercase" />--}}
+                                        <input type="hidden" class="form-control auto-blur"
+                                               name="custom-text" id="custom-input-text"
+                                               style="text-transform:uppercase" />
+                                        <div id="custom-text" class="form-control"
+                                             onfocusout="ChangeText()" style="text-transform:uppercase"
+                                             contenteditable></div>
+                                        <input type="hidden" id="src-list" value="">
 
                                         <div id="emoji_list" class="field radio_field" style="display: none;">
                                             <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji" onchange="SelectEmoji(this)" value="💍"/>
-                                                <span style="font-size: 40px">💍</span>
+                                                <input type="radio" name="emoji"
+                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/BUTTERFLY.PNG') }}"/>
+                                                <img src='{{ asset('IMAGES/EMOJI/BUTTERFLY.PNG') }}'>
                                             </label>
                                             <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji" onchange="SelectEmoji(this)" value="♥" />
-                                                <span style="font-size: 40px">♥</span>
+                                                <input type="radio" name="emoji"
+                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/CAT.PNG') }}"/>
+                                                <img src='{{ asset('IMAGES/EMOJI/CAT.PNG') }}'>
                                             </label>
                                             <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji" onchange="SelectEmoji(this)" value="🥐" />
-                                                <span style="font-size: 40px">🥐</span>
+                                                <input type="radio" name="emoji"
+                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/CLOVER.PNG') }}"/>
+                                                <img src='{{ asset('IMAGES/EMOJI/CLOVER.PNG') }}'>
                                             </label>
                                             <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji" onchange="SelectEmoji(this)" value="✌" />
-                                                <span style="font-size: 40px">✌</span>
+                                                <input type="radio" name="emoji"
+                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/COFFEE.PNG') }}"/>
+                                                <img src='{{ asset('IMAGES/EMOJI/COFFEE.PNG') }}'>
+                                            </label>
+                                            <label style="padding-right: 3%;cursor: pointer;">
+                                                <input type="radio" name="emoji"
+                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/CROWN.PNG') }}"/>
+                                                <img src='{{ asset('IMAGES/EMOJI/CROWN.PNG') }}'>
+                                            </label>
+                                            <label style="padding-right: 3%;cursor: pointer;">
+                                                <input type="radio" name="emoji"
+                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/CUPCAKE.PNG') }}"/>
+                                                <img src='{{ asset('IMAGES/EMOJI/CUPCAKE.PNG') }}'>
+                                            </label>
+                                            <label style="padding-right: 3%;cursor: pointer;">
+                                                <input type="radio" name="emoji"
+                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/DOG.PNG') }}"/>
+                                                <img src='{{ asset('IMAGES/EMOJI/DOG.PNG') }}'>
+                                            </label>
+                                            <label style="padding-right: 3%;cursor: pointer;">
+                                                <input type="radio" name="emoji"
+                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/GIFT.PNG') }}"/>
+                                                <img src='{{ asset('IMAGES/EMOJI/GIFT.PNG') }}'>
+                                            </label>
+                                            <label style="padding-right: 3%;cursor: pointer;">
+                                                <input type="radio" name="emoji"
+                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/ICECREAM.PNG') }}"/>
+                                                <img src='{{ asset('IMAGES/EMOJI/ICECREAM.PNG') }}'>
+                                            </label>
+                                            <label style="padding-right: 3%;cursor: pointer;">
+                                                <input type="radio" name="emoji"
+                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/LIKE.PNG') }}"/>
+                                                <img src='{{ asset('IMAGES/EMOJI/LIKE.PNG') }}'>
+                                            </label>
+                                            <label style="padding-right: 3%;cursor: pointer;">
+                                                <input type="radio" name="emoji"
+                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/LIPSTICK.PNG') }}"/>
+                                                <img src='{{ asset('IMAGES/EMOJI/LIPSTICK.PNG') }}'>
+                                            </label>
+                                            <label style="padding-right: 3%;cursor: pointer;">
+                                                <input type="radio" name="emoji"
+                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/LOVESTRUCK.PNG') }}"/>
+                                                <img src='{{ asset('IMAGES/EMOJI/LOVESTRUCK.PNG') }}'>
+                                            </label>
+                                            <label style="padding-right: 3%;cursor: pointer;">
+                                                <input type="radio" name="emoji"
+                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/MONEY.PNG') }}"/>
+                                                <img src='{{ asset('IMAGES/EMOJI/MONEY.PNG') }}'>
+                                            </label>
+                                            <label style="padding-right: 3%;cursor: pointer;">
+                                                <input type="radio" name="emoji"
+                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/PALMT.PNG') }}"/>
+                                                <img src='{{ asset('IMAGES/EMOJI/PALMT.PNG') }}'>
+                                            </label>
+                                            <label style="padding-right: 3%;cursor: pointer;">
+                                                <input type="radio" name="emoji"
+                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/PIZZA.PNG') }}"/>
+                                                <img src='{{ asset('IMAGES/EMOJI/PIZZA.PNG') }}'>
+                                            </label>
+                                            <label style="padding-right: 3%;cursor: pointer;">
+                                                <input type="radio" name="emoji"
+                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/PLANE.PNG') }}"/>
+                                                <img src='{{ asset('IMAGES/EMOJI/PLANE.PNG') }}'>
+                                            </label>
+                                            <label style="padding-right: 3%;cursor: pointer;">
+                                                <input type="radio" name="emoji"
+                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/RAINBOW.PNG') }}"/>
+                                                <img src='{{ asset('IMAGES/EMOJI/RAINBOW.PNG') }}'>
+                                            </label>
+                                            <label style="padding-right: 3%;cursor: pointer;">
+                                                <input type="radio" name="emoji"
+                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/RIBBON.PNG') }}"/>
+                                                <img src='{{ asset('IMAGES/EMOJI/RIBBON.PNG') }}'>
+                                            </label>
+                                            <label style="padding-right: 3%;cursor: pointer;">
+                                                <input type="radio" name="emoji"
+                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/STAR.PNG') }}"/>
+                                                <img src='{{ asset('IMAGES/EMOJI/STAR.PNG') }}'>
+                                            </label>
+                                            <label style="padding-right: 3%;cursor: pointer;">
+                                                <input type="radio" name="emoji"
+                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/SUN.PNG') }}"/>
+                                                <img src='{{ asset('IMAGES/EMOJI/SUN.PNG') }}'>
+                                            </label>
+                                            <label style="padding-right: 3%;cursor: pointer;">
+                                                <input type="radio" name="emoji"
+                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/SUSHI.PNG') }}"/>
+                                                <img src='{{ asset('IMAGES/EMOJI/SUSHI.PNG') }}'>
+                                            </label>
+                                            <label style="padding-right: 3%;cursor: pointer;">
+                                                <input type="radio" name="emoji"
+                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/UNICORN.PNG') }}"/>
+                                                <img src='{{ asset('IMAGES/EMOJI/UNICORN.PNG') }}'>
+                                            </label>
+                                            <label style="padding-right: 3%;cursor: pointer;">
+                                                <input type="radio" name="emoji"
+                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/WINE.PNG') }}"/>
+                                                <img src='{{ asset('IMAGES/EMOJI/WINE.PNG') }}'>
                                             </label>
                                         </div>
 
@@ -382,10 +502,7 @@
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
-
                     </div>
                     {!! Form::close() !!}
                 </div><!-- .col-md-6 end-->
@@ -397,6 +514,365 @@
     <!-- #cover5 end -->
 @endsection
 @include('partials.frontend._color-information')
+
+@section('scripts')
+    <!-- JavaScript Section -->
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('a[data-toggle=tooltip]').tooltip();
+        });
+
+        // Auto onfocusout when enter is pressed
+        $('.auto-blur').keypress(function (e) {
+            if (e.which == 13) {
+                $(this).blur();
+            }
+        });
+
+        // Toggle customize section
+        function onToggleCustomize(){
+            var toggleInput = $('#customize-toggle').val();
+            if(toggleInput === 'true'){
+                $('#customize-toggle').val('false');
+                $('#customize-section').hide();
+            }
+            else{
+                $('#customize-toggle').val('true');
+                $('#customize-section').show();
+            }
+        }
+        function ChangeColour(){
+            var url = "/product-detail/" + $('#select-colour').val();
+
+            window.location = url;
+        }
+        function ChangeColourThumbnail(myRadio){
+            var url = "/product-detail/" + myRadio.value;
+
+            window.location = url;
+        }
+
+        $('#waiting_list_button').click(function(e){
+            e.preventDefault();
+            var email = $('#waiting_list_email').val();
+            var name = $('#waiting_list_name').val();
+            var slug = $('#slug').val();
+
+            if(email === "" || name === ""){
+                $('#waiting_list_error_message').slideDown(500);
+            }
+            else{
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('waiting-list') }}',
+                    datatype : "application/json",
+                    data: {
+                        '_token': '{{ csrf_token() }}',
+                        'email': email,
+                        'name': name,
+                        'slug': slug,
+                    }, // no need to stringify
+                    success: function (result) {
+                        $('#waiting_list_error_message').hide();
+                        $('#waiting_list_success_message').slideDown(500);
+                    }
+                });
+            }
+        });
+
+        $('#emoji-picker').click(function(e){
+            e.preventDefault();
+            var toggleEmoji = $('#emoji_show').val();
+
+            if(toggleEmoji === 'true'){
+                $('#emoji_show').val('false');
+                $('#emoji_list').hide();
+            }
+            else{
+                $('#emoji_show').val('true');
+                $('#emoji_list').show();
+            }
+        });
+    </script>
+    <script>
+
+        function ChangeCustom(value, option){
+            var valueArr = value.split("-");
+            //change position
+            if(option === 1){
+                var valuePosition = valueArr[1] + "-" + valueArr[2];
+                $('#custom-position').val(valuePosition);
+                $('#custom-position-text').text(valueArr[0]);
+                $('#custom-position-name').text(valueArr[0]);
+                $('#custom-position-name').val(valueArr[0]);
+                ChangeSelectedPosition();
+            }
+            //change color
+            else if(option === 2){
+                $('#custom-color').val(value);
+                $('#custom-color-text').text(valueArr[0]);
+                $('#custom-position-name').text(valueArr[0]);
+            }
+            //change Size
+            else{
+                $('#custom-size').val(value);
+                $('#custom-size-text').text(valueArr[0]);
+                $('#custom-position-name').text(valueArr[0]);
+            }
+
+            ChangePosition();
+            $('#custom-text').focus();
+        }
+        function ChangeSelectedPosition(){
+            var selectedPosition = $('#custom-position').val();
+            var positionArr = selectedPosition.split("-");
+            $('#position_x').val(positionArr[0]);
+            $('#position_y').val(positionArr[1]);
+            // alert(positionArr[0] + " " + positionArr[1]);
+            ChangePosition();
+        }
+
+        function SelectEmoji(myRadio){
+            var text = $('#custom-text').html();
+            var srcList = $('#src-list').val();
+            var img = "<img src='" + myRadio.value + "'>";
+
+            srcList = srcList + myRadio.value + '#';
+            {{--if(myRadio.value === "1"){--}}
+                {{--img = "<img src='{{ asset('IMAGES/EMOJI/10-SMILEY.PNG') }}'>";--}}
+                {{--srcList = srcList + '{{ asset('IMAGES/EMOJI/10-SMILEY.PNG') }}' + '#';--}}
+            {{--}--}}
+            // alert(newText.length);
+            var newText = text + img;
+            $('#custom-text').empty();
+            $('#custom-text').append(newText);
+            // $('#custom-input-text').val(newText);
+
+            $('#src-list').val(srcList);
+
+            ChangeText();
+        }
+
+        function ChangeText(){
+            var src = [];
+            var indices = [];
+            var oldText = $('#custom-text').html().toUpperCase();
+            oldText = oldText.replace(/<BR>/g, "");
+            var newText = oldText.replace(/>/g, "<");
+
+            newText = newText.replace(/"/g, "'");
+            newText = newText.replace(/<IMG SRC='/g, "#");
+            newText = newText.replace(/'<<IMG SRC='/g, "#");
+            newText = newText.replace(/'</g, "#");
+            newText = newText.replace(/##/g, "#");
+            newText = newText.replace(/<BR</g, "");
+
+            //count character process (only 3 character)
+            var srcList = newText.split("#");
+            var newSrcList = "";
+            for(var k=0; k<srcList.length;k++){
+                if(srcList[k] !== "" ){
+                    if(srcList[k].length > 1){
+                        if(srcList[k].indexOf('EMOJI') >= 0){
+                            newSrcList = newSrcList + srcList[k] + "#";
+                        }
+                        else{
+                            for(var m=0; m<srcList[k].length;m++){
+                                newSrcList = newSrcList + srcList[k].substr(m, 1) + "#";
+                            }
+                        }
+                    }
+                    else{
+                        newSrcList = newSrcList + srcList[k] + "#";
+                    }
+                }
+            }
+
+            //if more than 3 character
+            var newSrcListCount = newSrcList.split("#");
+            if((newSrcListCount.length - 1) > 3){
+                var oldInput = $('#custom-input-text').val();
+                $('#custom-text').empty();
+                $('#custom-text').append(oldInput);
+            }
+            else{
+                // $('#custom-text').val(text);
+                // $('#src-list').val(newText);
+                $('#src-list').val(newSrcList);
+                $('#custom-text').empty();
+                $('#custom-text').append(oldText);
+                $('#custom-input-text').val(oldText);
+
+                ChangePosition();
+            }
+        }
+
+        function ChangePosition(){
+            //checking mobile view
+            var isMobile = detectmob();
+            var canvasType = 1;
+            var canvasId = "myCanvas";
+            if(isMobile){
+                $('#myCanvas').hide();
+                $('#myCanvasMobile').show();
+
+                canvasType = 2;
+                canvasId = "myCanvasMobile";
+            }
+            else{
+                $('#myCanvas').show();
+                $('#myCanvasMobile').hide();
+            }
+
+            $('#slider-product').hide();
+            $('#custom-section').show();
+
+            var text = $('#custom-text').html().toUpperCase();
+
+            // $('#custom-text').val(text);
+            $('#custom-input-text').val(text);
+            var selectedPosition = $('#custom-position').val();
+            // var selectedFont = $('#custom-font').val();
+            var color = $('#custom-color').val();
+            var size = $('#custom-size').val();
+            var posX = ($('#position_x').val());
+            var posY = ($('#position_y').val());
+
+            var colorArr = color.split("-");
+            var sizeArr = size.split("-");
+
+            var font = sizeArr[1] + "px Bodoni";
+            if(isMobile){
+                if(sizeArr[1] === 16){
+                    font = (sizeArr[1] - 8) + "px Bodoni";
+                }
+                else{
+                    font = (sizeArr[1] - 2) + "px Bodoni";
+                }
+            }
+            var fillStyle = "#"+colorArr[1];
+
+            var canvas = document.getElementById(canvasId);
+            var context = canvas.getContext("2d");
+
+            var imageObj = new Image();
+
+            var src = [];
+            var imgs = [];
+
+            var srcListInput = $('#src-list').val();
+            var srcList = srcListInput.split("#");
+
+            for(var k=0; k<20;k++){
+                imgs[k] = new Image();
+            }
+            //emoji draw image
+            if(srcList.length > 0){
+                var ct = 0;
+                for(var l=0; l<srcList.length;l++) {
+                    if(srcList[l] !== "" && srcList[l].indexOf(".PNG") >= 0){
+                        var imageColor = srcList[l];
+
+                        if(fillStyle === '#C0C0C0') {
+                            imageColor = imageColor.replace(/.PNG/g, "-SILVER.PNG");
+                        }
+                        else{
+                            imageColor = imageColor.replace(/.PNG/g, "-GOLD.PNG");
+                        }
+                        imgs[ct].src = imageColor;
+                        ct++;
+                    }
+                }
+            }
+            imageObj.onload = function(){
+                context.restore();
+                if(isMobile){
+                    var hRatio = canvas.width  / imageObj.width;
+                    posX = posX * (hRatio-0.025);
+                    var vRatio =  canvas.height / imageObj.height;
+                    posY = posY * (vRatio-0.025);
+
+                    var ratio  = Math.min ( hRatio, vRatio );
+                    var centerShift_x = ( canvas.width - imageObj.width*ratio )/2;
+                    var centerShift_y = ( canvas.height - imageObj.height*ratio )/2;
+                    // context.clearRect(0,0,canvas.width, canvas.height);
+                    context.drawImage(imageObj, 0,0, imageObj.width, imageObj.height,
+                        centerShift_x,centerShift_y,imageObj.width*ratio, imageObj.height*ratio);
+                }
+                else{
+                    context.drawImage(imageObj, 10, 10);
+                }
+                context.textAlign = 'center';
+                context.font = font;
+
+                if(fillStyle === '#C0C0C0' || fillStyle === '#FFD700') {
+                    context.fillStyle = fillStyle;``
+                }else{
+                    context.strokeStyle = 'black';
+                    context.fillStyle = "rgba(255, 255, 255, 0.2)";
+                }
+
+                //emoji processing
+                var newText = text.replace(/<BR>/g, "");
+                if(text.indexOf('SRC=') >= 0){
+                    newText = "";
+                    var ct = 0;
+                    var posXimg = Number(posX);
+                    for(var l=0; l<srcList.length;l++) {
+                        if(srcList[l] !== "" ){
+                            if(srcList[l].indexOf(".PNG") >= 0){
+                                if(l === 0){
+                                    posXimg = posXimg - Number(13);
+                                    newText = newText + "     ";
+                                }
+                                else if(l === 1){
+                                    if(ct === 0){
+                                        posXimg = posXimg - Number(5);
+                                    }
+                                    else{
+                                        posXimg = posXimg + Number(16);
+                                    }
+                                    newText = newText + "      ";
+                                }
+                                else{
+                                    posXimg = posXimg + Number(16);
+                                }
+                                var posYimg = posY - 13;
+                                context.drawImage(imgs[ct], posXimg, posYimg, 15, 15);
+                                ct++;
+                            }
+                            else{
+                                // newText = newText + srcList[l];
+                                // posXimg = posXimg + Number(8);
+                                newText = newText + srcList[l];
+                                if(l <= 1){
+                                    if(ct !== 0){
+                                        posXimg = posXimg + Number(14);
+                                    }
+                                }
+                                else{
+                                    posXimg = posXimg + Number(14);
+                                }
+                            }
+                        }
+                    }
+                }
+                context.fillText(newText, posX, posY);
+            };
+            imageObj.src = "{{ asset('storage/products/'.$productMainImages->path) }}";
+
+        }
+
+        function detectmob() {
+            if(window.innerWidth <= 450) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+
+@endsection
 
 @section('styles')
     <style>
@@ -875,224 +1351,4 @@
             border: none;
         }
     </style>
-@endsection
-
-@section('scripts')
-    <!-- JavaScript Section -->
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $('a[data-toggle=tooltip]').tooltip();
-        });
-
-        // Auto onfocusout when enter is pressed
-        $('.auto-blur').keypress(function (e) {
-            if (e.which == 13) {
-                $(this).blur();
-            }
-        });
-
-        // Toggle customize section
-        function onToggleCustomize(){
-            var toggleInput = $('#customize-toggle').val();
-            if(toggleInput === 'true'){
-                $('#customize-toggle').val('false');
-                $('#customize-section').hide();
-            }
-            else{
-                $('#customize-toggle').val('true');
-                $('#customize-section').show();
-            }
-        }
-        function ChangeColour(){
-            var url = "/product-detail/" + $('#select-colour').val();
-
-            window.location = url;
-        }
-        function ChangeColourThumbnail(myRadio){
-            var url = "/product-detail/" + myRadio.value;
-
-            window.location = url;
-        }
-
-        $('#waiting_list_button').click(function(e){
-            e.preventDefault();
-            var email = $('#waiting_list_email').val();
-            var name = $('#waiting_list_name').val();
-            var slug = $('#slug').val();
-
-            if(email === "" || name === ""){
-                $('#waiting_list_error_message').slideDown(500);
-            }
-            else{
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ route('waiting-list') }}',
-                    datatype : "application/json",
-                    data: {
-                        '_token': '{{ csrf_token() }}',
-                        'email': email,
-                        'name': name,
-                        'slug': slug,
-                    }, // no need to stringify
-                    success: function (result) {
-                        $('#waiting_list_error_message').hide();
-                        $('#waiting_list_success_message').slideDown(500);
-                    }
-                });
-            }
-        });
-
-        $('#emoji-picker').click(function(e){
-            e.preventDefault();
-            var toggleEmoji = $('#emoji_show').val();
-
-            if(toggleEmoji === 'true'){
-                $('#emoji_show').val('false');
-                $('#emoji_list').hide();
-            }
-            else{
-                $('#emoji_show').val('true');
-                $('#emoji_list').show();
-            }
-        });
-    </script>
-    <script>
-
-        function SelectEmoji(myRadio){
-            var text = $('#custom-text').val();
-            if(text.length < 4){
-                var newText = text + myRadio.value;
-                alert(newText.length);
-                $('#custom-text').val(newText);
-                ChangePosition();
-            }
-        }
-        function ChangeCustom(value, option){
-            var valueArr = value.split("-");
-            //change position
-            if(option === 1){
-                var valuePosition = valueArr[1] + "-" + valueArr[2];
-                $('#custom-position').val(valuePosition);
-                $('#custom-position-text').text(valueArr[0]);
-                $('#custom-position-name').text(valueArr[0]);
-                $('#custom-position-name').val(valueArr[0]);
-                ChangeSelectedPosition();
-            }
-            //change color
-            else if(option === 2){
-                $('#custom-color').val(value);
-                $('#custom-color-text').text(valueArr[0]);
-                $('#custom-position-name').text(valueArr[0]);
-            }
-            //change Size
-            else{
-                $('#custom-size').val(value);
-                $('#custom-size-text').text(valueArr[0]);
-                $('#custom-position-name').text(valueArr[0]);
-            }
-            ChangePosition();
-        }
-        function ChangeSelectedPosition(){
-            var selectedPosition = $('#custom-position').val();
-            var positionArr = selectedPosition.split("-");
-            $('#position_x').val(positionArr[0]);
-            $('#position_y').val(positionArr[1]);
-            // alert(positionArr[0] + " " + positionArr[1]);
-            ChangePosition();
-        }
-
-        function ChangePosition(){
-            //checking mobile view
-            var isMobile = detectmob();
-            var canvasType = 1;
-            var canvasId = "myCanvas";
-            if(isMobile){
-                $('#myCanvas').hide();
-                $('#myCanvasMobile').show();
-
-                canvasType = 2;
-                canvasId = "myCanvasMobile";
-            }
-            else{
-                $('#myCanvas').show();
-                $('#myCanvasMobile').hide();
-            }
-
-            $('#slider-product').hide();
-            $('#custom-section').show();
-
-            var text = $('#custom-text').val().toUpperCase();
-            $('#custom-text').val(text);
-            var selectedPosition = $('#custom-position').val();
-            // var selectedFont = $('#custom-font').val();
-            var color = $('#custom-color').val();
-            var size = $('#custom-size').val();
-            var posX = ($('#position_x').val());
-            var posY = ($('#position_y').val());
-
-            var colorArr = color.split("-");
-            var sizeArr = size.split("-");
-
-            var font = sizeArr[1] + "px Bodoni";
-            if(isMobile){
-                if(sizeArr[1] === 16){
-                    font = (sizeArr[1] - 8) + "px Bodoni";
-                }
-                else{
-                    font = (sizeArr[1] - 2) + "px Bodoni";
-                }
-            }
-            var fillStyle = "#"+colorArr[1];
-
-            var canvas = document.getElementById(canvasId);
-            var context = canvas.getContext("2d");
-            var imageObj = new Image();
-
-            var img2 = new Image();
-
-            imageObj.onload = function(){
-                context.restore();
-                if(isMobile){
-                    var hRatio = canvas.width  / imageObj.width;
-                    posX = posX * (hRatio-0.025);
-                    var vRatio =  canvas.height / imageObj.height;
-                    posY = posY * (vRatio-0.025);
-
-                    var ratio  = Math.min ( hRatio, vRatio );
-                    var centerShift_x = ( canvas.width - imageObj.width*ratio )/2;
-                    var centerShift_y = ( canvas.height - imageObj.height*ratio )/2;
-                    // context.clearRect(0,0,canvas.width, canvas.height);
-                    context.drawImage(imageObj, 0,0, imageObj.width, imageObj.height,
-                        centerShift_x,centerShift_y,imageObj.width*ratio, imageObj.height*ratio);
-                }
-                else{
-                    context.drawImage(imageObj, 10, 10);
-                }
-                context.textAlign = 'center';
-                context.font = font;
-
-                context.drawImage(img2, posX, posY, 50, 50);
-
-                if(fillStyle === '#C0C0C0' || fillStyle === '#FFD700') {
-                    context.fillStyle = fillStyle;
-                }else{
-                    context.strokeStyle = 'black';
-                    context.fillStyle = "rgba(255, 255, 255, 0.2)";
-                }
-                context.fillText(text, posX, posY);
-            };
-            imageObj.src = "{{ asset('storage/products/'.$productMainImages->path) }}";
-            img2.src = 'https://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png';
-
-        }
-
-        function detectmob() {
-            if(window.innerWidth <= 450) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    </script>
-
 @endsection
