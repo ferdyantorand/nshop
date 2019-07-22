@@ -82,6 +82,7 @@ class ProductController extends Controller
 
         $data = [
             'product'      => $productDB,
+            'thumbnailColour'      => $productDB->colour,
             'otherProductColour'      => $otherProductColour
         ];
 //        dd($data);

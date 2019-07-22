@@ -56,7 +56,7 @@
                             <input type="hidden" id="position_y" value="{{$product->product_positions[0]->pos_y}}">
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6 text--left">
-                                    <H4>COLOR</H4>
+                                    <H4>COLOR <span id="color-thumbnail" style="font-size: 12px">({{$thumbnailColour}})</span></H4>
                                 </div>
                                 <div class="col-xs-6 col-sm-6 col-md-6 text--right">
                                     {{--<select id="select-colour" class="minimal family-sans" data-width="auto"--}}
@@ -113,7 +113,7 @@
 
                             <div id="customize-section" class="row customize-section" style="display:{{$display}}">
                                 <div class="col-md-12 bg-white bg-white-mobile" style="padding-bottom: 25px;">
-                                    <p style="font-weight: bold">Enter Text (max 3 characters)
+                                    <p style="font-weight: bold">Enter Text (max 5 characters)
 
                                         {{--@if(auth()->guard('web')->check())--}}
                                             {{--@if(auth()->guard('web')->user()->email == "yansen626@gmail.com")--}}
@@ -140,7 +140,10 @@
                                              contenteditable></div>
                                         <input type="hidden" id="src-list" value="">
 
-                                        <div id="emoji_list" class="field radio_field" style="display: none;">
+                                        <div id="emoji_list" class="field radio_field" style="display: none;padding-bottom: 5%;">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 text--right" style="padding-bottom: 5%;">
+                                                *Please hit refresh for emoji visualization
+                                            </div>
                                             <label style="padding-right: 3%;cursor: pointer;">
                                                 <input type="radio" name="emoji"
                                                        onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/BUTTERFLY.PNG') }}"/>
@@ -690,7 +693,7 @@
 
             //if more than 3 character
             var newSrcListCount = newSrcList.split("#");
-            if((newSrcListCount.length - 1) > 3){
+            if((newSrcListCount.length - 1) > 5){
                 var oldInput = $('#custom-input-text').val();
                 $('#custom-text').empty();
                 $('#custom-text').append(oldInput);
@@ -822,10 +825,21 @@
                         if(srcList[l] !== "" ){
                             if(srcList[l].indexOf(".PNG") >= 0){
                                 if(l === 0){
-                                    posXimg = posXimg - Number(13);
-                                    newText = newText + "     ";
+                                    posXimg = posXimg - Number(30);
+                                    newText = newText + "   ";
                                 }
                                 else if(l === 1){
+                                    //cek jika gambar pertama
+                                    if(ct === 0){
+                                        posXimg = posXimg - Number(18);
+                                    }
+                                    else{
+                                        posXimg = posXimg + Number(15);
+                                    }
+                                    newText = newText + "     ";
+                                }
+                                else if(l === 2){
+                                    //cek jika gambar pertama
                                     if(ct === 0){
                                         posXimg = posXimg - Number(5);
                                     }
@@ -834,8 +848,23 @@
                                     }
                                     newText = newText + "      ";
                                 }
+                                else if(l === 3){
+                                    //cek jika gambar pertama
+                                    if(ct === 0){
+                                        posXimg = posXimg - Number(5);
+                                    }
+                                    else{
+                                        posXimg = posXimg + Number(16);
+                                    }
+                                    newText = newText + "     ";
+                                }
                                 else{
-                                    posXimg = posXimg + Number(16);
+                                    if(ct === 0){
+                                        posXimg = posXimg + Number(9);
+                                    }
+                                    else{
+                                        posXimg = posXimg + Number(15);
+                                    }
                                 }
                                 var posYimg = posY - 13;
                                 context.drawImage(imgs[ct], posXimg, posYimg, 15, 15);
@@ -847,11 +876,16 @@
                                 newText = newText + srcList[l];
                                 if(l <= 1){
                                     if(ct !== 0){
-                                        posXimg = posXimg + Number(14);
+                                        posXimg = posXimg + Number(13);
                                     }
                                 }
                                 else{
-                                    posXimg = posXimg + Number(14);
+                                    if(ct !== 0){
+                                        posXimg = posXimg + Number(13);
+                                    }
+                                    else{
+                                        posXimg = posXimg + Number(5);
+                                    }
                                 }
                             }
                         }
