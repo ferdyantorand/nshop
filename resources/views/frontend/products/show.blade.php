@@ -831,32 +831,35 @@
                                 else if(l === 1){
                                     //cek jika gambar pertama
                                     if(ct === 0){
-                                        posXimg = posXimg - Number(18);
+                                        posXimg = posXimg - Number(15);
+                                        newText = newText + "    ";
                                     }
                                     else{
                                         posXimg = posXimg + Number(15);
+                                        newText = newText + "     ";
                                     }
-                                    newText = newText + "     ";
                                 }
                                 else if(l === 2){
                                     //cek jika gambar pertama
                                     if(ct === 0){
                                         posXimg = posXimg - Number(5);
+                                        newText = newText + "      ";
                                     }
                                     else{
                                         posXimg = posXimg + Number(16);
+                                        newText = newText + "      ";
                                     }
-                                    newText = newText + "      ";
                                 }
                                 else if(l === 3){
                                     //cek jika gambar pertama
                                     if(ct === 0){
                                         posXimg = posXimg - Number(5);
+                                        newText = newText + "     ";
                                     }
                                     else{
                                         posXimg = posXimg + Number(16);
+                                        newText = newText + "     ";
                                     }
-                                    newText = newText + "     ";
                                 }
                                 else{
                                     if(ct === 0){
