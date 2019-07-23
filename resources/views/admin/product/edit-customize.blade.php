@@ -102,7 +102,7 @@
                 context.textAlign = 'center';
                 context.font = "16px Bodoni";
                 context.fillStyle = "red";
-                context.fillText("123", posX, posY);
+                context.fillText("TEST1234", posX, posY);
             };
 
             imageObj.src = "{{ asset('storage/products/'.$mainImage->path) }}";
@@ -120,7 +120,7 @@
                 context.textAlign = 'center';
                 context.font = "16px Bodoni";
                 context.fillStyle = "red";
-                context.fillText("123", posX, posY);
+                context.fillText("TEST1234", posX, posY);
             };
 
             imageObj.src = "{{ asset('storage/products/'.$mainImage->path) }}";

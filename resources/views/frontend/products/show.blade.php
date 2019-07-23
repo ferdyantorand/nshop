@@ -826,7 +826,7 @@
                             if(srcList[l].indexOf(".PNG") >= 0){
                                 if(l === 0){
                                     posXimg = posXimg - Number(30);
-                                    newText = newText + "   ";
+                                    newText = newText + "     ";
                                 }
                                 else if(l === 1){
                                     //cek jika gambar pertama
@@ -843,21 +843,21 @@
                                     //cek jika gambar pertama
                                     if(ct === 0){
                                         posXimg = posXimg - Number(5);
-                                        newText = newText + "      ";
+                                        newText = newText + "    ";
                                     }
                                     else{
                                         posXimg = posXimg + Number(16);
-                                        newText = newText + "      ";
+                                        newText = newText + "     ";
                                     }
                                 }
                                 else if(l === 3){
                                     //cek jika gambar pertama
                                     if(ct === 0){
-                                        posXimg = posXimg - Number(5);
-                                        newText = newText + "     ";
+                                        posXimg = posXimg - Number(2);
+                                        newText = newText + "    ";
                                     }
                                     else{
-                                        posXimg = posXimg + Number(16);
+                                        posXimg = posXimg + Number(14);
                                         newText = newText + "     ";
                                     }
                                 }
@@ -866,7 +866,7 @@
                                         posXimg = posXimg + Number(9);
                                     }
                                     else{
-                                        posXimg = posXimg + Number(15);
+                                        posXimg = posXimg + Number(17);
                                     }
                                 }
                                 var posYimg = posY - 13;
@@ -879,7 +879,7 @@
                                 newText = newText + srcList[l];
                                 if(l <= 1){
                                     if(ct !== 0){
-                                        posXimg = posXimg + Number(13);
+                                        posXimg = posXimg + Number(12);
                                     }
                                 }
                                 else{
