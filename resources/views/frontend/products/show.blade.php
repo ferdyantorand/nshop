@@ -141,9 +141,9 @@
                                         <input type="hidden" id="src-list" value="">
 
                                         <div id="emoji_list" class="field radio_field" style="display: none;padding-bottom: 5%;">
-                                            {{--<div class="col-xs-12 col-sm-12 col-md-12 text--right" style="padding-bottom: 5%;">--}}
-                                                {{--*Please hit refresh for emoji visualization--}}
-                                            {{--</div>--}}
+                                            <div class="col-xs-12 col-sm-12 col-md-12 text--right" style="padding-bottom: 5%;">
+                                                *Please hit enter for emoji visualization
+                                            </div>
                                             <label style="padding-right: 3%;cursor: pointer;">
                                                 <input type="radio" name="emoji"
                                                        onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/BUTTERFLY.PNG') }}"/>
@@ -598,7 +598,16 @@
         });
     </script>
     <script>
+        window.addEventListener('load', function() {
+            var editbox = document.getElementById("custom-text")
 
+            editbox.addEventListener('keyup', (e) => {
+                // and here is how to detect the enter key
+                if (13 === e.keyCode) {
+                    $(':focus').blur();
+                }
+            });
+        });
         function ChangeCustom(value, option){
             var valueArr = value.split("-");
             //change position
@@ -624,7 +633,6 @@
             }
 
             ChangePosition();
-            $('#custom-text').focus();
         }
         function ChangeSelectedPosition(){
             var selectedPosition = $('#custom-position').val();
@@ -656,7 +664,7 @@
             ChangeText();
         }
 
-        function ChangeText(){
+        function ChangeText(e){
             var src = [];
             var indices = [];
             var oldText = $('#custom-text').html().toUpperCase();
@@ -670,7 +678,7 @@
             newText = newText.replace(/##/g, "#");
             newText = newText.replace(/<BR</g, "");
 
-            //count character process (only 3 character)
+            //count character process (only 5 character)
             var srcList = newText.split("#");
             var newSrcList = "";
             for(var k=0; k<srcList.length;k++){
@@ -691,7 +699,7 @@
                 }
             }
 
-            //if more than 3 character
+            //if more than 5 character
             var newSrcListCount = newSrcList.split("#");
             if((newSrcListCount.length - 1) > 5){
                 var oldInput = $('#custom-input-text').val();
@@ -708,7 +716,6 @@
 
                 ChangePosition();
             }
-            $('#custom-text').focus();
         }
 
         function ChangePosition(){
@@ -834,7 +841,7 @@
                                     else if(l === 1){
                                         //cek jika gambar pertama
                                         if(ct === 0){
-                                            posXimg = posXimg - Number(8);
+                                            posXimg = posXimg - Number(10);
                                             newText = newText + "   ";
                                         }
                                         else{
@@ -974,7 +981,7 @@
                 context.fillText(newText, posX, posY);
             };
             imageObj.src = "{{ asset('storage/products/'.$productMainImages->path) }}";
-
+            $('#custom-text').focus();
         }
 
         function detectmob() {
