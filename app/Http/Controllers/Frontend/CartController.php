@@ -113,6 +113,7 @@ class CartController extends Controller
         }catch(\Exception $ex){
 //            dd($ex);
             error_log($ex);
+            Log::error("CartController/addCart error: ". $ex);
             return back()->withErrors("Something Went Wrong")->withInput($request->all());
         }
     }
@@ -214,6 +215,7 @@ class CartController extends Controller
         }
         catch (\Exception $exception){
 //            dd($exception);
+            Log::error("CartController/submitCart error: ". $exception);
         }
     }
 
@@ -248,7 +250,7 @@ class CartController extends Controller
             return redirect()->route('cart');
         }
         catch (\Exception $exception){
-
+            Log::error("CartController/deleteCart error: ". $exception);
         }
     }
 

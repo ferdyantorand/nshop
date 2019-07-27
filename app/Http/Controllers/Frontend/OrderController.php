@@ -14,6 +14,7 @@ use App\Models\ProductImage;
 use App\Models\Voucher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -60,42 +61,49 @@ class OrderController extends Controller
     }
 
     public function SubmitBankTransfer(Request $request){
-        if (Auth::check())
-        {
-            $orderDB = Order::where('order_number', $request->input('order_number'))->first();
-            $user = $orderDB->user;
-            $dateTimeNow = Carbon::now('Asia/Jakarta');
+        try{
+            if (Auth::check())
+            {
+                $orderDB = Order::where('order_number', $request->input('order_number'))->first();
+                $user = $orderDB->user;
+                $dateTimeNow = Carbon::now('Asia/Jakarta');
 
-            //checking if user already submit transfer bank
-            $newOrderBankTransferExist = OrderBankTransfer::where('user_id', $orderDB->user_id)
-                ->where('order_id', $orderDB->id)
-                ->first();
-            if(!empty($newOrderBankTransferExist)){
+                //checking if user already submit transfer bank
+                $newOrderBankTransferExist = OrderBankTransfer::where('user_id', $orderDB->user_id)
+                    ->where('order_id', $orderDB->id)
+                    ->first();
+                if(!empty($newOrderBankTransferExist)){
+                    return Redirect::route('orders');
+                }
+
+                //create order transfer bank database
+                $newOrderBankTransfer = OrderBankTransfer::create([
+                    'user_id' => $orderDB->user_id,
+                    'order_id' => $orderDB->id,
+                    'bank_acc_no' => $request->input('bank_acc_no'),
+                    'bank_acc_name' => $request->input('bank_acc_name'),
+                    'bank_name' => $request->input('bank_name'),
+                    'amount' => $request->input('amount'),
+                    'status' => 0,
+                    'created_at'        => $dateTimeNow->toDateTimeString(),
+                ]);
+                $orderDB->order_status_id = 8;
+                $orderDB->save();
+
+                //send email to admin
+                $newTransferBank = new NewTransferBank($user, $orderDB);
+                Mail::to(env('MAIL_SALES'))
+                    ->send($newTransferBank);
                 return Redirect::route('orders');
             }
-
-            //create order transfer bank database
-            $newOrderBankTransfer = OrderBankTransfer::create([
-                'user_id' => $orderDB->user_id,
-                'order_id' => $orderDB->id,
-                'bank_acc_no' => $request->input('bank_acc_no'),
-                'bank_acc_name' => $request->input('bank_acc_name'),
-                'bank_name' => $request->input('bank_name'),
-                'amount' => $request->input('amount'),
-                'status' => 0,
-                'created_at'        => $dateTimeNow->toDateTimeString(),
-            ]);
-            $orderDB->order_status_id = 8;
-            $orderDB->save();
-
-            //send email to admin
-            $newTransferBank = new NewTransferBank($user, $orderDB);
-            Mail::to(env('MAIL_SALES'))
-                ->send($newTransferBank);
-            return Redirect::route('orders');
+            return Redirect::route('home');
+            //dd($carts);
         }
-        return Redirect::route('home');
-        //dd($carts);
+        catch (\Exception $exception){
+//            dd($exception);
+            Log::error("OrderController/SubmitBankTransfer error: ". $exception);
+            return Redirect::route('home');
+        }
     }
 
 }
