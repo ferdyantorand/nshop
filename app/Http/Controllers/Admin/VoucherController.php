@@ -11,6 +11,7 @@ use App\Transformer\VoucherTransformer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -73,111 +74,117 @@ class VoucherController extends Controller
      */
     public function store(Request $request)
     {
-        //Get Data from View
-        $validator = Validator::make($request->all(), [
-            'code'          => 'required|max:100|unique:vouchers',
-            'description'   => 'required|max:100',
-            'start_date'    => 'required',
-            'finish_date'   => 'required'
-        ]);
+        try{
+            //Get Data from View
+            $validator = Validator::make($request->all(), [
+                'code'          => 'required|max:100|unique:vouchers',
+                'description'   => 'required|max:100',
+                'start_date'    => 'required',
+                'finish_date'   => 'required'
+            ]);
 
-        //Check Category
-        if($request->input('type') == 'categories'){
-            $categories = $request->input('ids');
-            if($categories == null){
-                return redirect()->back()->withErrors("Categories Needed!")->withInput($request->all());
+            //Check Category
+            if($request->input('type') == 'categories'){
+                $categories = $request->input('ids');
+                if($categories == null){
+                    return redirect()->back()->withErrors("Categories Needed!")->withInput($request->all());
+                }
             }
-        }
 
-        if($request->input('type') == 'products'){
-            $products = $request->input('ids');
-            if($products == null){
-                return redirect()->back()->withErrors("Products Needed!")->withInput($request->all());
+            if($request->input('type') == 'products'){
+                $products = $request->input('ids');
+                if($products == null){
+                    return redirect()->back()->withErrors("Products Needed!")->withInput($request->all());
+                }
             }
-        }
 
-        if ($validator->fails()) return redirect()->back()->withErrors($validator->errors())->withInput($request->all());
+            if ($validator->fails()) return redirect()->back()->withErrors($validator->errors())->withInput($request->all());
 
-        if(empty($request->input('voucher_amount')) && empty($request->input('voucher_percentage'))){
-            return redirect()->back()->withErrors("Voucher Percentage or Voucher Amount is required!")->withInput($request->all());
-        }
-        //Sort out Data
-        $startDate = Carbon::parse($request->input('start_date'));
-        $finishDate = Carbon::parse($request->input('finish_date'));
+            if(empty($request->input('voucher_amount')) && empty($request->input('voucher_percentage'))){
+                return redirect()->back()->withErrors("Voucher Percentage or Voucher Amount is required!")->withInput($request->all());
+            }
+            //Sort out Data
+            $startDate = Carbon::parse($request->input('start_date'));
+            $finishDate = Carbon::parse($request->input('finish_date'));
 
-        //Check DateTime
-        if(!$finishDate->greaterThan($startDate)){
+            //Check DateTime
+            if(!$finishDate->greaterThan($startDate)){
 //            Session::flash('error', 'Finish Date cannot be less than Start Date!');
-            return redirect()->back()->withErrors("Finish Date cannot be less than Start Date!")->withInput($request->all());
-        }
-
-        $user = Auth::guard('admin')->user();
-        if($request->input('type') == 'categories'){
-            //Categories
-            $cats = '';
-            $idx = 1;
-            $categories = $request->input('ids');
-            foreach ($categories as $category){
-                if($idx == count($categories)){
-                    $cats .= $category;
-                }
-                else{
-                    $cats .= $category . '#';
-                }
-                $idx++;
+                return redirect()->back()->withErrors("Finish Date cannot be less than Start Date!")->withInput($request->all());
             }
 
-            Voucher::create([
-                'code'  => strtoupper($request->input('code')),
-                'description'   => $request->input('description'),
-                'category_id'   => $cats,
-                'voucher_amount'   => $request->input('voucher_amount'),
-                'voucher_percentage'   => $request->input('voucher_percentage'),
-                'is_shipping'   => 0,
-                'repeatable'   => 0,
-                'start_date'    => $startDate,
-                'finish_date'   => $finishDate,
-                'created_at'    => Carbon::now('Asia/Jakarta'),
-                'created_by'    => $user->id,
-                'updated_at'    => Carbon::now('Asia/Jakarta'),
-                'updated_by'    => $user->id,
-                'status_id'     => $request->input('status')
-            ]);
-        }
-        else if($request->input('type') == 'products'){
-            //Categories
-            $prods = '';
-            $idx = 1;
-            $products = $request->input('ids');
-            foreach ($products as $product){
-                if($idx == count($products)){
-                    $prods .= $product;
+            $user = Auth::guard('admin')->user();
+            if($request->input('type') == 'categories'){
+                //Categories
+                $cats = '';
+                $idx = 1;
+                $categories = $request->input('ids');
+                foreach ($categories as $category){
+                    if($idx == count($categories)){
+                        $cats .= $category;
+                    }
+                    else{
+                        $cats .= $category . '#';
+                    }
+                    $idx++;
                 }
-                else{
-                    $prods .= $product . '#';
+
+                Voucher::create([
+                    'code'  => strtoupper($request->input('code')),
+                    'description'   => $request->input('description'),
+                    'category_id'   => $cats,
+                    'voucher_amount'   => $request->input('voucher_amount'),
+                    'voucher_percentage'   => $request->input('voucher_percentage'),
+                    'is_shipping'   => 0,
+                    'repeatable'   => 0,
+                    'start_date'    => $startDate,
+                    'finish_date'   => $finishDate,
+                    'created_at'    => Carbon::now('Asia/Jakarta'),
+                    'created_by'    => $user->id,
+                    'updated_at'    => Carbon::now('Asia/Jakarta'),
+                    'updated_by'    => $user->id,
+                    'status_id'     => $request->input('status')
+                ]);
+            }
+            else if($request->input('type') == 'products'){
+                //Categories
+                $prods = '';
+                $idx = 1;
+                $products = $request->input('ids');
+                foreach ($products as $product){
+                    if($idx == count($products)){
+                        $prods .= $product;
+                    }
+                    else{
+                        $prods .= $product . '#';
+                    }
+                    $idx++;
                 }
-                $idx++;
+
+                Voucher::create([
+                    'code'  => strtoupper($request->input('code')),
+                    'description'   => $request->input('description'),
+                    'product_id'   => $prods,
+                    'voucher_amount'   => $request->input('voucher_amount'),
+                    'voucher_percentage'   => $request->input('voucher_percentage'),
+                    'is_shipping'   => 0,
+                    'repeatable'   => 0,
+                    'start_date'    => $startDate,
+                    'finish_date'   => $finishDate,
+                    'created_at'    => Carbon::now('Asia/Jakarta'),
+                    'created_by'    => $user->id,
+                    'updated_at'    => Carbon::now('Asia/Jakarta'),
+                    'updated_by'    => $user->id,
+                    'status_id'     => $request->input('status')
+                ]);
             }
 
-            Voucher::create([
-                'code'  => strtoupper($request->input('code')),
-                'description'   => $request->input('description'),
-                'product_id'   => $prods,
-                'voucher_amount'   => $request->input('voucher_amount'),
-                'voucher_percentage'   => $request->input('voucher_percentage'),
-                'is_shipping'   => 0,
-                'repeatable'   => 0,
-                'start_date'    => $startDate,
-                'finish_date'   => $finishDate,
-                'created_at'    => Carbon::now('Asia/Jakarta'),
-                'created_by'    => $user->id,
-                'updated_at'    => Carbon::now('Asia/Jakarta'),
-                'updated_by'    => $user->id,
-                'status_id'     => $request->input('status')
-            ]);
+            Session::flash('success', 'Success Creating new Voucher!');
         }
-
-        Session::flash('success', 'Success Creating new Voucher!');
+        catch (\Exception $exception){
+            Log::error("VoucherController/store error: ". $exception);
+            Session::flash('error', 'Failed Creating new Voucher!');
+        }
         return redirect()->route('admin.vouchers.index');
     }
 
@@ -248,77 +255,83 @@ class VoucherController extends Controller
      */
     public function update(Request $request)
     {
-        //Get Data from View
-        $validator = Validator::make($request->all(), [
-            'code'          => 'required|max:100',
-            'description'   => 'required|max:100',
-            'start_date'    => 'required',
-            'finish_date'   => 'required'
-        ]);
+        try{
+            //Get Data from View
+            $validator = Validator::make($request->all(), [
+                'code'          => 'required|max:100',
+                'description'   => 'required|max:100',
+                'start_date'    => 'required',
+                'finish_date'   => 'required'
+            ]);
 
-        if ($validator->fails()) return redirect()->back()->withErrors($validator->errors())->withInput($request->all());
+            if ($validator->fails()) return redirect()->back()->withErrors($validator->errors())->withInput($request->all());
 
-        //Sort out Data
-        $startDate = Carbon::parse($request->input('start_date'));
-        $finishDate = Carbon::parse($request->input('finish_date'));
+            //Sort out Data
+            $startDate = Carbon::parse($request->input('start_date'));
+            $finishDate = Carbon::parse($request->input('finish_date'));
 
-        //Check DateTime
-        if(!$finishDate->greaterThan($startDate)){
-            Session::flash('error', 'Finish Date cannot be less than Start Date!');
-            return redirect()->back();
-        }
+            //Check DateTime
+            if(!$finishDate->greaterThan($startDate)){
+                Session::flash('error', 'Finish Date cannot be less than Start Date!');
+                return redirect()->back();
+            }
 
-        $user = Auth::guard('admin')->user();
-        $voucher = Voucher::find($request->input('id'));
+            $user = Auth::guard('admin')->user();
+            $voucher = Voucher::find($request->input('id'));
 //dd($request->input('ids'));
-        //check for categories or products
-        $cats = null;
-        $prods = null;
-        if($request->input('type') == 'categories'){
-            //Categories
-            $cats = '';
-            $idx = 1;
-            $categories = $request->input('ids');
-            foreach ($categories as $category){
-                if($idx == count($categories)){
-                    $cats .= $category;
+            //check for categories or products
+            $cats = null;
+            $prods = null;
+            if($request->input('type') == 'categories'){
+                //Categories
+                $cats = '';
+                $idx = 1;
+                $categories = $request->input('ids');
+                foreach ($categories as $category){
+                    if($idx == count($categories)){
+                        $cats .= $category;
+                    }
+                    else{
+                        $cats .= $category . '#';
+                    }
+                    $idx++;
                 }
-                else{
-                    $cats .= $category . '#';
-                }
-                $idx++;
             }
-        }
-        else if($request->input('type') == 'products'){
-            //Categories
-            $prods = '';
-            $idx = 1;
-            $products = $request->input('ids');
-            foreach ($products as $product){
-                if($idx == count($products)){
-                    $prods .= $product;
+            else if($request->input('type') == 'products'){
+                //Categories
+                $prods = '';
+                $idx = 1;
+                $products = $request->input('ids');
+                foreach ($products as $product){
+                    if($idx == count($products)){
+                        $prods .= $product;
+                    }
+                    else{
+                        $prods .= $product . '#';
+                    }
+                    $idx++;
                 }
-                else{
-                    $prods .= $product . '#';
-                }
-                $idx++;
             }
+
+            $voucher->code = $request->input('code');
+            $voucher->voucher_amount   = $request->input('voucher_amount');
+            $voucher->voucher_percentage   = $request->input('voucher_percentage');
+            $voucher->description = $request->input('description');
+            $voucher->start_date = $startDate;
+            $voucher->finish_date = $finishDate;
+            $voucher->status_id = $request->input('status');
+            $voucher->category_id = $cats;
+            $voucher->product_id = $prods;
+            $voucher->updated_at = Carbon::now('Asia/Jakarta');
+            $voucher->updated_by = $user->id;
+            $voucher->save();
+
+            Session::flash('success', 'Success Updating Voucher ' . $voucher->code . '!');
         }
-
-        $voucher->code = $request->input('code');
-        $voucher->voucher_amount   = $request->input('voucher_amount');
-        $voucher->voucher_percentage   = $request->input('voucher_percentage');
-        $voucher->description = $request->input('description');
-        $voucher->start_date = $startDate;
-        $voucher->finish_date = $finishDate;
-        $voucher->status_id = $request->input('status');
-        $voucher->category_id = $cats;
-        $voucher->product_id = $prods;
-        $voucher->updated_at = Carbon::now('Asia/Jakarta');
-        $voucher->updated_by = $user->id;
-        $voucher->save();
-
-        Session::flash('success', 'Success Updating Voucher ' . $voucher->code . '!');
+        catch (\Exception $exception){
+            Log::error("VoucherController/update error: ". $exception);
+            Session::flash('error', 'Failed Updating Voucher ' . $voucher->code . '!');
+        }
         return redirect()->route('admin.vouchers.index');
     }
 
