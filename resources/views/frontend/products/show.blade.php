@@ -830,31 +830,48 @@
                     var ct = 0;
                     var posXimg = Number(posX);
                     var posXimgArr = [];
-                    posXimgArr[0] = posXimg - Number(30);
-                    posXimgArr[1] = posXimg - Number(15);
-                    posXimgArr[2] = posXimg;
-                    posXimgArr[3] = posXimg + Number(14);
-                    posXimgArr[4] = posXimg + Number(29);
+                    posXimgArr[0] = posXimg - Number(33);
+                    posXimgArr[1] = posXimg - Number(18);
+                    posXimgArr[2] = posXimg - Number(3);
+                    posXimgArr[3] = posXimg + Number(11);
+                    posXimgArr[4] = posXimg + Number(26);
 
 
                     for(var l=0; l<srcList.length;l++) {
                         if(srcList[l] !== "" ){
                             if(srcList[l].indexOf(".PNG") >= 0){
-
-                                if(srcList.length === 1){
+                                if(srcList.length === 2){
                                     posXimg = posXimgArr[l+2];
-                                }
-                                else if(srcList.length === 2){
-                                    posXimg = posXimgArr[l+1];
-                                    newText = newText + " ";
+                                    newText = newText + "  ";
                                 }
                                 else if(srcList.length === 3){
                                     posXimg = posXimgArr[l+1];
-                                    newText = newText + "  ";
+                                    newText = newText + " ";
+                                }
+                                else if(srcList.length === 4){
+                                    posXimg = posXimgArr[l+1];
+                                    newText = newText + "   ";
                                 }
                                 else{
-                                    posXimg = posXimgArr[l];
-                                    newText = newText + "    ";
+                                    if(l===4 && (ct === 0) ){
+                                        posXimg = posXimgArr[3];
+                                        newText = newText + "     ";
+                                    }
+                                    else{
+                                        posXimg = posXimgArr[l];
+                                        if(l === 0){
+                                            newText = newText + "     ";
+                                        }
+                                        else if(l === 1){
+                                            newText = newText + "    ";
+                                        }
+                                        else if(l === 2){
+                                            newText = newText + "     ";
+                                        }
+                                        else if(l === 3){
+                                            newText = newText + "    ";
+                                        }
+                                    }
                                 }
 
                                 var posYimg = posY - 13;
@@ -1020,7 +1037,7 @@
                 context.fillText(newText, posX, posY);
             };
             imageObj.src = "{{ asset('storage/products/'.$productMainImages->path) }}";
-            $('#custom-text').focus();
+            // $('#custom-text').focus();
         }
 
         function detectmob() {
