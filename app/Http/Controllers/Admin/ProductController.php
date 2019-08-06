@@ -121,134 +121,133 @@ class ProductController extends Controller
             if ($validator->fails())
                 return redirect()->back()->withErrors($validator->errors())->withInput($request->all());
 
-            $dateTimeNow = Carbon::now('Asia/Jakarta');
-            $slug = Utilities::CreateProductSlug($request->input('name'));
+            $route = DB::transaction(function() use ($request, $detailImages, $mainImages, $thumbnailImages){
+                $dateTimeNow = Carbon::now('Asia/Jakarta');
+                $slug = Utilities::CreateProductSlug($request->input('name'));
 
 //            dd($slug);
-            // save product
-            $colourNew = Utilities::CreateProductSlug($request->input('colour'));
-            $is_primary = 1;
-//            $is_exist = Product::where('name', $request->input('name'))->first();
-//            if(!empty($is_exist)){
-//                $is_primary = 0;
-//            }
-            if($request->input('is_customize') == 'on'){
-                $customize = 1;
-            }
-            else{
-                $customize = 0;
-            }
+                // save product
+                $colourNew = Utilities::CreateProductSlug($request->input('colour'));
+                $is_primary = 1;
+
+                if($request->input('is_customize') === 'on'){
+                    $customize = 1;
+                }
+                else{
+                    $customize = 0;
+                }
 //            dd($colourNew);
-            $newProduct = Product::create([
-                'name' => $request->input('name'),
-                'slug' => $slug."--".$colourNew,
-                'sku' => $request->input('sku'),
-                'category_id' => $request->input('category'),
-                'description' => $request->input('description'),
-                'style_notes' => $request->input('style_notes'),
-                'qty' => $request->input('qty'),
-                'price' => (double) $request->input('price'),
-                'colour' => $request->input('colour'),
-                'weight' => $request->input('weight'),
-                'width' => $request->input('width'),
-                'height' => $request->input('height'),
-                'length' => $request->input('length'),
-                'tag' => $request->input('tags'),
-                'is_primary' => $is_primary,
-                'is_customize' => $customize,
-                'status' => 1,
-                'created_at'        => $dateTimeNow->toDateTimeString(),
-                'updated_at'        => $dateTimeNow->toDateTimeString(),
-                'zoho_id'           => 'TEMP'
-            ]);
+                $newProduct = Product::create([
+                    'name' => $request->input('name'),
+                    'slug' => $slug."--".$colourNew,
+                    'sku' => $request->input('sku'),
+                    'category_id' => $request->input('category'),
+                    'description' => $request->input('description'),
+                    'style_notes' => $request->input('style_notes'),
+                    'qty' => $request->input('qty'),
+                    'price' => (double) $request->input('price'),
+                    'colour' => $request->input('colour'),
+                    'weight' => $request->input('weight'),
+                    'width' => $request->input('width'),
+                    'height' => $request->input('height'),
+                    'length' => $request->input('length'),
+                    'tag' => $request->input('tags'),
+                    'is_primary' => $is_primary,
+                    'is_customize' => $customize,
+                    'status' => 1,
+                    'created_at'        => $dateTimeNow->toDateTimeString(),
+                    'updated_at'        => $dateTimeNow->toDateTimeString(),
+                    'zoho_id'           => 'TEMP'
+                ]);
 
-            // save product category
-//                $newProductCategory = CategoryProduct::create([
-//                    'category_id' => $request->input('category'),
-//                    'product_id' => $newProduct->id,
-//                    'created_at'        => $dateTimeNow->toDateTimeString(),
-//                ]);
 
-            // save product position
-        $newProductPosition = ProductPosition::create([
-            'product_id' => $newProduct->id,
-            'name' => "Top Middle",
-            'pos_x' => 250,
-            'pos_y' => 300,
-        ]);
+                // save product position
+                $newProductPosition = ProductPosition::create([
+                    'product_id' => $newProduct->id,
+                    'name' => "Top",
+                    'pos_x' => 250,
+                    'pos_y' => 300,
+                ]);
 
-            // save product main image, thumbnail and image detail
-            //main image
-            $img = Image::make($mainImages);
-            $extStr = $img->mime();
-            $ext = explode('/', $extStr, 2);
-            $filename = $newProduct->id.'_main_'.$slug.'_'.Carbon::now('Asia/Jakarta')->format('Ymdhms'). '.'. $ext[1];
-
-            //thumbnail image
-            $imgThumbnail = Image::make($thumbnailImages);
-            $extStrThumbnail = $img->mime();
-            $extThumbnail = explode('/', $extStrThumbnail, 2);
-            $filenameThumbnail = $newProduct->id.'_thumbnail_'.$slug.'_'.Carbon::now('Asia/Jakarta')->format('Ymdhms'). '.'. $extThumbnail[1];
-
-            if(env('SERVER_HOST_URL') == 'http://localhost:8000/'){
-                $img->save(public_path('storage/products/'. $filename), 75);
-                $imgThumbnail->save(public_path('storage/products/'. $filenameThumbnail), 75);
-            }
-            else{
-                $img->save('../public_html/storage/products/'. $filename, 75);
-                $imgThumbnail->save('../public_html/storage/products/'. $filenameThumbnail, 75);
-            }
-
-            $newProductImage = ProductImage::create([
-                'product_id' => $newProduct->id,
-                'path' => $filename,
-                'is_main_image' => 1,
-                'is_thumbnail' => 0,
-            ]);
-
-            $newProductImageThumbnail = ProductImage::create([
-                'product_id' => $newProduct->id,
-                'path' => $filenameThumbnail,
-                'is_main_image' => 0,
-                'is_thumbnail' => 1,
-            ]);
-
-            //image detail
-            for($i=0;$i<sizeof($detailImages);$i++){
-                $img = Image::make($detailImages[$i]);
+                // save product main image, thumbnail and image detail
+                //main image
+                $img = Image::make($mainImages);
                 $extStr = $img->mime();
                 $ext = explode('/', $extStr, 2);
+                $filename = $newProduct->id.'_main_'.$slug.'_'.Carbon::now('Asia/Jakarta')->format('Ymdhms'). '.'. $ext[1];
 
-                $filename = $newProduct->id.'_'.$i.'_'.$slug.'_'.Carbon::now('Asia/Jakarta')->format('Ymdhms'). '.'. $ext[1];
+                //thumbnail image
+                $imgThumbnail = Image::make($thumbnailImages);
+                $extStrThumbnail = $img->mime();
+                $extThumbnail = explode('/', $extStrThumbnail, 2);
+                $filenameThumbnail = $newProduct->id.'_thumbnail_'.$slug.'_'.Carbon::now('Asia/Jakarta')->format('Ymdhms'). '.'. $extThumbnail[1];
 
                 if(env('SERVER_HOST_URL') == 'http://localhost:8000/'){
                     $img->save(public_path('storage/products/'. $filename), 75);
+                    $imgThumbnail->save(public_path('storage/products/'. $filenameThumbnail), 75);
                 }
                 else{
                     $img->save('../public_html/storage/products/'. $filename, 75);
+                    $imgThumbnail->save('../public_html/storage/products/'. $filenameThumbnail, 75);
                 }
 
                 $newProductImage = ProductImage::create([
                     'product_id' => $newProduct->id,
                     'path' => $filename,
-                    'is_main_image' => 0,
+                    'is_main_image' => 1,
                     'is_thumbnail' => 0,
                 ]);
-            }
 
-            // Create ZOHO Product
-            $tmp = Zoho::createProduct($newProduct, $newProduct->category->zoho_item_group_id);
+                $newProductImageThumbnail = ProductImage::create([
+                    'product_id' => $newProduct->id,
+                    'path' => $filenameThumbnail,
+                    'is_main_image' => 0,
+                    'is_thumbnail' => 1,
+                ]);
+
+                //image detail
+                for($i=0;$i<sizeof($detailImages);$i++){
+                    $img = Image::make($detailImages[$i]);
+                    $extStr = $img->mime();
+                    $ext = explode('/', $extStr, 2);
+
+                    $filename = $newProduct->id.'_'.$i.'_'.$slug.'_'.Carbon::now('Asia/Jakarta')->format('Ymdhms'). '.'. $ext[1];
+
+                    if(env('SERVER_HOST_URL') == 'http://localhost:8000/'){
+                        $img->save(public_path('storage/products/'. $filename), 75);
+                    }
+                    else{
+                        $img->save('../public_html/storage/products/'. $filename, 75);
+                    }
+
+                    $newProductImage = ProductImage::create([
+                        'product_id' => $newProduct->id,
+                        'path' => $filename,
+                        'is_main_image' => 0,
+                        'is_thumbnail' => 0,
+                    ]);
+                }
+
+                // Create ZOHO Product
+                $tmp = Zoho::createProduct($newProduct, $newProduct->category->zoho_item_group_id);
 //            $tmp = Zoho::createProduct($newProduct, "1783013000000069095");
 //            dd($tmp);
 
-            if($customize == 1){
-                return redirect()->route('admin.product.edit.customize',['item' => $newProductPosition->id]);
-            }
-            else{
-                return redirect()->route('admin.product.show',['item' => $newProduct->id]);
-            }
+                $productPositionId =  $newProductPosition->id;
+                $newProductId = $newProduct->id;
 
-        }catch(\Exception $ex){
+                if($customize == 1){
+                    Log::error("Admin/ProductController checkpoint : customize = ". $customize);
+                    return route('admin.product.edit.customize', ['item' => $productPositionId]);
+                }
+                else{
+                    Log::error("Admin/ProductController checkpoint : customize = ". $customize);
+                    return route('admin.product.show', ['item' => $newProductId]);
+                }
+            });
+            return redirect()->away($route);
+        }
+        catch(\Exception $ex){
             error_log($ex);
             Log::error("Admin/ProductController error: ". $ex->getMessage());
             return back()->withErrors("Something Went Wrong")->withInput();
@@ -296,13 +295,15 @@ class ProductController extends Controller
         }
     }
 
-    public function editCustomize(ProductPosition $item)
+    public function editCustomize($item)
     {
-        $mainImage = ProductImage::where('product_id', $item->product_id)->where('is_main_image', 1)->first();
+        $productPosition = ProductPosition::find($item);
+        $mainImage = ProductImage::where('product_id', $productPosition->product_id)->where('is_main_image', 1)->first();
         $data = [
-            'productPosition'    => $item,
+            'productPosition'    => $productPosition,
             'mainImage'    => $mainImage,
         ];
+        Log::error("Admin/ProductController editCustomize checkpoint : product position ID = ". $item);
         return view('admin.product.edit-customize')->with($data);
     }
 
