@@ -151,6 +151,7 @@
                                 <div class="row center">
                                     <a href="{{ route('admin.product.index') }}" class="btn btn-success">Back</a>
                                     <a href="{{ route('admin.product.edit', ['item' => $product->id]) }}" class="btn btn-danger">Edit</a>
+                                    <a href="{{ route('admin.product.create-copy', ['item' => $product->id]) }}" class="btn btn-primary">Duplicate Product</a>
                                 </div>
                             </div>
                         </div>

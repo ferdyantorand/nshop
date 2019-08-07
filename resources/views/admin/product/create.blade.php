@@ -43,17 +43,17 @@
                                                 <div class="col-md-12">
                                                     <div class="row">
                                                         <div class="col-md-4 mb-3">
-                                                            <label class="form-label">Upload Main Image *</label>
+                                                            <label class="form-label">Upload Main Image <br> (Recommended image size is 500px x 500px)*</label>
                                                             {{--<input type="file" name="PhotoPosted" id="PhotoPosted" class="file-loading">--}}
                                                             {!! Form::file('main_image', array('id' => 'main_image', 'class' => 'file-loading', 'accept' => 'image/*,application/pdf')) !!}
                                                         </div>
                                                         <div class="col-md-4 mb-3">
-                                                            <label class="form-label">Upload Thumbnail Image *</label>
+                                                            <label class="form-label">Upload Thumbnail Image <br>  (Recommended image size 30px x 30px)*</label>
                                                             {{--<input type="file" name="PhotoPosted" id="PhotoPosted" class="file-loading">--}}
                                                             {!! Form::file('thumbnail_image', array('id' => 'thumbnail_image', 'class' => 'file-loading', 'accept' => 'image/*')) !!}
                                                         </div>
                                                         <div class="col-md-4 mb-3">
-                                                            <label class="form-label">Upload Detail Image *</label>
+                                                            <label class="form-label">Upload Detail Image <br>  (Recommended image size is 500px x 500px)*</label>
                                                             {!! Form::file('detail_image[]', array('id' => 'detail_image', 'class' => 'file-loading', 'multiple' => 'multiple')) !!}
                                                         </div>
                                                     </div>

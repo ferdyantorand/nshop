@@ -39,7 +39,7 @@ class ProductTransformer extends TransformerAbstract
                 'name'              => $product->name,
                 'sku'               => $product->sku,
                 'qty'               => $product->qty,
-                'price'             => $product->price,
+                'price'             => $product->price_string,
                 'created_at'        => $createdDate,
                 'update_at'         => $updatedDate,
                 'status'            => $status->description,
