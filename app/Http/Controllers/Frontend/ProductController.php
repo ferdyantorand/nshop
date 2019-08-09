@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\CategoryProduct;
+use App\Models\Emojy;
 use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
@@ -80,8 +81,10 @@ class ProductController extends Controller
         $otherProductColour = Product::where('slug','like', '%'.$slug.'--%')
             ->where('status', 1)->get();
 
+        $emojies = Emojy::all();
         $data = [
             'product'      => $productDB,
+            'emojies'      => $emojies,
             'thumbnailColour'      => $productDB->colour,
             'otherProductColour'      => $otherProductColour
         ];

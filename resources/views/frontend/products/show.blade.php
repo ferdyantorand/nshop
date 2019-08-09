@@ -118,12 +118,12 @@
                                         {{--@if(auth()->guard('web')->check())--}}
                                             {{--@if(auth()->guard('web')->user()->email == "yansen626@gmail.com")--}}
                                                 {{--<button id="emoji-picker">--}}
-                                                    {{--<img src="{{ asset('images/emoji/smiley.png') }}" height="20" width="20">--}}
+                                                    {{--<img src="{{ asset('images/emoji/smiley-icon.png') }}" height="20" width="20">--}}
                                                 {{--</button>--}}
                                             {{--@endif--}}
                                         {{--@endif--}}
                                         <button id="emoji-picker">
-                                            <img src="{{ asset('images/emoji/smiley.png') }}" height="20" width="20">
+                                            <img src="{{ asset('images/emoji/smiley-icon.png') }}" height="20" width="20">
                                         </button>
                                     </p>
                                     <input type="hidden" id="emoji_show" value="false">
@@ -144,135 +144,21 @@
                                             <div class="col-xs-12 col-sm-12 col-md-12 text--right" style="padding-bottom: 5%;">
                                                 *Please hit enter for emoji visualization
                                             </div>
-                                            <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji"
-                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/BUTTERFLY.PNG') }}"/>
-                                                <img src='{{ asset('IMAGES/EMOJI/BUTTERFLY.PNG') }}'>
-                                            </label>
-                                            <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji"
-                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/CAT.PNG') }}"/>
-                                                <img src='{{ asset('IMAGES/EMOJI/CAT.PNG') }}'>
-                                            </label>
-                                            <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji"
-                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/CLOVER.PNG') }}"/>
-                                                <img src='{{ asset('IMAGES/EMOJI/CLOVER.PNG') }}'>
-                                            </label>
-                                            <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji"
-                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/COFFEE.PNG') }}"/>
-                                                <img src='{{ asset('IMAGES/EMOJI/COFFEE.PNG') }}'>
-                                            </label>
-                                            <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji"
-                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/CROWN.PNG') }}"/>
-                                                <img src='{{ asset('IMAGES/EMOJI/CROWN.PNG') }}'>
-                                            </label>
-                                            <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji"
-                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/CUPCAKE.PNG') }}"/>
-                                                <img src='{{ asset('IMAGES/EMOJI/CUPCAKE.PNG') }}'>
-                                            </label>
-                                            <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji"
-                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/DOG.PNG') }}"/>
-                                                <img src='{{ asset('IMAGES/EMOJI/DOG.PNG') }}'>
-                                            </label>
-                                            <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji"
-                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/GIFT.PNG') }}"/>
-                                                <img src='{{ asset('IMAGES/EMOJI/GIFT.PNG') }}'>
-                                            </label>
-                                            <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji"
-                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/ICECREAM.PNG') }}"/>
-                                                <img src='{{ asset('IMAGES/EMOJI/ICECREAM.PNG') }}'>
-                                            </label>
-                                            <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji"
-                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/LIKE.PNG') }}"/>
-                                                <img src='{{ asset('IMAGES/EMOJI/LIKE.PNG') }}'>
-                                            </label>
-                                            <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji"
-                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/LIPSTICK.PNG') }}"/>
-                                                <img src='{{ asset('IMAGES/EMOJI/LIPSTICK.PNG') }}'>
-                                            </label>
-                                            <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji"
-                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/LOVESTRUCK.PNG') }}"/>
-                                                <img src='{{ asset('IMAGES/EMOJI/LOVESTRUCK.PNG') }}'>
-                                            </label>
-                                            <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji"
-                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/MONEY.PNG') }}"/>
-                                                <img src='{{ asset('IMAGES/EMOJI/MONEY.PNG') }}'>
-                                            </label>
-                                            <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji"
-                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/PALMT.PNG') }}"/>
-                                                <img src='{{ asset('IMAGES/EMOJI/PALMT.PNG') }}'>
-                                            </label>
-                                            <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji"
-                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/PIZZA.PNG') }}"/>
-                                                <img src='{{ asset('IMAGES/EMOJI/PIZZA.PNG') }}'>
-                                            </label>
-                                            <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji"
-                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/PLANE.PNG') }}"/>
-                                                <img src='{{ asset('IMAGES/EMOJI/PLANE.PNG') }}'>
-                                            </label>
-                                            <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji"
-                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/RAINBOW.PNG') }}"/>
-                                                <img src='{{ asset('IMAGES/EMOJI/RAINBOW.PNG') }}'>
-                                            </label>
-                                            <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji"
-                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/RIBBON.PNG') }}"/>
-                                                <img src='{{ asset('IMAGES/EMOJI/RIBBON.PNG') }}'>
-                                            </label>
-                                            <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji"
-                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/STAR.PNG') }}"/>
-                                                <img src='{{ asset('IMAGES/EMOJI/STAR.PNG') }}'>
-                                            </label>
-                                            <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji"
-                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/SUN.PNG') }}"/>
-                                                <img src='{{ asset('IMAGES/EMOJI/SUN.PNG') }}'>
-                                            </label>
-                                            <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji"
-                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/SUSHI.PNG') }}"/>
-                                                <img src='{{ asset('IMAGES/EMOJI/SUSHI.PNG') }}'>
-                                            </label>
-                                            <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji"
-                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/UNICORN.PNG') }}"/>
-                                                <img src='{{ asset('IMAGES/EMOJI/UNICORN.PNG') }}'>
-                                            </label>
-                                            <label style="padding-right: 3%;cursor: pointer;">
-                                                <input type="radio" name="emoji"
-                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/WINE.PNG') }}"/>
-                                                <img src='{{ asset('IMAGES/EMOJI/WINE.PNG') }}'>
-                                            </label>
+                                            @foreach($emojies as $emoji)
+                                                <label style="padding-right: 3%;cursor: pointer;">
+                                                    <input type="radio" name="emoji"
+                                                           onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/'.$emoji->path) }}"/>
+                                                    <img src='{{ asset('IMAGES/EMOJI/'.$emoji->path) }}'>
+                                                </label>
+                                            @endforeach
+{{--                                            <label style="padding-right: 3%;cursor: pointer;">--}}
+{{--                                                <input type="radio" name="emoji"--}}
+{{--                                                       onchange="SelectEmoji(this)" value="{{ asset('IMAGES/EMOJI/BUTTERFLY.PNG') }}"/>--}}
+{{--                                                <img src='{{ asset('IMAGES/EMOJI/BUTTERFLY.PNG') }}'>--}}
+{{--                                            </label>--}}
                                         </div>
 
 
-                                        {{--<div class="col-xs-12 col-sm-12 col-md-4 text-center">--}}
-                                        {{--<p style="margin-bottom: 0;margin-left: 11%;">Choose Position</p>--}}
-                                        {{--<select class="minimal" data-width="auto"--}}
-                                        {{--id="custom-position" name="custom-position"--}}
-                                        {{--onchange="ChangeSelectedPosition()" style="width: 130px;">--}}
-                                        {{--@foreach($product->product_positions as $position)--}}
-                                        {{--@php($value=$position->pos_x."-".$position->pos_y)--}}
-                                        {{--<option value="{{$value}}">{{$position->name}}</option>--}}
-                                        {{--@endforeach--}}
-                                        {{--</select>--}}
-                                        {{--</div>--}}
                                         <div class="col-xs-12 col-sm-12 col-md-4 text-center">
                                             <div class="row">
                                                 <div style="width: 100%">
@@ -851,7 +737,7 @@
                                         newText = newText + "      ";
                                     }
                                     else{
-                                        posXimg = posXimg - Number(33);
+                                        posXimg = posXimg - Number(29);
                                         newText = newText + "    ";
                                     }
                                 }
@@ -874,13 +760,19 @@
                                                 newText = newText + "    ";
                                             }
                                             else{
-                                                posXimg = posXimg - Number(17);
+                                                posXimg = posXimg - Number(13);
                                                 newText = newText + "     ";
                                             }
                                         }
                                         else{
-                                            posXimg = posXimg + Number(16);
-                                            newText = newText + "      ";
+                                            if(isMobile){
+                                                posXimg = posXimg + Number(13);
+                                                newText = newText + "    ";
+                                            }
+                                            else{
+                                                posXimg = posXimg + Number(16);
+                                                newText = newText + "      ";
+                                            }
                                         }
                                     }
                                 }
@@ -889,12 +781,12 @@
                                     if(srcList.length === 4){
                                         //3 character and only 1 emoji
                                         if(ct === 0){
-                                            posXimg = posXimg + Number(5);
-                                            newText = newText + "    ";
+                                            posXimg = posXimg + Number(7);
+                                            newText = newText + "     ";
                                         }
                                         else{
                                             if(isMobile){
-                                                posXimg = posXimg + Number(15);
+                                                posXimg = posXimg + Number(13);
                                                 newText = newText + "    ";
                                             }
                                             else{
@@ -911,15 +803,15 @@
                                                 newText = newText + "     ";
                                             }
                                             else{
-                                                posXimg = posXimg + Number(16);
+                                                posXimg = posXimg + Number(10);
                                                 newText = newText + "      ";
                                             }
                                         }
                                         else{
                                             //cek jika gambar pertama
                                             if(ct === 0){
-                                                posXimg = posXimg - Number(7);
-                                                newText = newText + "     ";
+                                                posXimg = posXimg - Number(0);
+                                                newText = newText + "    ";
                                             }
                                             else{
                                                 posXimg = posXimg + Number(14);
@@ -930,18 +822,24 @@
                                 }
                                 else if(l === 3){
                                     //cek jika gambar pertama
-                                    if(ct === 0){
-                                        posXimg = posXimg + Number(2);
-                                        newText = newText + "    ";
+                                    if(isMobile){
+                                        if(ct === 0){
+                                            posXimg = posXimg + Number(2);
+                                            newText = newText + "    ";
+                                        }
+                                        else{
+                                            posXimg = posXimg + Number(11);
+                                            newText = newText + "    ";
+                                        }
                                     }
                                     else{
-                                        if(isMobile){
-                                            posXimg = posXimg + Number(11);
+                                        if(ct === 0){
+                                            posXimg = posXimg + Number(8);
                                             newText = newText + "    ";
                                         }
                                         else{
                                             posXimg = posXimg + Number(15);
-                                            newText = newText + "      ";
+                                            newText = newText + "    ";
                                         }
                                     }
                                 }
@@ -957,7 +855,7 @@
                                     }
                                     else{
                                         if(ct === 0){
-                                            posXimg = posXimg + Number(20);
+                                            posXimg = posXimg + Number(23);
                                         }
                                         else{
                                             posXimg = posXimg + Number(15);
@@ -995,9 +893,25 @@
                                 // else{
                                 //     posXimg = posXimg + Number(5);
                                 // }
-                                if(l === 0 || l === 1){
+                                if(l === 0){
+                                    if(ct !== 0){
+                                        posXimg = posXimg + Number(10);
+                                    }
+                                    else{
+                                        posXimg = posXimg - Number(6);
+                                    }
+                                }
+                                if(l === 1){
+                                    if(ct !== 0){
+                                        // posXimg = posXimg + Number(10);
+                                    }
+                                }
+                                if(l === 2){
                                     if(ct !== 0){
                                         posXimg = posXimg + Number(12);
+                                    }
+                                    else{
+                                        posXimg = posXimg + Number(2);
                                     }
                                 }
                                 else{
@@ -1005,7 +919,7 @@
                                         posXimg = posXimg + Number(12);
                                     }
                                     else{
-                                        // posXimg = posXimg + Number(5);
+                                        posXimg = posXimg + Number(2);
                                     }
                                 }
                             }
