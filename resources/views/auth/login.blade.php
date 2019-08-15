@@ -54,7 +54,7 @@
                                 </label>
                                 <span>REMEMBER ME</span>
                             </div>
-                        </div>l
+                        </div>
                         <div class="col-md-12 text--center pb-30">
                             <button type="submit" class="btn btn--secondary btn--bordered">Login</button>
                         </div>

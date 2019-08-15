@@ -38,7 +38,8 @@
                             <thead>
                             <tr>
                                 <th>Product Name</th>
-                                <th>SKU</th>
+                                <th>Color</th>
+{{--                                <th>SKU</th>--}}
                                 <th>Qty</th>
                                 <th>Price</th>
                                 <th>Created At</th>
@@ -75,7 +76,8 @@
             order: [ [0, 'asc'] ],
             columns: [
                 { data: 'name', name: 'name', class: 'text-center'},
-                { data: 'sku', name: 'sku', class: 'text-center'},
+                { data: 'color', name: 'color', class: 'text-center'},
+                // { data: 'sku', name: 'sku', class: 'text-center'},
                 { data: 'qty', name: 'qty', class: 'text-center'},
                 { data: 'price', name: 'price', class: 'text-center'},
                 { data: 'created_at', name: 'created_at', class: 'text-center', orderable: false, searchable: false,

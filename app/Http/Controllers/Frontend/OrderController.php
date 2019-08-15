@@ -11,6 +11,7 @@ use App\Models\OrderBankTransfer;
 use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\User;
 use App\Models\Voucher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -65,7 +66,7 @@ class OrderController extends Controller
             if (Auth::check())
             {
                 $orderDB = Order::where('order_number', $request->input('order_number'))->first();
-                $user = $orderDB->user;
+                $user = User::find($orderDB->user_id);
                 $dateTimeNow = Carbon::now('Asia/Jakarta');
 
                 //checking if user already submit transfer bank
@@ -89,6 +90,7 @@ class OrderController extends Controller
                 ]);
                 $orderDB->order_status_id = 8;
                 $orderDB->save();
+                Log::info('Order #'. $orderDB->order_number. ' ('.$orderDB->id.'), User '.$user->email.' select payment Credit Card');
 
                 //send email to admin
                 $newTransferBank = new NewTransferBank($user, $orderDB);

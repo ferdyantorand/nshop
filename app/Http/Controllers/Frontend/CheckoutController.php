@@ -71,6 +71,7 @@ class CheckoutController extends Controller
         try{
             $paymentMethod = $request->input('payment_method');
             $order = Order::find($request->input('order'));
+            $user = $order->user;
             $orderProduct = OrderProduct::where('order_id', $order->id)->get();
 
             if($request->input('voucher') != ''){
@@ -86,6 +87,7 @@ class CheckoutController extends Controller
             if($paymentMethod == "credit_card"){
                 $order->payment_option = "Credit Card";
                 $order->save();
+                Log::info('Order #'. $order->order_number. ' ('.$order->id.'), User '.$user->email.' select payment Credit Card');
 
                 //set data to request
                 $transactionDataArr = Midtrans::setRequestData($order, $orderProduct, $paymentMethod);
@@ -106,6 +108,7 @@ class CheckoutController extends Controller
             else{
                 $order->payment_option = "Transfer Bank";
                 $order->save();
+                Log::info('Order #'. $order->order_number. ' ('.$order->id.'), User '.$user->email.' select payment Transfer Bank');
 
                 $redirectUrl = route('checkout-transfer-information', ['order'=>$order]);
                 //dd($exception);
@@ -167,37 +170,42 @@ class CheckoutController extends Controller
             $orderDB->order_status_id = 3;
             $orderDB->save();
 
+            $user = User::find($orderDB->user_id);
+            Log::info('Order #'. $orderDB->order_number. ' ('.$orderDB->id.'), Payment Credit Card success by '.$user->email.', order status '.$orderDB->order_status->name);
+
             $orderProducts = OrderProduct::where('order_id', $orderDB->id)->get();
 
             // Create ZOHO Invoice
-            Zoho::createInvoice($orderDB->zoho_sales_order_id);
+            $zohoResult = Zoho::createInvoice($orderDB->zoho_sales_order_id);
 
-            //send email confirmation
-            $user = User::find($orderDB->user_id);
+            if($orderDB->is_sent_email_processing == 0){
+                //send email confirmation
+                $productIdArr = [];
+                foreach ($orderProducts as $orderProduct){
+                    array_push($productIdArr, $orderProduct->product_id);
 
-            $productIdArr = [];
-            foreach ($orderProducts as $orderProduct){
-                array_push($productIdArr, $orderProduct->product_id);
-
-                //minus item quantity
-                $product = $orderProduct->product;
-                $qty = $product->qty;
-                if($qty > 0){
-                    $product->qty = $qty-1;
-                    $product->save();
+                    //minus item quantity
+                    $product = $orderProduct->product;
+                    $qty = $product->qty;
+                    if($qty > 0){
+                        $product->qty = $qty-1;
+                        $product->save();
+                    }
                 }
-            }
 
-            $productImages = ProductImage::whereIn('product_id',$productIdArr)->where('is_main_image', 1)->get();
-            $productImageArr = [];
-            foreach ($productImages as $productImage){
-                $productImageArr[$productImage->product_id] = $productImage->path;
+                $productImages = ProductImage::whereIn('product_id',$productIdArr)->where('is_main_image', 1)->get();
+                $productImageArr = [];
+                foreach ($productImages as $productImage){
+                    $productImageArr[$productImage->product_id] = $productImage->path;
+                }
+                $orderConfirmation = new OrderConfirmation($user, $orderDB, $orderProducts, $productImageArr);
+                Mail::to($user->email)
+                    ->bcc(env('MAIL_SALES'))
+                    ->send($orderConfirmation);
+                Log::info('Order #'. $orderDB->order_number. ' ('.$orderDB->id.'), Email sent to '.$user->email.' payment '.$orderDB->payment_option.', order status '.$orderDB->order_status->name);
+                $orderDB->is_sent_email_processing = 1;
+                $orderDB->save();
             }
-            $orderConfirmation = new OrderConfirmation($user, $orderDB, $orderProducts, $productImageArr);
-            Mail::to($user->email)
-                ->bcc(env('MAIL_SALES'))
-                ->send($orderConfirmation);
-//            dd($resultMail);
 
             $data=([
                 'order' => $orderDB,
@@ -240,6 +248,7 @@ class CheckoutController extends Controller
         Mail::to($user->email)
             ->bcc(env('MAIL_SALES'))
             ->send($orderConfirmation);
+        Log::info('Order #'. $order->order_number. ' ('.$order->id.'), Email sent to '.$user->email.' payment '.$order->payment_option.', order status '.$order->order_status->name);
 
         $data=([
             'order' => $order,

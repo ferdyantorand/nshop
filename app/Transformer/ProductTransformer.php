@@ -38,6 +38,7 @@ class ProductTransformer extends TransformerAbstract
             return[
                 'name'              => $product->name,
                 'sku'               => $product->sku,
+                'color'             => ucfirst($product->colour),
                 'qty'               => $product->qty,
                 'price'             => $product->price_string,
                 'created_at'        => $createdDate,

@@ -9174,7 +9174,7 @@ td.cart-product-quantity {
 }
 
 .product--img img {
-	max-width: 100%;
+	max-width: 260px;
     max-height: 260px;
 }
 

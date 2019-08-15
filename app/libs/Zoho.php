@@ -562,7 +562,7 @@ class Zoho
         }
         catch(\Exception $ex){
             Log::error("Zoho.php > createInvoice ".$ex);
-            return "Error!";
+            return false;
         }
     }
     //Transaction Stuff Finish

@@ -155,6 +155,7 @@ class OrderController extends Controller
             $orderBankDB = OrderBankTransfer::where('order_id', $orderid)->first();
             $orderBankDB->status = 1;
             $orderBankDB->save();
+            Log::info('Order #'. $orderDB->order_number. ' ('.$orderDB->id.'), bank transfer confirmation by Admin');
 
 
             $orderProducts = OrderProduct::where('order_id', $orderDB->id)->get();
@@ -185,6 +186,7 @@ class OrderController extends Controller
             Mail::to($user->email)
                 ->bcc(env('MAIL_SALES'))
                 ->send($orderConfirmation);
+            Log::info('Order #'. $orderDB->order_number. ' ('.$orderDB->id.'), Email sent to '.$user->email.' payment '.$orderDB->payment_option.', order status '.$orderDB->order_status->name);
 
             //request type, json or from form
             $requestType = $request->input('type');

@@ -11,7 +11,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
  * Class Order
- * 
+ *
  * @property int $id
  * @property int $user_id
  * @property string $voucher_code
@@ -32,7 +32,8 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property \Carbon\Carbon $updated_at
  * @property string $order_number
  * @property string $zoho_sales_order_id
- * 
+ * @property int $is_sent_email_processing
+ *
  * @property \App\Models\Address $address
  * @property \App\Models\OrderStatus $order_status
  * @property \App\Models\User $user
@@ -54,6 +55,7 @@ class Order extends Eloquent
 		'sub_total' => 'float',
 		'tax_amount' => 'float',
 		'grand_total' => 'float',
+		'is_sent_email_processing' => 'int',
 		'order_status_id' => 'int'
 	];
 
@@ -74,6 +76,7 @@ class Order extends Eloquent
 		'currency_code',
 		'order_status_id',
         'order_number',
+        'is_sent_email_processing',
         'zoho_sales_order_id'
 	];
 

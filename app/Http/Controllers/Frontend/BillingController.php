@@ -512,6 +512,7 @@ class BillingController extends Controller
                 'currency_code' => "IDR",
                 'order_status_id' => 1,
                 'order_number' => $orderNumber,
+                'is_sent_email_processing' => 0,
                 'created_at' => Carbon::now('Asia/Jakarta')->toDateTimeString(),
                 'updated_at' => Carbon::now('Asia/Jakarta')->toDateTimeString()
             ]);
@@ -566,6 +567,7 @@ class BillingController extends Controller
             // Create ZOHO Sales Order
             Zoho::createSalesOrder($newOrder);
 
+            Log::info('Order #'. $newOrder->order_number. ' ('.$newOrder->id.'), Transaction successfully created');
             return $newOrder->id;
         }
         catch (\Exception $exception){

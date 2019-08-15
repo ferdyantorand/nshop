@@ -128,7 +128,7 @@
                                     </p>
                                     <p style="font-size: 20px;text-align: center">
                                         BANK CENTRAL ASIA (BCA)<br>
-                                        006 612 1555 A.N CAROLINE
+                                        006 999 1515  a.n PT. Nama Karya Bersama
                                     </p>
                                 @endif
                             </td>
