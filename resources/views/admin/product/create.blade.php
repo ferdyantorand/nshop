@@ -125,6 +125,13 @@
                                                                   placeholder="Write Something..." rows="7" required>{{old('style_notes', $product->style_notes)}}</textarea>
                                                     </div>
                                                     <div class="form-group">
+                                                        <label for="status">Status</label>
+                                                        <select id="status" name="status" class="form-control">
+                                                            <option value="1">Active</option>
+                                                            <option value="2">Not Active</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
                                                         <input type="checkbox" id="is_customize" name="is_customize" class="form-check-input" checked/>
                                                         <label class="form-check-label" for="is_customize">
                                                             Customize

@@ -154,7 +154,7 @@ class ProductController extends Controller
                     'tag' => $request->input('tags'),
                     'is_primary' => $is_primary,
                     'is_customize' => $customize,
-                    'status' => 1,
+                    'status' => $request->input('status'),
                     'created_at'        => $dateTimeNow->toDateTimeString(),
                     'updated_at'        => $dateTimeNow->toDateTimeString(),
                     'zoho_id'           => 'TEMP'
@@ -420,6 +420,7 @@ class ProductController extends Controller
             $product->height = $request->input('height');
             $product->length = $request->input('length');
             $product->tag = $request->input('tags');
+            $product->status = $request->input('status');
             $product->updated_at = $dateTimeNow->toDateTimeString();
 
             $product->save();
