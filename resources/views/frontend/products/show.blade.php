@@ -932,6 +932,334 @@
             $('#custom-text').focus();
         }
 
+        function ChangePositionBig(){
+            //checking mobile view
+            var isMobile = detectmob();
+            var canvasType = 1;
+            var canvasId = "myCanvas";
+            if(isMobile){
+                $('#myCanvas').hide();
+                $('#myCanvasMobile').show();
+
+                canvasType = 2;
+                canvasId = "myCanvasMobile";
+            }
+            else{
+                $('#myCanvas').show();
+                $('#myCanvasMobile').hide();
+            }
+
+            $('#slider-product').hide();
+            $('#custom-section').show();
+
+            var text = $('#custom-text').html().toUpperCase();
+
+            // $('#custom-text').val(text);
+            $('#custom-input-text').val(text);
+            var selectedPosition = $('#custom-position').val();
+            // var selectedFont = $('#custom-font').val();
+            var color = $('#custom-color').val();
+            var size = $('#custom-size').val();
+            var posX = ($('#position_x').val());
+            var posY = ($('#position_y').val());
+
+            var colorArr = color.split("-");
+            var sizeArr = size.split("-");
+
+            var font = sizeArr[1] + "px Bodoni";
+            if(isMobile){
+                if(sizeArr[1] === 16){
+                    font = (sizeArr[1] - 8) + "px Bodoni";
+                }
+                else{
+                    font = (sizeArr[1] - 2) + "px Bodoni";
+                }
+            }
+            var fillStyle = "#"+colorArr[1];
+
+            var canvas = document.getElementById(canvasId);
+            var context = canvas.getContext("2d");
+
+            var imageObj = new Image();
+
+            var src = [];
+            var imgs = [];
+
+            var srcListInput = $('#src-list').val();
+            var srcList = srcListInput.split("#");
+
+            for(var k=0; k<20;k++){
+                imgs[k] = new Image();
+            }
+            //emoji draw image
+            if(srcList.length > 0){
+                var ct = 0;
+                for(var l=0; l<srcList.length;l++) {
+                    if(srcList[l] !== "" && srcList[l].indexOf(".PNG") >= 0){
+                        var imageColor = srcList[l];
+
+                        if(fillStyle === '#C0C0C0') {
+                            imageColor = imageColor.replace(/.PNG/g, "-SILVER.PNG");
+                        }
+                        else{
+                            imageColor = imageColor.replace(/.PNG/g, "-GOLD.PNG");
+                        }
+                        imgs[ct].src = imageColor;
+                        ct++;
+                    }
+                }
+            }
+            imageObj.onload = function(){
+                context.restore();
+                if(isMobile){
+                    var hRatio = canvas.width  / imageObj.width;
+                    posX = posX * (hRatio-0.025);
+                    var vRatio =  canvas.height / imageObj.height;
+                    posY = posY * (vRatio-0.025);
+
+                    var ratio  = Math.min ( hRatio, vRatio );
+                    var centerShift_x = ( canvas.width - imageObj.width*ratio )/2;
+                    var centerShift_y = ( canvas.height - imageObj.height*ratio )/2;
+                    // context.clearRect(0,0,canvas.width, canvas.height);
+                    context.drawImage(imageObj, 0,0, imageObj.width, imageObj.height,
+                        centerShift_x,centerShift_y,imageObj.width*ratio, imageObj.height*ratio);
+                }
+                else{
+                    context.drawImage(imageObj, 10, 10);
+                }
+                context.textAlign = 'center';
+                context.font = font;
+
+                if(fillStyle === '#C0C0C0' || fillStyle === '#FFD700') {
+                    context.fillStyle = fillStyle;``
+                }else{
+                    context.strokeStyle = 'black';
+                    context.fillStyle = "rgba(255, 255, 255, 0.2)";
+                }
+
+                //emoji processing
+                var newText = text.replace(/<BR>/g, "");
+                if(text.indexOf('SRC=') >= 0){
+                    newText = "";
+                    var ct = 0;
+                    var posXimg = Number(posX);
+                    var posXimgArr = [];
+
+                    for(var l=0; l<srcList.length;l++) {
+                        if(srcList[l] !== "" ){
+                            if(srcList[l].indexOf(".PNG") >= 0){
+                                if(l === 0){
+                                    //only 1 character
+                                    if(srcList.length === 2){
+                                        posXimg = posXimg - Number(9);
+                                        newText = newText + "     ";
+                                    }
+                                    //only 2 character
+                                    else if(srcList.length === 3){
+                                        posXimg = posXimg - Number(18);
+                                        newText = newText + "    ";
+                                    }
+                                    //only 3 character
+                                    else if(srcList.length === 4){
+                                        posXimg = posXimg - Number(18);
+                                        newText = newText + "      ";
+                                    }
+                                    else{
+                                        posXimg = posXimg - Number(29);
+                                        newText = newText + "    ";
+                                    }
+                                }
+                                else if(l === 1){
+                                    //only 2 character
+                                    if(srcList.length === 3){
+                                        posXimg = posXimg + Number(14);
+                                        newText = newText + "    ";
+                                    }
+                                    //only 3 character
+                                    else if(srcList.length === 4){
+                                        posXimg = posXimg + Number(14);
+                                        newText = newText + "    ";
+                                    }
+                                    else{
+                                        //cek jika gambar pertama
+                                        if(ct === 0){
+                                            if(isMobile){
+                                                posXimg = posXimg - Number(14);
+                                                newText = newText + "    ";
+                                            }
+                                            else{
+                                                posXimg = posXimg - Number(13);
+                                                newText = newText + "     ";
+                                            }
+                                        }
+                                        else{
+                                            if(isMobile){
+                                                posXimg = posXimg + Number(13);
+                                                newText = newText + "    ";
+                                            }
+                                            else{
+                                                posXimg = posXimg + Number(16);
+                                                newText = newText + "      ";
+                                            }
+                                        }
+                                    }
+                                }
+                                else if(l === 2){
+                                    //only 3 character
+                                    if(srcList.length === 4){
+                                        //3 character and only 1 emoji
+                                        if(ct === 0){
+                                            posXimg = posXimg + Number(7);
+                                            newText = newText + "     ";
+                                        }
+                                        else{
+                                            if(isMobile){
+                                                posXimg = posXimg + Number(13);
+                                                newText = newText + "    ";
+                                            }
+                                            else{
+                                                posXimg = posXimg + Number(16);
+                                                newText = newText + "    ";
+                                            }
+                                        }
+                                    }
+                                    else{
+                                        if(isMobile){
+                                            //cek jika gambar pertama
+                                            if(ct === 0){
+                                                posXimg = posXimg - Number(6);
+                                                newText = newText + "     ";
+                                            }
+                                            else{
+                                                posXimg = posXimg + Number(10);
+                                                newText = newText + "      ";
+                                            }
+                                        }
+                                        else{
+                                            //cek jika gambar pertama
+                                            if(ct === 0){
+                                                posXimg = posXimg - Number(0);
+                                                newText = newText + "    ";
+                                            }
+                                            else{
+                                                posXimg = posXimg + Number(14);
+                                                newText = newText + "    ";
+                                            }
+                                        }
+                                    }
+                                }
+                                else if(l === 3){
+                                    //cek jika gambar pertama
+                                    if(isMobile){
+                                        if(ct === 0){
+                                            posXimg = posXimg + Number(2);
+                                            newText = newText + "    ";
+                                        }
+                                        else{
+                                            posXimg = posXimg + Number(11);
+                                            newText = newText + "    ";
+                                        }
+                                    }
+                                    else{
+                                        if(ct === 0){
+                                            posXimg = posXimg + Number(8);
+                                            newText = newText + "    ";
+                                        }
+                                        else{
+                                            posXimg = posXimg + Number(15);
+                                            newText = newText + "    ";
+                                        }
+                                    }
+                                }
+                                else{
+                                    if(isMobile){
+                                        if(ct === 0){
+                                            posXimg = posXimg + Number(19);
+                                        }
+                                        else{
+                                            posXimg = posXimg + Number(13);
+                                            newText = newText + "    ";
+                                        }
+                                    }
+                                    else{
+                                        if(ct === 0){
+                                            posXimg = posXimg + Number(23);
+                                        }
+                                        else{
+                                            posXimg = posXimg + Number(15);
+                                            newText = newText + "    ";
+                                        }
+                                    }
+                                }
+
+                                //set image position and size
+                                if(isMobile){
+                                    var posYimg = posY - 12;
+                                    context.drawImage(imgs[ct], posXimg, posYimg, 14, 14);
+                                }else{
+                                    var posYimg = posY - 13;
+                                    context.drawImage(imgs[ct], posXimg, posYimg, 15, 15);
+                                }
+                                ct++;
+                            }
+                            else{
+                                // newText = newText + srcList[l];
+                                // posXimg = posXimg + Number(8);
+                                newText = newText + srcList[l];
+                                // if(l === 0){
+                                //     posXimg = posXimg + Number(12);
+                                // }
+                                // else if(l === 1){
+                                //     posXimg = posXimg + Number(12);
+                                // }
+                                // else if(l === 2){
+                                //     posXimg = posXimg + Number(5);
+                                // }
+                                // else if(l === 3){
+                                //     posXimg = posXimg + Number(5);
+                                // }
+                                // else{
+                                //     posXimg = posXimg + Number(5);
+                                // }
+                                if(l === 0){
+                                    if(ct !== 0){
+                                        posXimg = posXimg + Number(10);
+                                    }
+                                    else{
+                                        posXimg = posXimg - Number(6);
+                                    }
+                                }
+                                if(l === 1){
+                                    if(ct !== 0){
+                                        // posXimg = posXimg + Number(10);
+                                    }
+                                }
+                                if(l === 2){
+                                    if(ct !== 0){
+                                        posXimg = posXimg + Number(12);
+                                    }
+                                    else{
+                                        posXimg = posXimg + Number(2);
+                                    }
+                                }
+                                else{
+                                    if(ct !== 0){
+                                        posXimg = posXimg + Number(12);
+                                    }
+                                    else{
+                                        posXimg = posXimg + Number(2);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                context.fillText(newText, posX, posY);
+            };
+            imageObj.src = "{{ asset('storage/products/'.$productMainImages->path) }}";
+            $('#custom-text').focus();
+        }
+
         function detectmob() {
             if(window.innerWidth <= 450) {
                 return true;

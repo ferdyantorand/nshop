@@ -91,37 +91,38 @@
             @else
                 @foreach($categoryDB as $category)
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 center">
-                            <h2>{{$category->name}}</h2>
-                        </div>
+                        {{--<div class="col-xs-12 col-sm-12 col-md-12 center">--}}
+                            {{--<h2>{{$category->name}}</h2>--}}
+                        {{--</div>--}}
                         <!-- Product #1 -->
                         @php($products = $productResult->where('category_id', $category->id))
-                        @if($products->count() == 0)
-                            <h5 class="text--center">No Product</h5>
-                        @else
+                        @if($products->count() != 0)
+                            <div class="col-xs-12 col-sm-12 col-md-12 center">
+                                <h2>{{$category->name}}</h2>
+                            </div>
                             @foreach($products as $product)
                                 @php($link = route('product.detail', ['product'=>$product->slug] ))
                                 @php($productImage = $product->product_images->where('is_main_image', 1)->first())
                                 <div class="col-xs-12 col-sm-6 col-md-3 product-item">
-                                    <div class="product--img">
-                                        <img src="{{ asset('storage/products/'.$productImage->path) }}" alt="Product"/>
-                                        <div class="product--hover">
-                                            <div class="product--action">
-                                                <a class="btn btn--secondary btn--bordered" href="{{$link}}">View</a>
-                                            </div>
-                                        </div><!-- .product-overlay end -->
-                                    </div><!-- .product-img end -->
-                                    <div class="product--content">
-                                        <div class="product--title" style="height: 50px;">
-                                            <h3><a href="{{$link}}">{{$product->name}}</a></h3>
-                                        </div><!-- .product-title end -->
-                                        <div class="product--price">
-                                            <span class="family-sans" style="font-weight: 400;">{{env('KURS_IDR')}} {{$product->price_string}}</span>
-                                        </div><!-- .product-price end -->
-                                    </div><!-- .product-bio end -->
-                                </div>
-                        @endforeach
-                    @endif
+                                        <div class="product--img">
+                                            <img src="{{ asset('storage/products/'.$productImage->path) }}" alt="Product"/>
+                                            <div class="product--hover">
+                                                <div class="product--action">
+                                                    <a class="btn btn--secondary btn--bordered" href="{{$link}}">View</a>
+                                                </div>
+                                            </div><!-- .product-overlay end -->
+                                        </div><!-- .product-img end -->
+                                        <div class="product--content">
+                                            <div class="product--title" style="height: 50px;">
+                                                <h3><a href="{{$link}}">{{$product->name}}</a></h3>
+                                            </div><!-- .product-title end -->
+                                            <div class="product--price">
+                                                <span class="family-sans" style="font-weight: 400;">{{env('KURS_IDR')}} {{$product->price_string}}</span>
+                                            </div><!-- .product-price end -->
+                                        </div><!-- .product-bio end -->
+                                    </div>
+                            @endforeach
+                        @endif
                     <!-- .product end -->
                     </div><!-- .row end -->
                 @endforeach
