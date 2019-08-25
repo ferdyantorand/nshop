@@ -52,6 +52,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <input type="hidden" id="slug" name="slug" value="{{$product->slug}}">
+                            <input type="hidden" id="product_category" value="{{$product->category_id}}">
                             <input type="hidden" id="position_x" value="{{$product->product_positions[0]->pos_x}}">
                             <input type="hidden" id="position_y" value="{{$product->product_positions[0]->pos_y}}">
                             <div class="row">
@@ -113,7 +114,14 @@
 
                             <div id="customize-section" class="row customize-section" style="display:{{$display}}">
                                 <div class="col-md-12 bg-white bg-white-mobile" style="padding-bottom: 25px;">
-                                    <p style="font-weight: bold">Enter Text (max 5 characters)
+                                    @php($maxCharacter = 5)
+                                    {{--checking if popgrip or  --}}
+                                    @if($product->category_id == 18)
+                                        @php($maxCharacter = 3)
+                                    @elseif($product->category_id == 19)
+                                        @php($maxCharacter = 2)
+                                    @endif
+                                    <p style="font-weight: bold">Enter Text (max {{$maxCharacter}} characters)
 
                                         {{--@if(auth()->guard('web')->check())--}}
                                             {{--@if(auth()->guard('web')->user()->email == "yansen626@gmail.com")--}}
@@ -585,9 +593,20 @@
                 }
             }
 
-            //if more than 5 character
             var newSrcListCount = newSrcList.split("#");
-            if((newSrcListCount.length - 1) > 5){
+
+            var maxChar = 5;
+            var productCategory = $('#product_category').val();
+
+            // checking if popgrip or
+            if(productCategory === 18){
+                maxChar = 3;
+            }
+            else if(productCategory === 19){
+                maxChar = 2;
+            }
+            //if more than 5/3/2 character
+            if((newSrcListCount.length - 1) > maxChar){
                 var oldInput = $('#custom-input-text').val();
                 $('#custom-text').empty();
                 $('#custom-text').append(oldInput);
