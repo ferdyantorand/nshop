@@ -599,13 +599,14 @@
             var productCategory = $('#product_category').val();
 
             // checking if popgrip or
-            if(productCategory === 18){
+            if(productCategory === '18'){
                 maxChar = 3;
             }
-            else if(productCategory === 19){
+            else if(productCategory === '19'){
                 maxChar = 2;
             }
             //if more than 5/3/2 character
+            alert(maxChar);
             if((newSrcListCount.length - 1) > maxChar){
                 var oldInput = $('#custom-input-text').val();
                 $('#custom-text').empty();

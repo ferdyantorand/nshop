@@ -239,16 +239,22 @@ class CheckoutController extends Controller
             }
         }
 
-        $productImages = ProductImage::whereIn('product_id',$productIdArr)->where('is_main_image', 1)->get();
-        $productImageArr = [];
-        foreach ($productImages as $productImage){
-            $productImageArr[$productImage->product_id] = $productImage->path;
+        try{
+            $productImages = ProductImage::whereIn('product_id',$productIdArr)->where('is_main_image', 1)->get();
+            $productImageArr = [];
+            foreach ($productImages as $productImage){
+                $productImageArr[$productImage->product_id] = $productImage->path;
+            }
+            $orderConfirmation = new OrderConfirmation($user, $order, $orderProducts, $productImageArr);
+            Mail::to($user->email)
+                ->bcc(env('MAIL_SALES'))
+                ->send($orderConfirmation);
+            Log::info('Order #'. $order->order_number. ' ('.$order->id.'), Email sent to '.$user->email.' payment '.$order->payment_option.', order status '.$order->order_status->name);
         }
-        $orderConfirmation = new OrderConfirmation($user, $order, $orderProducts, $productImageArr);
-        Mail::to($user->email)
-            ->bcc(env('MAIL_SALES'))
-            ->send($orderConfirmation);
-        Log::info('Order #'. $order->order_number. ' ('.$order->id.'), Email sent to '.$user->email.' payment '.$order->payment_option.', order status '.$order->order_status->name);
+        catch(\Exception $ex){
+            Log::info('Order #'. $order->order_number. ' ('.$order->id.'), sending email failed');
+            Log::error("CheckoutController > TransferInformation Error: ". $ex->getMessage());
+        }
 
         $data=([
             'order' => $order,
