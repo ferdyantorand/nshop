@@ -135,6 +135,7 @@ class VoucherController extends Controller
                     'category_id'   => $cats,
                     'voucher_amount'   => $request->input('voucher_amount'),
                     'voucher_percentage'   => $request->input('voucher_percentage'),
+                    'min_purchase'   => $request->input('min_purchase'),
                     'is_shipping'   => 0,
                     'repeatable'   => 0,
                     'start_date'    => $startDate,
@@ -167,6 +168,7 @@ class VoucherController extends Controller
                     'product_id'   => $prods,
                     'voucher_amount'   => $request->input('voucher_amount'),
                     'voucher_percentage'   => $request->input('voucher_percentage'),
+                    'min_purchase'   => $request->input('min_purchase'),
                     'is_shipping'   => 0,
                     'repeatable'   => 0,
                     'start_date'    => $startDate,
@@ -316,6 +318,7 @@ class VoucherController extends Controller
             $voucher->code = $request->input('code');
             $voucher->voucher_amount   = $request->input('voucher_amount');
             $voucher->voucher_percentage   = $request->input('voucher_percentage');
+            $voucher->min_purchase   = $request->input('min_purchase');
             $voucher->description = $request->input('description');
             $voucher->start_date = $startDate;
             $voucher->finish_date = $finishDate;

@@ -148,6 +148,11 @@
                                         <input id="voucher_percentage" type="number" class="form-control"
                                                name="voucher_percentage" value="{{ $voucher->voucher_percentage }}">
                                     </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label" for="min_purchase">Minimal Purchase </label>
+                                        <input id="min_purchase" type="number" class="form-control"
+                                               name="min_purchase" value="{{ $voucher->min_purchase }}">
+                                    </div>
 
                                     <div class="col-md-12">
                                         <div class="form-group form-float form-group-lg">

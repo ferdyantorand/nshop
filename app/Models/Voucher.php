@@ -11,12 +11,13 @@ use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
  * Class Voucher
- * 
+ *
  * @property int $id
  * @property string $code
  * @property string $description
  * @property int $voucher_percentage
  * @property float $voucher_amount
+ * @property float $min_purchase
  * @property string $category_id
  * @property string $product_id
  * @property \Carbon\Carbon $start_date
@@ -28,7 +29,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property int $created_by
  * @property int $updated_by
  * @property int $status_id
- * 
+ *
  * @property \App\Models\AdminUser $admin_user
  * @property \App\Models\Status $status
  *
@@ -39,6 +40,7 @@ class Voucher extends Eloquent
 	protected $casts = [
 		'voucher_percentage' => 'int',
 		'voucher_amount' => 'float',
+		'min_purchase' => 'float',
 		'product_id' => 'int',
 		'created_by' => 'int',
 		'updated_by' => 'int',
@@ -57,6 +59,7 @@ class Voucher extends Eloquent
 		'description',
 		'voucher_percentage',
 		'voucher_amount',
+		'min_purchase',
         'is_shipping',
         'repeatable',
 		'category_id',
@@ -69,11 +72,15 @@ class Voucher extends Eloquent
 	];
 
     protected $appends = [
-        'voucher_amount_string'
+        'voucher_amount_string',
+        'min_purchase_string',
     ];
 
     public function getVoucherAmountStringAttribute(){
         return number_format($this->attributes['voucher_amount'], 0, ",", ".");
+    }
+    public function getMinPurchaseStringAttribute(){
+        return number_format($this->attributes['min_purchase'], 0, ",", ".");
     }
 	public function updatedBy()
 	{

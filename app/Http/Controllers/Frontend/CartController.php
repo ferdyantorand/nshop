@@ -260,9 +260,11 @@ class CartController extends Controller
             $voucher = strtoupper($request->input('voucher-code'));
 
             $voucherCheck = Voucher::where('code', $voucher)->first();
+            // checking if valid voucher code
             if(empty($voucherCheck)){
                 return Response::json(array('errors' => 'Voucher Not Found!'));
             }
+            // checking if free shipping voucher
             if($voucherCheck->is_shipping == 1){
                 $order = Order::find($request->input('order_id'));
                 $totalVoucher = $order->shipping_charge;
@@ -284,6 +286,12 @@ class CartController extends Controller
                 $trx = Order::find($request->input('order_id'));
 
                 if(!empty($voucherDB)){
+                    // checking for minimum purchase
+                    if(!empty($voucherCheck->min_purchase)){
+                        if($trx->sub_total < $voucherCheck->min_purchase){
+                            return Response::json(array('errors' => 'Minimum purchase to activate this voucher is IDR '.$voucherCheck->min_purchase_string.'!'));
+                        }
+                    }
                     //Check the Voucher Categories or Products
                     if($voucherDB->category_id != null){
                         $cats = explode('#', $voucherDB->category_id);
@@ -298,6 +306,7 @@ class CartController extends Controller
                                     break;
                                 }
                                 if($cat == $details->product->category_id){
+
                                     $flag = true;
 
                                     //Count the Voucher Total Price
