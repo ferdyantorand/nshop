@@ -272,6 +272,15 @@ class CartController extends Controller
                 return Response::json(array('success' => $totalVoucher));
             }
             else{
+                // checking if using stock system and checking if stock available
+                if($voucherCheck->is_stock == 1){
+                    error_log("stock ada dalam if   ".$voucherCheck->stock);
+                    if($voucherCheck->stock <= 0){
+                        error_log("sisa stock ada ".$voucherCheck->stock);
+                        return Response::json(array('errors' => 'Voucher Already Used Up!'));
+                    }
+                }
+
                 //Check if User already used the Voucher
                 $order = Order::where('user_id', $user->id)->where('voucher_code', $voucher)->first();
                 if($order != null){

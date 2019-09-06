@@ -156,6 +156,11 @@
                                         <input id="min_purchase" type="number" class="form-control"
                                                name="min_purchase" value="{{ $voucher->min_purchase }}">
                                     </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label" for="stock">Stock </label>
+                                        <input id="stock" type="number" class="form-control"
+                                               name="stock" value="{{ $voucher->stock }}">
+                                    </div>
 
                                     <div class="col-md-12">
                                         <div class="form-group form-float form-group-lg">

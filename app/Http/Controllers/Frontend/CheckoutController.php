@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\ProductImage;
 use App\Models\User;
+use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -74,8 +75,8 @@ class CheckoutController extends Controller
             $user = $order->user;
             $orderProduct = OrderProduct::where('order_id', $order->id)->get();
 
+            //Apply Voucher
             if($request->input('voucher') != ''){
-                //Apply Voucher
                 $voucherAmount = (float)$request->input('voucher_amount');
                 $order->voucher_code = $request->input('voucher');
                 $order->voucher_amount = $voucherAmount;
@@ -198,6 +199,19 @@ class CheckoutController extends Controller
                 foreach ($productImages as $productImage){
                     $productImageArr[$productImage->product_id] = $productImage->path;
                 }
+
+                // mengurangi stock voucher
+                if(!empty($order->voucher_code)){
+                    $voucher =  Voucher::where('code', strtoupper($order->voucher_code))->first();
+                    if(!empty($voucher->stock)){
+                        if($voucher->stock > 0){
+                            $currentStock = $voucher->stock;
+                            $voucher->stock = $currentStock - 1;
+                            $voucher->save();
+                        }
+                    }
+                }
+
                 $orderConfirmation = new OrderConfirmation($user, $orderDB, $orderProducts, $productImageArr);
                 Mail::to($user->email)
                     ->bcc(env('MAIL_SALES'))
@@ -223,7 +237,6 @@ class CheckoutController extends Controller
     public function TransferInformation(Order $order){
         $orderProducts = OrderProduct::where('order_id', $order->id)->get();
 
-        //send email confirmation
         $user = User::find($order->user_id);
 
         $productIdArr = [];
@@ -239,6 +252,19 @@ class CheckoutController extends Controller
             }
         }
 
+        // mengurangi stock voucher
+        if(!empty($order->voucher_code)){
+            $voucher =  Voucher::where('code', strtoupper($order->voucher_code))->first();
+            if(!empty($voucher->stock)){
+                if($voucher->stock > 0){
+                    $currentStock = $voucher->stock;
+                    $voucher->stock = $currentStock - 1;
+                    $voucher->save();
+                }
+            }
+        }
+
+        //send email confirmation
         try{
             $productImages = ProductImage::whereIn('product_id',$productIdArr)->where('is_main_image', 1)->get();
             $productImageArr = [];

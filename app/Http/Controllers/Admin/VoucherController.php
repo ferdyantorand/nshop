@@ -112,7 +112,10 @@ class VoucherController extends Controller
 //            Session::flash('error', 'Finish Date cannot be less than Start Date!');
                 return redirect()->back()->withErrors("Finish Date cannot be less than Start Date!")->withInput($request->all());
             }
-
+            $is_stock = 0;
+            if(!empty($request->input('stock'))){
+                $is_stock = 1;
+            }
             $user = Auth::guard('admin')->user();
             if($request->input('type') == 'categories'){
                 //Categories
@@ -138,6 +141,8 @@ class VoucherController extends Controller
                     'min_purchase'   => $request->input('min_purchase'),
                     'is_shipping'   => 0,
                     'repeatable'   => 0,
+                    'stock'   => $request->input('stock'),
+                    'is_stock'   => $is_stock,
                     'start_date'    => $startDate,
                     'finish_date'   => $finishDate,
                     'created_at'    => Carbon::now('Asia/Jakarta'),
@@ -171,6 +176,8 @@ class VoucherController extends Controller
                     'min_purchase'   => $request->input('min_purchase'),
                     'is_shipping'   => 0,
                     'repeatable'   => 0,
+                    'stock'   => $request->input('stock'),
+                    'is_stock'   => $is_stock,
                     'start_date'    => $startDate,
                     'finish_date'   => $finishDate,
                     'created_at'    => Carbon::now('Asia/Jakarta'),
@@ -320,6 +327,7 @@ class VoucherController extends Controller
             $voucher->voucher_percentage   = $request->input('voucher_percentage');
             $voucher->min_purchase   = $request->input('min_purchase');
             $voucher->description = $request->input('description');
+            $voucher->stock = $request->input('stock');
             $voucher->start_date = $startDate;
             $voucher->finish_date = $finishDate;
             $voucher->status_id = $request->input('status');

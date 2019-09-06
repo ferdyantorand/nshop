@@ -606,7 +606,7 @@
                 maxChar = 2;
             }
             //if more than 5/3/2 character
-            alert(maxChar);
+            //alert(maxChar);
             if((newSrcListCount.length - 1) > maxChar){
                 var oldInput = $('#custom-input-text').val();
                 $('#custom-text').empty();

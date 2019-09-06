@@ -20,6 +20,8 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property float $min_purchase
  * @property string $category_id
  * @property string $product_id
+ * @property int $stock
+ * @property int $is_stock
  * @property \Carbon\Carbon $start_date
  * @property \Carbon\Carbon $finish_date
  * @property \Carbon\Carbon $created_at
@@ -46,7 +48,9 @@ class Voucher extends Eloquent
 		'updated_by' => 'int',
 		'status_id' => 'int',
         'is_shipping' => 'int',
-        'repeatable' => 'int'
+        'is_stock' => 'int',
+        'repeatable' => 'int',
+        'stock' => 'int'
 	];
 
 	protected $dates = [
@@ -64,6 +68,8 @@ class Voucher extends Eloquent
         'repeatable',
 		'category_id',
 		'product_id',
+		'is_stock',
+		'stock',
 		'start_date',
 		'finish_date',
 		'created_by',
