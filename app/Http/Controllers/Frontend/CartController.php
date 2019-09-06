@@ -101,7 +101,8 @@ class CartController extends Controller
                     'created_at'        => $dateTimeNow->toDateTimeString(),
                     'updated_at'        => $dateTimeNow->toDateTimeString()
                 ]);
-
+                $text = str_replace('<IMG SRC="'.env('SERVER_HOST_URL_UPPERCASE').'IMAGES/EMOJI/','',$text);
+                $text = str_replace('.PNG">','',$text);
                 $cart->add($tmpCart, $productDB->id.$text);
 
                 $request->session()->put('cart', $cart);
@@ -216,6 +217,7 @@ class CartController extends Controller
         catch (\Exception $exception){
 //            dd($exception);
             Log::error("CartController/submitCart error: ". $exception);
+            return redirect()->route('login.register');
         }
     }
 
