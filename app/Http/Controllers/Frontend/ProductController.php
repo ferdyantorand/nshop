@@ -25,7 +25,9 @@ class ProductController extends Controller
                 $filterArr = explode('-', $category);
 
                 $filter = 99;
-                $categoryDB = Category::whereIn('id', $filterArr)->get();
+                $categoryDB = Category::whereIn('id', $filterArr)
+                    ->orderBy('id', 'desc')
+                    ->get();
                 $filterName = "";
 
                 $items = Product::where('is_primary', 1)
