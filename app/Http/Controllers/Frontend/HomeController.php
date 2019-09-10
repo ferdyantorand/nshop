@@ -46,7 +46,7 @@ class HomeController extends Controller
     public function index()
     {
 //        return view('frontend.coming-soon');
-        $products = Product::where('is_primary', 1)->where('status', 1)->get();
+        $products = Product::where('is_primary', 1)->where('status', 1)->orderBy('created_at', 'desc')->get();
 
         if (Auth::check())
         {

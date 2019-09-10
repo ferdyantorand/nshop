@@ -49,7 +49,9 @@ class ProductController extends Controller
             }
         }
         else{
-            $categoryDB = Category::all();
+            $categoryDB = Category::where('id', '>', 0)
+                ->orderBy('id', 'desc')
+                ->get();
             $items = Product::where('is_primary', 1)
                 ->where('status', 1)
                 ->orderBy('created_at', 'desc')
