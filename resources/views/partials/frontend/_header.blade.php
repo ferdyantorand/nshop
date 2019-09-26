@@ -40,7 +40,7 @@
                                     {{--<a href="/product-list?category=3"><H4 class="header-menu">CARD HOLDERS</H4></a>--}}
                                     <a href="/product-list?category=5-11-16"><H4 class="header-menu">POUCHES</H4></a>
                                     <a href="/product-list?category=10"><H4 class="header-menu">PHONE CASES</H4></a>
-                                    <a href="/product-list?category=9-18-19"><H4 class="header-menu">ACCESSORIES</H4></a>
+                                    <a href="/product-list?category=9-18-19-22"><H4 class="header-menu">ACCESSORIES</H4></a>
                                 </div><!-- .col-md-8 end -->
                             </div><!-- .row end -->
                         </div>
@@ -219,7 +219,7 @@
                                     {{--<a href="/product-list?category=3"><H4 class="header-menu">CARD HOLDERS</H4></a>--}}
                                     <a href="/product-list?category=5-11-16"><H4 class="header-menu">POUCHES</H4></a>
                                     <a href="/product-list?category=10"><H4 class="header-menu">PHONE CASES</H4></a>
-                                    <a href="/product-list?category=9-18-19"><H4 class="header-menu">ACCESSORIES</H4></a>
+                                    <a href="/product-list?category=9-18-19-22"><H4 class="header-menu">ACCESSORIES</H4></a>
                                 </div><!-- .col-md-8 end -->
                             </div><!-- .row end -->
                         </div><!-- .container end -->
