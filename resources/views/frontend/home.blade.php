@@ -20,7 +20,7 @@
                         <a class="btn btn--secondary btn--bordered" href="{{route('product.list')}}" style="width: 220px;">SHOP COLLECTION</a>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-6 slider-home" style="background-image: url('{{asset('images/Links/banner-1.jpg')}}')">
+                <div class="col-xs-12 col-sm-12 col-md-6 slider-home" style="background-image: url('{{asset('images/Links/AHA06134.jpg')}}')">
                     {{--<div class="bg-section">--}}
                     {{--<img src="{{ asset('images/sliders/slide-bg/banner-1.jpg') }}" alt="Background"/>--}}
                     {{--</div>--}}
@@ -124,7 +124,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-6 pr-0 pl-0">
                     <div class="bg-overlay">
                         <div class="bg-section">
-                            <img src="{{asset('/images/Links/home-3.jpg')}}" alt="Background"/>
+                            <img src="{{asset('/images/Links/AHA06149.jpg')}}" alt="Background"/>
                         </div>
                     </div>
                 </div><!-- .col-md-6 end-->
