@@ -84,7 +84,7 @@
                     </p>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div id="testimonial-carousel" class="carousel carousel-dots" data-slide="3" data-slide-rs="1" data-autoplay="false" data-nav="true" data-dots="false" data-space="0" data-loop="true" data-speed="800" data-center="true">
+                    <div id="testimonial-carousel" class="carousel carousel-dots" data-slide="3" data-slide-rs="1" data-autoplay="false" data-nav="true" data-dots="false" data-space="0" data-loop="true" data-speed="800" data-center="false">
                         <!-- Product -->
                         @foreach($products as $product)
                             @php($link = route('product.detail', ['product'=>$product->slug] ))
