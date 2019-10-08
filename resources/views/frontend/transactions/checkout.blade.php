@@ -254,9 +254,9 @@
                                     console.log('success');console.log(result2);
                                     window.location = url;
                                 },
-                                onPending: function(result){console.log('pending');console.log(result);},
-                                onError: function(result){console.log('error');console.log(result);},
-                                onClose: function(){console.log('customer closed the popup without finishing the payment');}
+                                onPending: function(result) { console.log('pending');console.log(result); },
+                                onError: function(result) { console.log('error');console.log(result); },
+                                onClose: function() { console.log('customer closed the popup without finishing the payment'); }
                             });
                         } else {
                             snap.hide();
@@ -283,8 +283,8 @@
                             result = JSON.parse(result);
                         if (result.success) {
                             snapToken = result.success;
-                            // $('#pay-button').attr("disabled", false);
                             window.location = snapToken;
+                            $('#pay-button').attr("disabled", false);
                         }
                     }
                 });
