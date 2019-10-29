@@ -231,7 +231,7 @@ class CheckoutController extends Controller
         catch(\Exception $ex){
 //            dd($ex);
             error_log($ex);
-            Log::error("CheckoutController > checkoutSuccess Error: ". $ex->getMessage());
+            Log::error("CheckoutController > checkoutSuccess Error: ". $ex);
         }
     }
     public function TransferInformation(Order $order){

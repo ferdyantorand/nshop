@@ -332,7 +332,7 @@ class BillingController extends Controller
                         'postal_code' => $request->input('post_code')
                     ]);
 
-                    Zoho::updateUser(User::find($user->id));
+//                    Zoho::updateUser(User::find($user->id));
                 }
 
                 Session::forget('cartQty');

@@ -95,12 +95,14 @@ class Midtrans
 
             $hostUrl = env('SERVER_HOST_URL');
             if($paymentMethod == 'bank_transfer'){
-                $finish_redirect_url = $hostUrl. '/checkout/success/bank_transfer';
-                $unfinish_redirect_url = $hostUrl. '/checkout-4';
+                $finish_redirect_url = $hostUrl. 'checkout/success/bank_transfer';
+                $unfinish_redirect_url = $hostUrl. 'checkout-4';
             }
             else{
-                $finish_redirect_url = $hostUrl. '/checkout-success/'.$order->id;
-                $unfinish_redirect_url = $hostUrl. '/checkout-failed/'.$order->id;
+                $orderNumber = str_replace('/', '_', $order->order_number);
+
+                $finish_redirect_url = $hostUrl. 'checkout-success/'.$orderNumber;
+                $unfinish_redirect_url = $hostUrl. 'checkout-failed/'.$orderNumber;
             }
 
             $paymentList = [];
@@ -112,9 +114,9 @@ class Midtrans
 //                'enabled_payments' => $paymentList,
                 'finish_redirect_url' => $finish_redirect_url,
                 'unfinish_redirect_url' => $unfinish_redirect_url,
-                'error_redirect_url' => $hostUrl. '/payment/error'
+                'error_redirect_url' => $hostUrl. 'payment/error'
             );
-            
+
             $transaction_details = array(
                 'order_id' => $order->order_number,
                 'gross_amount' => $grandTotal, // no decimal allowed
@@ -136,12 +138,11 @@ class Midtrans
                     "secure" => true
                 ],
             );
-
             return $transaction;
         }
         catch (\Exception $ex){
 //            error_log($ex);
-            dd($ex);
+            Log::error("Midtrans.php > midtransSetRequestData ".$ex);
             Utilities::ExceptionLog('midtransSetRequestData EX = '. $ex);
         }
     }
@@ -201,7 +202,7 @@ class Midtrans
         }
         catch (\Exception $ex){
 //            error_log($ex);
-            dd($ex);
+//            dd($ex);
             Log::error("Midtrans.php > midtransSendRequest ".$ex);
         }
     }
