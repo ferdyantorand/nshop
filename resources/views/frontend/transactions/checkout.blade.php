@@ -251,11 +251,11 @@
                                     var order_id = result2.order_id;
                                     var new_order_id = order_id.replace(new RegExp('/', 'g'), '_');
                                     var url = "{{env('SERVER_HOST_URL')}}" + "checkout-success/" + new_order_id;
-                                    console.log('success');console.log(result2);
+                                    // console.log('success');console.log(result2);
                                     window.location = url;
                                 },
                                 onPending: function(result) { console.log('pending');console.log(result); },
-                                onError: function(result) { console.log('error');console.log(result); },
+                                onError: function(result2) { console.log('error');console.log(result2); },
                                 onClose: function() { console.log('customer closed the popup without finishing the payment'); }
                             });
                         } else {
