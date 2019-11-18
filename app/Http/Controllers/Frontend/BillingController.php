@@ -487,6 +487,14 @@ class BillingController extends Controller
             $carts = Cart::where('user_id', $user->id)->get();
             $totalPrice = $carts->sum('total_price');
 
+            //validasi qty produk
+            foreach ($carts as $cart){
+                $product = Product::find($cart->product_id);
+                if($cart->qty > $product->qty){
+                    return 0;
+                }
+            }
+
             //$tmpDate = Carbon::now()->format("Y-m-d\TH:i:s\.000\Z");
             //dd($tmpDate);
 

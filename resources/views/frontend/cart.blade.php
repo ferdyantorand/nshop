@@ -98,10 +98,19 @@
                         </div>
                     </div>
                 </div><!-- .row end -->
-                
+
                 <div class="row">
-                    <!-- Coupon Side -->
                     <div class="col-xs-12 col-sm-12 col-md-8">
+                        <div class="col-md-12">
+                            @if($errors->count() > 0)
+                                @foreach($errors->all() as $error)
+                                    <span class="form-message">
+                                        <strong> {{ $error }} </strong>
+                                        <br/>
+                                    </span>
+                                @endforeach
+                            @endif
+                        </div>
                     </div>
 
                     <!-- Subtotal Side -->
@@ -234,8 +243,17 @@
                 </div><!-- .row end -->
 
                 <div class="row">
-                    <!-- Coupon Side -->
                     <div class="col-xs-12 col-sm-12 col-md-8">
+                        <div class="col-md-12">
+                            @if($errors->count() > 0)
+                                @foreach($errors->all() as $error)
+                                    <span class="form-message">
+                                        <strong> {{ $error }} </strong>
+                                        <br/>
+                                    </span>
+                                @endforeach
+                            @endif
+                        </div>
                     </div>
 
                     <!-- Subtotal Side -->

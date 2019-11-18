@@ -181,6 +181,10 @@ class CartController extends Controller
                 $voucher = $request->input('voucher');
                 foreach ($items as $item){
                     $cart = Cart::find($item);
+                    $product = Product::find($cart->product_id);
+                    if($qtys[$item] > $product->qty){
+                        return back()->withErrors("One or more product quantity exceeds that product stock");
+                    }
                     $cart->qty = $qtys[$item];
                     $cart->total_price = $cart->price * $qtys[$item];
                     $cart->voucher_code = $voucher;
@@ -204,6 +208,7 @@ class CartController extends Controller
                 $items = $request->input('id');
                 $qtys = $request->input('qty');
                 $voucher = $request->input('voucher');
+//                dd($items);
                 foreach ($items as $item){
                     $cart->update($item, $qtys[$item], $voucher);
                 }
