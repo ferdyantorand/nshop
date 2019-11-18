@@ -188,22 +188,12 @@ class Midtrans
 
                 return $token;
             }
-//            if($request->getStatusCode() == 200){
-//                $collect = json_decode($request->getBody());
-////                dd($request);
-//                if($collect->status_code == 201){
-//                    $redirectUrl = $collect->redirect_url;
-//                }
-//                else{
-//                    $redirectUrl = "";
-//                }
-//                return $redirectUrl;
-//            }
         }
         catch (\Exception $ex){
 //            error_log($ex);
 //            dd($ex);
             Log::error("Midtrans.php > midtransSendRequest ".$ex);
+            return "error";
         }
     }
 }

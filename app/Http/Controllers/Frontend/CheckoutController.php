@@ -15,6 +15,7 @@ use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
@@ -179,46 +180,52 @@ class CheckoutController extends Controller
             // Create ZOHO Invoice
             $zohoResult = Zoho::createInvoice($orderDB->zoho_sales_order_id);
 
-            if($orderDB->is_sent_email_processing == 0){
-                //send email confirmation
-                $productIdArr = [];
-                foreach ($orderProducts as $orderProduct){
-                    array_push($productIdArr, $orderProduct->product_id);
+            try{
+                if($orderDB->is_sent_email_processing == 0){
+                    //send email confirmation
+                    $productIdArr = [];
+                    foreach ($orderProducts as $orderProduct){
+                        array_push($productIdArr, $orderProduct->product_id);
 
-                    //minus item quantity
-                    $product = $orderProduct->product;
-                    $qty = $product->qty;
-                    if($qty > 0){
-                        $product->qty = $qty-1;
-                        $product->save();
-                    }
-                }
-
-                $productImages = ProductImage::whereIn('product_id',$productIdArr)->where('is_main_image', 1)->get();
-                $productImageArr = [];
-                foreach ($productImages as $productImage){
-                    $productImageArr[$productImage->product_id] = $productImage->path;
-                }
-
-                // mengurangi stock voucher
-                if(!empty($order->voucher_code)){
-                    $voucher =  Voucher::where('code', strtoupper($order->voucher_code))->first();
-                    if(!empty($voucher->stock)){
-                        if($voucher->stock > 0){
-                            $currentStock = $voucher->stock;
-                            $voucher->stock = $currentStock - 1;
-                            $voucher->save();
+                        //minus item quantity
+                        $product = $orderProduct->product;
+                        $qty = $product->qty;
+                        if($qty > 0){
+                            $product->qty = $qty-1;
+                            $product->save();
                         }
                     }
+
+                    $productImages = ProductImage::whereIn('product_id',$productIdArr)->where('is_main_image', 1)->get();
+                    $productImageArr = [];
+                    foreach ($productImages as $productImage){
+                        $productImageArr[$productImage->product_id] = $productImage->path;
+                    }
+
+                    // mengurangi stock voucher
+                    if(!empty($order->voucher_code)){
+                        $voucher =  Voucher::where('code', strtoupper($order->voucher_code))->first();
+                        if(!empty($voucher->stock)){
+                            if($voucher->stock > 0){
+                                $currentStock = $voucher->stock;
+                                $voucher->stock = $currentStock - 1;
+                                $voucher->save();
+                            }
+                        }
+                    }
+
+                    $orderConfirmation = new OrderConfirmation($user, $orderDB, $orderProducts, $productImageArr);
+                    Mail::to($user->email)
+                        ->bcc(env('MAIL_SALES'))
+                        ->send($orderConfirmation);
+                    Log::info('Order #'. $orderDB->order_number. ' ('.$orderDB->id.'), Email sent to '.$user->email.' payment '.$orderDB->payment_option.', order status '.$orderDB->order_status->name);
+                    $orderDB->is_sent_email_processing = 1;
+                    $orderDB->save();
                 }
 
-                $orderConfirmation = new OrderConfirmation($user, $orderDB, $orderProducts, $productImageArr);
-                Mail::to($user->email)
-                    ->bcc(env('MAIL_SALES'))
-                    ->send($orderConfirmation);
-                Log::info('Order #'. $orderDB->order_number. ' ('.$orderDB->id.'), Email sent to '.$user->email.' payment '.$orderDB->payment_option.', order status '.$orderDB->order_status->name);
-                $orderDB->is_sent_email_processing = 1;
-                $orderDB->save();
+            }
+            catch(\Exception $ex){
+                Log::error("CheckoutController > checkoutSuccess (send email) Error: ". $ex);
             }
 
             $data=([
@@ -233,6 +240,24 @@ class CheckoutController extends Controller
             error_log($ex);
             Log::error("CheckoutController > checkoutSuccess Error: ". $ex);
         }
+    }
+    public function checkoutFailed($order){
+        $orderDB = Order::find($order);
+        $orderDB->order_status_id = 6;
+        $orderDB->save();
+
+        Log::info('Order #'. $orderDB->order_number. ' ('.$orderDB->id.'), Payment Credit Card failed');
+
+        return Redirect::route('orders');
+    }
+    public function checkoutPaid($order){
+        $orderDB = Order::find($order);
+        $orderDB->order_status_id = 3;
+        $orderDB->save();
+
+        Log::info('Order #'. $orderDB->order_number. ' ('.$orderDB->id.'), Payment Credit Card already paid, automatic change status');
+
+        return Redirect::route('orders');
     }
     public function TransferInformation(Order $order){
         $orderProducts = OrderProduct::where('order_id', $order->id)->get();
@@ -287,8 +312,5 @@ class CheckoutController extends Controller
             'orderProduct' => $orderProducts,
         ]);
         return view('frontend.transactions.transfer_information')->with($data);
-    }
-    public function checkoutFailed(Order $order){
-
     }
 }

@@ -55,6 +55,7 @@ Route::post('/submit-checkout', 'Frontend\CheckoutController@submitCheckout')->n
 Route::get('/checkout-bank-information/{order}', 'Frontend\CheckoutController@TransferInformation')->name('checkout-transfer-information');
 Route::get('/checkout-success/{order}', 'Frontend\CheckoutController@checkoutSuccess')->name('checkout-success');
 Route::get('/checkout-failed/{order}', 'Frontend\CheckoutController@checkoutFailed')->name('checkout-failed');
+Route::get('/checkout-paid/{order}', 'Frontend\CheckoutController@checkoutPaid')->name('checkout-paid');
 
 Route::prefix('payment')->group(function(){
     Route::post('/checkout-notification', 'Frontend\MidtransController@notification')->name('notification.checkout');
