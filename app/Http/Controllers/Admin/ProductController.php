@@ -13,6 +13,7 @@ use App\libs\Utilities;
 use App\libs\Zoho;
 use App\Models\Category;
 use App\Models\CategoryProduct;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductPosition;
@@ -563,6 +564,35 @@ class ProductController extends Controller
             $product = Product::find($request->id);
             $product->status = 2;
             $product->save();
+
+            //checking transaction
+            $transaction = Order::where('product_id', $request->id)->first();
+            if(!empty($transaction)){
+                return Response::json(array('errors' => 'INVALID'));
+            }
+
+            $productPositions = ProductPosition::where('product_id', $request->id)->get();
+            if($productPositions->count() > 0){
+                foreach ($productPositions as $productPosition){
+                    $productPosition->delete();
+                }
+            }
+
+            $productImages = ProductImage::where('product_id', $request->id)->get();
+            if($productPositions->count() > 0){
+                foreach ($productImages as $productImage){
+                    if(!empty($productImage->path)){
+                        if(env('SERVER_HOST_URL') == 'http://localhost:8000/'){
+                            $deletedPath = public_path('storage/products/'. $productImage->path);
+                        }
+                        else{
+                            $deletedPath = '../public_html/storage/products/'. $productImage->path;
+                        }
+                        if(file_exists($deletedPath)) unlink($deletedPath);
+                    }
+                }
+            }
+            $product->delete();
 
             Session::flash('success', 'Success Deleting ');
             return Response::json(array('success' => 'VALID'));
