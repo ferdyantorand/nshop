@@ -101,7 +101,7 @@
                                     <p>
                                         Hello {{$user->first_name}} {{$user->last_name}},<br>
                                         Your payment has been received. We are pleased to inform you that your order has been confirmed and is underway.
-                                        Please allow 2-3 business days before dispatch, while we personalize your order.<br>
+                                        Please allow 5 business days before dispatch, while we personalize your order.<br>
                                         You can check the status of your order by logging into your account.
                                         If you have any questions regarding your order, please contact us at hi@nama-official.com Monday-Friday, 9am-5pm WIB.
                                         {{--Your order is now secured and will be processed on the 10th of June since our workshop is closed during the Lebaran Holiday.<br>--}}
@@ -245,7 +245,7 @@
                             <td bgcolor="#FFFFFF" style="background-color: #ffffff; font-size: 10px; font-family: Verdana, Geneva, sans-serif; color: #3f3f3f;line-height: 1.6;">
                                 <p>
                                     Terms & Conditions<br>
-                                    All of our products are custom made to order, therefore please allow 2-3 business days for production. All sales are final.<br>
+                                    All of our products are custom made to order, therefore please allow 5 business days for production. All sales are final.<br>
                                     <span style="font-weight: bold">>Notes: Availability of your products will only be secured after you confirm your payment.</span>
                                 </p>
                             </td>
