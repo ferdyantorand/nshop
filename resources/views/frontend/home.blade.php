@@ -183,8 +183,7 @@
         .modal-dialog {
             width: 100% !important;
             height: auto;
-            margin-top: 11%;
-            margin-left: 31%;
+            margin-top: 50%;
         }
 
         .modal-header{
@@ -196,8 +195,35 @@
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
-            height: 470px;
-            width: 700px;
+            height: 240px;
+            width: 95%;
+        }
+        @media (min-width: 576px) {
+            .modal-dialog{
+                margin-top: 7%;
+                margin-left: 27%;
+            }
+            .bg_popup{
+                height: 370px;
+                width: 600px;
+            }
+        }
+
+        @media (min-width: 768px) {
+
+        }
+
+
+        @media (min-width: 992px) {
+
+        }
+
+
+        @media (min-width: 1369px) {
+            .modal-dialog {
+                margin-top: 11%;
+                margin-left: 31%;
+            }
         }
     </style>
 @endsection
