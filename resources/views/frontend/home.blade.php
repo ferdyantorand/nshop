@@ -152,11 +152,52 @@
         <iframe src="https://snapwidget.com/embed/682408" class="snapwidget-widget" allowtransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:100%; "></iframe>
         {{--<div style="font:10px/14px 'Roboto','Helvetica Neue',Arial,Helvetica,sans-serif;font-weight:400;width:100%;text-align:right"><a href="https://snapwidget.com" style="color:#777;text-decoration:none;">SnapWidget · Instagram Widget</a></div>--}}
     </div>
+
+    <div class="modal" id="first_modal">
+        <div class="modal-dialog">
+            <div class="modal-content bg_popup">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('styles')
     <style>
-        body {
-            cursor: url( {{asset('/images/Links/Kursor2.png')}} ), auto;
+        body{ height: auto; }
+        * { cursor: url( '{{asset('/images/Links/cursor.cur')}}' ), default; }
+
+        /* pop up css */
+        .modal-open .modal {
+            z-index: 99999999;
+        }
+
+        .modal-dialog {
+            width: 100% !important;
+            height: auto;
+            margin-top: 11%;
+            margin-left: 31%;
+        }
+
+        .modal-header{
+            border-bottom: 0 !important;
+        }
+
+        .bg_popup{
+            background-image: url('{{ asset('images/Links/PopUp_191128.jpg') }}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            height: 470px;
+            width: 700px;
         }
     </style>
 @endsection
@@ -164,6 +205,7 @@
 @section('scripts')
     <script src="{{ asset('js/frontend/jquery.flurry.js')}}"></script>
     <script>
+
         $( document ).ready( function() {
             try {
                 $('body').flurry('destroy');
@@ -171,9 +213,10 @@
             catch(err) {
             }
             finally {
+                $('#first_modal').modal();
                 $('body').flurry({
                     character: '❅❆',
-                    height: $( document ).height() + 700,
+                    height: $( document ).height() + 600,
                     speed: 40400,
                     wind: 300,
                     windVariance: 320,

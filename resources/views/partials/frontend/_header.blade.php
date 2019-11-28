@@ -7,7 +7,8 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 top--contact center color-black">
                         <ul class="list-inline mb-0">
                             <li>
-                                {{--<span>FREE SHIPPING ON All ORDERS OVER XXX</span>--}}
+                                <span style="font-weight: bold">BLACK FRIDAY </span>
+                                <span>15% OFF EVERYTHING</span>
                             </li>
                         </ul>
                     </div><!-- .col-md-6 end -->
@@ -124,7 +125,7 @@
                 <a class="logo" href="{{route('home')}}">
                     {{--<img class="logo-light" src="{{ asset('images/icons/nama-brand-logo.svg') }}" alt="Nama Logo">--}}
                     {{--<img class="logo-dark" src="{{ asset('images/icons/nama-brand-logo.svg') }}" alt="Nama Logo">--}}
-                    <img  src="{{ asset('images/icons/logo.jpg') }}" alt="Nama Logo" style="width: 25%;">
+                    <img  src="{{ asset('images/Links/logo.png') }}" alt="Nama Logo" style="width: 25%;">
                     {{--<h1 style="font-size: 48px;">nama.</h1>--}}
                 </a>
             </div>

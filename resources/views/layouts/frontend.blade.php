@@ -56,6 +56,7 @@
 
         gtag('config', 'UA-142605978-1');
     </script>
+    @yield('styles')
 </head>
 <body>
     {{--<div class="preloader">--}}
@@ -76,7 +77,6 @@
         @include('partials.frontend._footer')
     </div><!-- #wrapper end -->
 
-    @yield('styles')
     <!-- Footer Scripts
     ============================================= -->
     <script src="{{ asset('js/frontend/jquery-2.2.4.min.js')}}"></script>
