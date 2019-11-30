@@ -7,8 +7,8 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 top--contact center color-black">
                         <ul class="list-inline mb-0">
                             <li>
-                                <span style="font-weight: bold">BLACK FRIDAY </span>
-                                <span>15% OFF EVERYTHING</span>
+{{--                                <span style="font-weight: bold">BLACK FRIDAY. 15% OFF EVERYTHING. </span>--}}
+{{--                                <span>use code: BLACKFRIDAY15</span>--}}
                             </li>
                         </ul>
                     </div><!-- .col-md-6 end -->

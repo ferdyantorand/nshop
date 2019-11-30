@@ -318,9 +318,9 @@ class CartController extends Controller
 
                         foreach ($trx->order_products as $details){
                             foreach ($cats as $cat){
-                                if($flag == true){
-                                    break;
-                                }
+//                                if($flag == true){
+//                                    break;
+//                                }
                                 if($cat == $details->product->category_id){
 
                                     $flag = true;
