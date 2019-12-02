@@ -176,15 +176,17 @@
         * { cursor: url( '{{asset('/images/Links/cursor.cur')}}' ), default; }
 
         /* pop up css */
-        .modal-open .modal {
-            z-index: 99999999;
-        }
 
         .modal-dialog {
-            width: 100% !important;
-            height: auto;
-            margin-top: 11%;
-            margin-left: 31%;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) !important;
+            /*height: auto;*/
+            /*margin-top: 50%;*/
+            /*display: flex!important;*/
+            /*align-items: center!important;*/
+            /*flex-grow: 1;*/
         }
 
         .modal-header{
@@ -196,8 +198,33 @@
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
-            height: 470px;
-            width: 700px;
+            height: 240px;
+            width: 95%;
+        }
+        @media (max-width: 578px) {
+            .modal-dialog{
+                width: 350px;
+            }
+        }
+        @media (min-width: 576px) {
+            .bg_popup{
+                height: 370px;
+                width: 600px;
+            }
+        }
+
+        @media (min-width: 768px) {
+
+        }
+
+
+        @media (min-width: 992px) {
+
+        }
+
+
+        @media (min-width: 1369px) {
+
         }
     </style>
 @endsection
