@@ -241,6 +241,7 @@
             }
             finally {
                 // $('#first_modal').modal();
+
                 $('body').flurry({
                     character: '❅❆',
                     height: $( document ).height() + 600,
