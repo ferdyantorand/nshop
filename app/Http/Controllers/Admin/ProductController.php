@@ -137,10 +137,16 @@ class ProductController extends Controller
                 else{
                     $customize = 0;
                 }
-//            dd($colourNew);
+                $productSlug = $slug."--".$colourNew;
+                $productExist = Product::where('slug', 'like', $productSlug.'%')->get();
+                if($productExist->count() > 0){
+                    $productExistCount = $productExist->count() + 1;
+                    $productSlugNew = $productSlug.$productExistCount;
+                }
+//            dd($productExist->count(), $productSlug, $productSlugNew);
                 $newProduct = Product::create([
                     'name' => $request->input('name'),
-                    'slug' => $slug."--".$colourNew,
+                    'slug' => $productSlugNew,
                     'sku' => $request->input('sku'),
                     'category_id' => $request->input('category'),
                     'description' => $request->input('description'),
@@ -160,7 +166,6 @@ class ProductController extends Controller
                     'updated_at'        => $dateTimeNow->toDateTimeString(),
                     'zoho_id'           => 'TEMP'
                 ]);
-
 
                 // save product position
                 $newProductPosition = ProductPosition::create([
