@@ -138,6 +138,7 @@ class ProductController extends Controller
                     $customize = 0;
                 }
                 $productSlug = $slug."--".$colourNew;
+                $productSlugNew = $productSlug;
                 $productExist = Product::where('slug', 'like', $productSlug.'%')->get();
                 if($productExist->count() > 0){
                     $productExistCount = $productExist->count() + 1;
