@@ -526,6 +526,11 @@ class ProductController extends Controller
                 }
             }
 
+            // Create ZOHO Product
+            if($product->zoho_id == "TEMP"){
+                $tmp = Zoho::createProduct($product, $product->category->zoho_item_group_id);
+            }
+
             // Update ZOHO Product
             if($prevQty != 0){
                 $tmp = Zoho::stockAdjustment($product, $prevQty);
