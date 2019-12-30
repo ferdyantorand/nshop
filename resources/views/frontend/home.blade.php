@@ -240,7 +240,8 @@
             catch(err) {
             }
             finally {
-                $('#first_modal').modal();
+                // $('#first_modal').modal();
+
                 $('body').flurry({
                     character: '❅❆',
                     height: $( document ).height() + 600,
