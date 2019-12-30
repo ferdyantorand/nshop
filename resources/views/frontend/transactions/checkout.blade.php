@@ -10,6 +10,8 @@
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="col-md-12">
                             <h1>Checkout</h1>
+                            <span style="font-size:16px; color: red;"> Transactions between 23 December 2019- 5 January 2020 <br> will be processed on 6 January 2020 <br></span>
+                            <br>
                             <hr style="height:1px;border:none;color:#333;background-color:#333;" />
                             <br/>
                         </div>

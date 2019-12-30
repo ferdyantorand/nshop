@@ -12,6 +12,8 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <h1>Your Cart</h1>
+                        <span style="font-size:16px; color: red;"> Transactions between 23 December 2019- 5 January 2020 <br> will be processed on 6 January 2020 <br></span>
+                        <br>
                         <div class="cart-table table-responsive">
                             <table class="table">
                                 <thead>
