@@ -172,8 +172,8 @@
 @endsection
 @section('styles')
     <style>
-        body{ height: auto; }
-        * { cursor: url( '{{asset('/images/Links/cursor.cur')}}' ), default; }
+        {{--body{ height: auto; }--}}
+        {{--* { cursor: url( '{{asset('/images/Links/cursor.cur')}}' ), default; }--}}
 
         /* pop up css */
 
@@ -230,31 +230,32 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/frontend/jquery.flurry.js')}}"></script>
-    <script>
+{{--    for christmas snow efect--}}
+{{--    <script src="{{ asset('js/frontend/jquery.flurry.js')}}"></script>--}}
+{{--    <script>--}}
 
-        $( document ).ready( function() {
-            try {
-                $('body').flurry('destroy');
-            }
-            catch(err) {
-            }
-            finally {
-                // $('#first_modal').modal();
+{{--        $( document ).ready( function() {--}}
+{{--            try {--}}
+{{--                $('body').flurry('destroy');--}}
+{{--            }--}}
+{{--            catch(err) {--}}
+{{--            }--}}
+{{--            finally {--}}
+{{--                // $('#first_modal').modal();--}}
 
-                $('body').flurry({
-                    character: '❅❆',
-                    height: $( document ).height() + 600,
-                    speed: 40400,
-                    wind: 300,
-                    windVariance: 320,
-                    frequency: 40,
-                    large: 20,
-                    small: 2
-                });
-            }
-        });
-    </script>
+{{--                $('body').flurry({--}}
+{{--                    character: '❅❆',--}}
+{{--                    height: $( document ).height() + 600,--}}
+{{--                    speed: 40400,--}}
+{{--                    wind: 300,--}}
+{{--                    windVariance: 320,--}}
+{{--                    frequency: 40,--}}
+{{--                    large: 20,--}}
+{{--                    small: 2--}}
+{{--                });--}}
+{{--            }--}}
+{{--        });--}}
+{{--    </script>--}}
 @endsection
 
 
