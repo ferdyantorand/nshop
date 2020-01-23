@@ -174,6 +174,20 @@
                                     </div>
                                 </div>
 
+                                <div class="col-md-6">
+                                    <div class="form-group form-float form-group-lg">
+                                        <div class="form-line">
+                                            <label class="form-label" for="status">Use Dustbag</label>
+                                            @php($dustbagOption = "No")
+                                            @if($order->dustbag_option == 1)
+                                                @php($dustbagOption = "Yes")
+                                            @endif
+                                            <input id="dustbag_option" type="text" class="form-control"
+                                                   name="dustbag_option" value="{{ $dustbagOption }}" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="col-md-12">
                                     <table class="table table-striped table-bordered dt-responsive">
                                         <thead>

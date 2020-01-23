@@ -71,10 +71,22 @@ class CheckoutController extends Controller
         // Over the counter = cstore
         // Cardless Credit = akulaku
         try{
+//            dd($request);
             $paymentMethod = $request->input('payment_method');
+            $dustbagOption = 0;
             $order = Order::find($request->input('order'));
             $user = $order->user;
             $orderProduct = OrderProduct::where('order_id', $order->id)->get();
+
+            //apply dustbag
+            if($request->input('dustbag_option') == 'on'){
+                $dustbagOption = 1;
+            }
+            else{
+                $dustbagOption = 0;
+            }
+            $order->dustbag_option = $dustbagOption;
+            $order->save();
 
             //Apply Voucher
             if($request->input('voucher') != ''){

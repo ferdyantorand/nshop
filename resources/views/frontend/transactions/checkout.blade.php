@@ -132,6 +132,26 @@
                                             <div class="col-md-6 right bold"><h5>{{env('KURS_IDR')}} <span id="grand_total_span">{{$order->grand_total_string}}</span></h5></div>
                                             <input type="hidden" name="grand_total" id="grand_total" value="{{$order->grand_total}}">
                                         </div>
+                                        <div class="col-md-12 mb-20">
+                                            <div class="row">
+                                                <div class="col-sm-12 hidden-xs text--right">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="dustbag_option">
+                                                        <label class="form-check-label bold" for="dustbag_option">
+                                                            include dustbag
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 hidden-md text--left">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="dustbag_option">
+                                                        <label class="form-check-label bold" for="dustbag_option">
+                                                            include dustbag
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </td>
@@ -224,6 +244,7 @@
             var voucher = $('#voucher_applied').val();
             var voucherAmount = $('#voucher_amount').val();
             var grandTotal = $('#grand_total').val();
+            var dustbagOption = $('#dustbag_option').val();
             var snapToken;
             // Request get token to your server & save result to snapToken variable
             // alert(paymentMethod);
@@ -239,6 +260,7 @@
                         'payment_method': paymentMethod,
                         'voucher' : voucher,
                         'voucher_amount' : voucherAmount,
+                        'dustbag_option' : dustbagOption,
                         'grand_total' : grandTotal
                     }, // no need to stringify
                     success: function (result) {
@@ -278,6 +300,7 @@
                         'payment_method': paymentMethod,
                         'voucher' : voucher,
                         'voucher_amount' : voucherAmount,
+                        'dustbag_option' : dustbagOption,
                         'grand_total' : grandTotal
                     }, // no need to stringify
                     success: function (result) {

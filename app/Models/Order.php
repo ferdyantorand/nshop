@@ -28,6 +28,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property string $track_code
  * @property string $currency_code
  * @property int $order_status_id
+ * @property int $dustbag_option
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property string $order_number
@@ -55,6 +56,7 @@ class Order extends Eloquent
 		'sub_total' => 'float',
 		'tax_amount' => 'float',
 		'grand_total' => 'float',
+		'dustbag_option' => 'float',
 		'is_sent_email_processing' => 'int',
 		'order_status_id' => 'int'
 	];
@@ -76,6 +78,7 @@ class Order extends Eloquent
 		'currency_code',
 		'order_status_id',
         'order_number',
+        'dustbag_option',
         'is_sent_email_processing',
         'zoho_sales_order_id'
 	];
