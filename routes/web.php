@@ -170,6 +170,10 @@ Route::prefix('admin')->group(function(){
     Route::get('/orders/bank-transfer', 'Admin\OrderController@indexBankTransfer')->name('admin.orders.bank_transfer');
     Route::post('/orders/bank-transfer-accept/', 'Admin\OrderController@acceptBankTransfer')->name('admin.orders.bank_transfer_accept');
     Route::get('/orders/print_packing/{id}', 'Admin\OrderController@packingLabel')->name('admin.orders.print_packing');
+
+    //create new transaction
+    Route::get('/orders/create', 'Admin\OrderController@create')->name('admin.orders.create');
+    Route::post('/orders/store', 'Admin\OrderController@store')->name('admin.orders.store');
 });
 
 Route::get('/verifyemail/{token}', 'Auth\RegisterController@verify');
@@ -199,6 +203,7 @@ Route::get('/datatables-order-shipped', 'Admin\OrderController@getIndexShipped')
 Route::get('/select-roles', 'Admin\RoleController@getRoles')->name('select.roles');
 Route::get('/select-categories', 'Admin\CategoryController@getCategories')->name('select.categories');
 Route::get('/select-products', 'Admin\ProductController@getProducts')->name('select.products');
+Route::get('/select-product-positions', 'Admin\ProductController@getProductPositions')->name('select.product-positions');
 
 // Third Party API
 Route::get('/update-currency', 'Admin\CurrencyController@getCurrenciesUpdate')->name('update-currencies');

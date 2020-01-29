@@ -126,6 +126,13 @@
                     </a>
                     <ul class="treeview-menu">
                         <li>
+                            <a href="{{ route('admin.orders.create') }}">
+                                <i class="icon icon-user-circle text-green"></i>Create New Order
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="treeview-menu">
+                        <li>
                             <a href="{{ route('admin.orders.index') }}">
                                 <i class="icon icon-user-circle text-green"></i>List All Order
                             </a>

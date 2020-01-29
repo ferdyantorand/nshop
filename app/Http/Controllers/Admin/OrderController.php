@@ -3,16 +3,23 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\libs\Utilities;
 use App\libs\Zoho;
 use App\Mail\OrderConfirmation;
+use App\Models\City;
 use App\Models\Order;
 use App\Models\OrderBankTransfer;
 use App\Models\OrderProduct;
+use App\Models\OrderWa;
+use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\Province;
 use App\Models\StoreAddress;
 use App\Models\User;
+use App\Models\Voucher;
 use App\Transformer\OrderBankTransferTransformer;
 use App\Transformer\OrderTransformer;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -111,13 +118,162 @@ class OrderController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new transaction from backend.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        $provinces = Province::all();
+        $cities = City::all();
+
+        // Get Rajaongkir API Key
+        $roApiKey = env('RAJAONGKIR_KEY');
+        $userCity = -1;
+        $totalWeight = 1;
+
+        $data = [
+            'provinces'     => $provinces,
+            'cities'        => $cities,
+            'totalWeight'   => $totalWeight,
+            'userCity'      => $userCity,
+            'roApiKey'      => $roApiKey
+        ];
+        return view('admin.order.create')->with($data);
+    }
+
+    /**
+     * store a new transaction from backend.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+//        dd($request);
+        try{
+            $shippingPrice = $request->input('delivery_fee');
+            $courier = $request->input('choose_shipping');
+
+            $today = Carbon::now('Asia/Jakarta')->format('Ymd');
+            $prepend = "INV/". $today;
+
+            $nextNo = Utilities::GetNextOrderNumber($prepend);
+            $orderNumber = Utilities::GenerateOrderNumber($prepend, $nextNo);
+
+            //create order
+            $newOrder = Order::create([
+                'user_id' => 293,
+                'billing_address_id' => 1,
+                'shipping_option' => $courier,
+                'shipping_address_id' => 1,
+                'shipping_charge' => $shippingPrice,
+                'payment_option' => "Transfer Bank",
+                'sub_total' => 0,
+                'grand_total' => 0,
+                'currency_code' => "IDR",
+                'order_status_id' => 3,
+                'order_number' => $orderNumber,
+                'dustbag_option' => 0,
+                'is_sent_email_processing' => 0,
+                'created_at' => Carbon::now('Asia/Jakarta')->toDateTimeString(),
+                'updated_at' => Carbon::now('Asia/Jakarta')->toDateTimeString()
+            ]);
+
+            // Update auto number of Order Number
+            Utilities::UpdateOrderNumber($prepend);
+            $voucherCode = $request->input('voucher');
+            $products = $request->input('product');
+            $quantity = $request->input('quantity');
+            $texts = $request->input('text');
+            $positions = $request->input('position');
+            $colors = $request->input('color');
+            $sizes = $request->input('size');
+
+            //create order product
+            $ct=0;
+            $subTotal = 0;
+            foreach ($products as $product){
+                $productDB = Product::find($product);
+                $totalPrice = $quantity[$ct] * $productDB->price;
+                $description = "Text: ".$texts[$ct]."<br>".
+//                        "Font: ".$request->input('custom-font')."<br>".
+                    "Position: ".$positions[$ct]."<br>".
+                    "Color: ".$colors[$ct]."<br>".
+                    "Size: ".$sizes[$ct]."<br>";
+
+                $newOrderProduct = OrderProduct::create([
+                    'order_id' => $newOrder->id,
+                    'product_id' => $product,
+                    'qty' => $quantity[$ct],
+                    'price' => $productDB->price,
+                    'grand_total' => $totalPrice,
+                    'product_info' => $description,
+                    'created_at' => Carbon::now('Asia/Jakarta')->toDateTimeString(),
+                    'updated_at' => Carbon::now('Asia/Jakarta')->toDateTimeString()
+                ]);
+                $subTotal += $totalPrice;
+                $ct++;
+            }
+            $newOrder->sub_total = $subTotal;
+            $newOrder->grand_total = $subTotal + $shippingPrice;
+            $newOrder->save();
+
+            //edit voucher if using voucher
+            $voucherDB = Voucher::where('code', $voucherCode)->first();
+//            dd($voucherDB);
+            if(!empty($voucherDB)){
+                $voucherAmount = $voucherDB->voucher_amount;
+                if(!empty($voucherAmount)){
+                    $newSubTotal = $subTotal - $voucherAmount;
+                    $newGrandTotal = $newOrder->grand_total - $voucherAmount;
+
+                    $newOrder->voucher_amount = $voucherAmount;
+                    $newOrder->sub_total = $newSubTotal;
+                    $newOrder->grand_total = $newGrandTotal;
+                    $newOrder->save();
+                }
+                $voucherPercentage = $voucherDB->voucher_percentage;
+                if(!empty($voucherPercentage)){
+                    $voucherPercentageAmount = ($totalPrice * $voucherPercentage) / 100;
+                    $newSubTotal = $subTotal - $voucherPercentageAmount;
+                    $newGrandTotal = $newOrder->grand_total - $voucherPercentageAmount;
+
+                    $newOrder->voucher_amount = $voucherPercentageAmount;
+                    $newOrder->sub_total = $newSubTotal;
+                    $newOrder->grand_total = $newGrandTotal;
+                    $newOrder->save();
+                }
+            }
+//dd($newOrder);
+
+            //save other data
+            $splitedCity = explode('-', $request->input('address_city'));
+            $cityId = $splitedCity[1];
+            $newOrderWa = OrderWa::create([
+                'order_id'              => $newOrder->id,
+                'name'                  => $request->input('name'),
+                'email'                 => $request->input('email'),
+                'phone'                 => $request->input('phone'),
+                'address_description'   => $request->input('address_description'),
+                'address_street'        => $request->input('address_street'),
+                'address_province'      => $request->input('address_province'),
+                'address_city'          => $cityId,
+                'address_postal_code'   => $request->input('address_postal_code'),
+                'shipping_date'         => Carbon::parse($request->input('shipping_date'))
+            ]);
+
+            // Create ZOHO Sales Order
+            Zoho::createSalesOrder($newOrder);
+
+            Log::info('Order #'. $newOrder->order_number. ' ('.$newOrder->id.'), Transaction successfully created');
+            return redirect()->route('admin.orders.detail', ['id'=>$newOrder->id]);
+        }
+        catch(\Exception $ex){
+            Log::error("OrderController > store ".$ex);
+            Session::flash('error', 'Something Went Wrong');
+            dd($ex);
+            return redirect()->route('admin.orders.bank_transfer');
+        }
     }
 
     /**
@@ -215,6 +371,13 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::find($id);
+        if($order->user_id == 293){
+            $otherData = OrderWa::where('order_id', $order->id)->first();
+            $province = Province::find($otherData->address_province)->first();
+            $city = City::find($otherData->address_city)->first();
+//            dd($otherData);
+            return view('admin.order.show-wa', compact('order', 'otherData', 'province', 'city'));
+        }
 
         return view('admin.order.show', compact('order'));
     }

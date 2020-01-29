@@ -549,6 +549,7 @@ class ProductController extends Controller
     public function getProducts(Request $request){
         $term = trim($request->q);
         $roles = Product::where('id', '!=', $request->id)
+            ->where('status', 1)
             ->where(function ($q) use ($term) {
                 $q->where('name', 'LIKE', '%' . $term . '%');
             })
@@ -557,7 +558,20 @@ class ProductController extends Controller
         $formatted_tags = [];
 
         foreach ($roles as $role) {
-            $formatted_tags[] = ['id' => $role->id, 'text' => $role->name];
+            $formatted_tags[] = ['id' => $role->id, 'text' => $role->name." ".$role->colour];
+        }
+
+        return \Response::json($formatted_tags);
+    }
+    public function getProductPositions(Request $request){
+        $term = trim($request->q);
+        $id = $request->input('id');
+        $product = Product::find($id);
+
+        $formatted_tags = [];
+
+        foreach ($product->product_positions as $position) {
+            $formatted_tags[] = ['id' => $position->name, 'text' => $position->name];
         }
 
         return \Response::json($formatted_tags);
