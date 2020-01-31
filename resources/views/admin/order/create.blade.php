@@ -50,7 +50,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group form-float form-group-lg">
                                             <div class="form-line">
-                                                <label class="form-label" for="name">Name *</label>
+                                                <label class="form-label" for="name">Buyer Name *</label>
                                                 <input id="name" type="text" class="form-control"
                                                        name="name" value="{{ old('name') }}" required>
                                             </div>
@@ -60,7 +60,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group form-float form-group-lg">
                                             <div class="form-line">
-                                                <label class="form-label" for="email">Email *</label>
+                                                <label class="form-label" for="email">Buyer Email *</label>
                                                 <input id="email" type="text" class="form-control"
                                                        name="email" value="{{ old('email') }}" required>
                                             </div>
@@ -70,7 +70,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group form-float form-group-lg">
                                             <div class="form-line">
-                                                <label class="form-label" for="phone">Phone *</label>
+                                                <label class="form-label" for="phone">Buyer Phone *</label>
                                                 <input id="phone" type="number" class="form-control"
                                                        name="phone" value="{{ old('phone') }}" required>
                                             </div>
@@ -81,8 +81,10 @@
                                         <div class="form-group form-float form-group-lg">
                                             <div class="form-line">
                                                 <label class="form-label" for="address_description">Buyer Address Description *</label>
-                                                <input id="address_description" type="text" class="form-control"
-                                                       name="address_description" value="{{ old('address_description') }}" required>
+
+                                                <textarea class="form-control" id="address_description" name="address_description" rows="3" required>{{old('address_description')}}</textarea>
+{{--                                                <input id="address_description" type="text" class="form-control"--}}
+{{--                                                       name="address_description" value="{{ old('address_description') }}" required>--}}
                                             </div>
                                         </div>
                                     </div>
@@ -90,9 +92,10 @@
                                     <div class="col-md-12">
                                         <div class="form-group form-float form-group-lg">
                                             <div class="form-line">
-                                                <label class="form-label" for="address_description">Buyer Address Street *</label>
-                                                <input id="address_street" type="text" class="form-control"
-                                                       name="address_street" value="{{ old('address_street') }}" required>
+                                                <label class="form-label" for="address_street">Buyer Address Street *</label>
+                                                <textarea class="form-control" id="address_street" name="address_street" rows="3" required>{{old('address_street')}}</textarea>
+{{--                                                <input id="address_street" type="text" class="form-control"--}}
+{{--                                                       name="address_street" value="{{ old('address_street') }}" required>--}}
                                             </div>
                                         </div>
                                     </div>
@@ -147,30 +150,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group form-float form-group-lg">
                                             <div class="form-line">
-                                                <label class="form-label" for="choose_shipping">Choose Shipping *</label>
-                                                <select id="choose_shipping" name="choose_shipping" class="form-control">
-                                                    <option value="jne-REG">JNE - REG</option>
-                                                    <option value="jne-YES">JNE - YES</option>
-                                                    <option value="gojek-grab">GOJEK / GRAB</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <div class="form-group form-float form-group-lg">
-                                            <div class="form-line">
-                                                <label class="form-label" for="delivery-fee">Delivery Fee</label>
-                                                <br>
-                                                <span id="delivery-fee" class="" style="color:black; height: 31.5px; width: 120px; line-height: 0;font-size: 24px"></span>
-                                                <input type="hidden" id="delivery_fee" name="delivery_fee">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group form-float form-group-lg">
-                                            <div class="form-line">
-                                                <label class="form-label" for="address_postal_code">Voucher Code *</label>
+                                                <label class="form-label" for="address_postal_code">Voucher Code</label>
                                                 <input id="voucher" type="text" class="form-control"
                                                        name="voucher" value="{{ old('voucher') }}">
                                             </div>
@@ -181,6 +161,7 @@
                                     <h5>Pilih Produk</h5>
                                     <br>
 
+                                    <input type="hidden" id="weight" value="{{ $totalWeight }}">
                                     <div class="col-md-12">
                                         <div class="table-responsive">
                                             <table class="table table-bordered table-hover" id="tab_logic">
@@ -193,16 +174,16 @@
                                                         Quantity
                                                     </th>
                                                     <th class="text-center" width="30">
-                                                        Text
+                                                        Customization Text
                                                     </th>
                                                     <th class="text-center" width="10">
-                                                        Position
+                                                        Customization Position
                                                     </th>
                                                     <th class="text-center" width="10">
-                                                        Color
+                                                        Customization Color
                                                     </th>
                                                     <th class="text-center" width="10">
-                                                        Size
+                                                        Customization Size
                                                     </th>
                                                 </tr>
                                                 </thead>
@@ -210,12 +191,13 @@
                                                 <tr id='sch0'>
                                                     <td>
                                                         <select id="product0" name="product[]" class='form-control'></select>
+                                                        <input id='weight0' type="hidden" class='form-control weight-product'/>
                                                     </td>
                                                     <td>
-                                                        <input id='quantity0' type="text" class='form-control' name='quantity[]'/>
+                                                        <input id='quantity0' type="text" class='form-control' name='quantity[]' required/>
                                                     </td>
                                                     <td>
-                                                        <input id='text0' type="text" class='form-control' name='text[]' maxlength="5"/>
+                                                        <input id='text0' type="text" class='form-control' name='text[]' maxlength="5" value="-"/>
                                                     </td>
                                                     <td>
 {{--                                                        <select id="position0" name="position[]" class='form-control'></select>--}}
@@ -246,7 +228,32 @@
                                         &nbsp;
                                         <a id='delete_row' class="btn btn-danger" style="color: #fff;">Hapus</a>
                                     </div>
+                                    <br>
 
+                                    <div class="col-md-12">
+                                        <div class="form-group form-float form-group-lg">
+                                            <div class="form-line">
+                                                <label class="form-label" for="choose_shipping">Choose Shipping *</label>
+                                                <select id="choose_shipping" name="choose_shipping" class="form-control">
+                                                    <option value="jne-REG">JNE - REG</option>
+                                                    <option value="jne-YES">JNE - YES</option>
+                                                    <option value="gojek-grab">GOJEK / GRAB</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group form-float form-group-lg">
+                                            <div class="form-line">
+                                                <label class="form-label" for="delivery-fee">Delivery Fee</label>
+                                                <a id="btn-delivery-fee" class="btn btn-primary btn-xs" onclick="refreshButton()">Refresh</a>
+                                                <br><br>
+                                                <span id="delivery-fee" class="" style="color:black; height: 31.5px; width: 120px; line-height: 0;font-size: 24px"></span>
+                                                <input type="hidden" id="delivery_fee" name="delivery_fee">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-11 col-sm-11 col-xs-12" style="margin: 3% 0 3% 0;">
                                     <a href="{{ route('admin.orders.index') }}" class="btn btn-danger">Exit</a>
@@ -276,6 +283,31 @@
 @section('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script type="text/javascript">
+        var userCityId = parseInt("{{ $userCity }}");
+        var weightInt = parseInt('{{ $totalWeight }}');
+        var defaultCourier = 'jne-REG';
+
+        $("#btn-delivery-fee").click(function(){
+        // function refreshButton(){
+            let i = 0;
+            let totalWeight = 0;
+            $('.weight-product').each(function() {
+                let qty = $('#quantity' + i).val();
+                if(qty == null){
+                    qty = 1;
+                }
+                $(this).val();
+                let totalWeightProduct = qty * ($(this).val());
+                totalWeight = totalWeight + totalWeightProduct;
+
+                i++;
+            });
+
+            let courierValue = $('#choose_shipping').val();
+            let courierValueSplitted = courierValue.split('-');
+
+            rajaongkirAjaxGetCost(userCityId, totalWeight, courierValueSplitted);
+        });
 
         $('#product0').select2({
             placeholder: {
@@ -285,7 +317,7 @@
             width: '100%',
             minimumInputLength: 1,
             ajax: {
-                url: '{{ route('select.products') }}',
+                url: '{{ route('select.product-weights') }}',
                 dataType: 'json',
                 data: function (params) {
                     return {
@@ -300,29 +332,13 @@
                 }
             }
         });
-        {{--$('#position0').select2({--}}
-        {{--    placeholder: {--}}
-        {{--        id: '-1',--}}
-        {{--        text: ' - Pilih Position - '--}}
-        {{--    },--}}
-        {{--    width: '100%',--}}
-        {{--    minimumInputLength: 0,--}}
-        {{--    ajax: {--}}
-        {{--        url: '{{ route('select.product-positions') }}',--}}
-        {{--        dataType: 'json',--}}
-        {{--        data: function (params) {--}}
-        {{--            return {--}}
-        {{--                q: $.trim(params.term),--}}
-        {{--                id: $('#position0').val()--}}
-        {{--            };--}}
-        {{--        },--}}
-        {{--        processResults: function (data) {--}}
-        {{--            return {--}}
-        {{--                results: data--}}
-        {{--            };--}}
-        {{--        }--}}
-        {{--    }--}}
-        {{--});--}}
+        $('#product0').on('select2:select', function(){
+            var database = $('#product0').val();
+            let weight = database.split("#");
+
+            let id = "#weight0";
+            $(id).val(weight[1]);
+        });
 
         var i=1;
         $("#add_row").click(function(){
@@ -331,6 +347,7 @@
 
                 "<td>" +
                 "<select id='product" + i + "' name='product[]' class='form-control'></select>" +
+                "<input id='weight" + i + "' type='hidden' class='form-control weight-product'/>" +
                 "</td>" +
 
                 "<td>" +
@@ -338,7 +355,7 @@
                 "</td>" +
 
                 "<td>" +
-                "<input id='text"+ i +"' type='text' class='form-control' name='text[]' maxlength='5' required/>" +
+                "<input id='text"+ i +"' type='text' class='form-control' name='text[]' maxlength='5' value='-'/>" +
                 "</td>" +
 
                 "<td>"+
@@ -374,7 +391,7 @@
                 width: '100%',
                 minimumInputLength: 1,
                 ajax: {
-                    url: '{{ route('select.products') }}',
+                    url: '{{ route('select.product-weights') }}',
                     dataType: 'json',
                     data: function (params) {
                         return {
@@ -385,9 +402,17 @@
                         return {
                             results: data
                         };
-                    }
+                    },
                 }
             });
+            $('#product' + i).on('select2:select', function(){
+                var database = $('#product' + i).val();
+                let weight = database.split("#");
+
+                let id = "#weight" + i;
+                $(id).val(weight[1]);
+            });
+
             {{--$('#position' + i).select2({--}}
             {{--    placeholder: {--}}
             {{--        id: '-1',--}}
@@ -420,18 +445,12 @@
                 i--;
             }
         });
-    </script>
 
-    <script type="text/javascript">
-
-        var userCityId = parseInt("{{ $userCity }}");
-        var weightInt = parseInt('{{ $totalWeight }}');
-        var defaultCourier = 'jne-REG';
 
         @if($userCity !== -1)
-        // Get default delivery fee for jne-REG
-        var defaultCourierSplitted = defaultCourier.split('-');
-        rajaongkirAjaxGetCost(userCityId, weightInt, defaultCourierSplitted);
+            // Get default delivery fee for jne-REG
+            var defaultCourierSplitted = defaultCourier.split('-');
+            rajaongkirAjaxGetCost(userCityId, weightInt, defaultCourierSplitted);
         @endif
 
         // Get delivery fee for every courier selected
@@ -439,6 +458,7 @@
             let value = $(this).val();
             let splittedValue = value.split('-');
 
+            weightInt = $('#weight').val();
             if(userCityId !== -1){
                 rajaongkirAjaxGetCost(userCityId, weightInt, splittedValue);
             }

@@ -149,7 +149,8 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request);
+//        $test = Carbon::parse($request->input('order_date'));
+//        dd($request, $test->toDateTimeString());
         try{
             $shippingPrice = $request->input('delivery_fee');
             $courier = $request->input('choose_shipping');
@@ -175,8 +176,8 @@ class OrderController extends Controller
                 'order_number' => $orderNumber,
                 'dustbag_option' => 0,
                 'is_sent_email_processing' => 0,
-                'created_at' => Carbon::now('Asia/Jakarta')->toDateTimeString(),
-                'updated_at' => Carbon::now('Asia/Jakarta')->toDateTimeString()
+                'created_at' => Carbon::parse($request->input('order_date'))->toDateTimeString(),
+                'updated_at' => Carbon::parse($request->input('order_date'))->toDateTimeString()
             ]);
 
             // Update auto number of Order Number
@@ -193,23 +194,28 @@ class OrderController extends Controller
             $ct=0;
             $subTotal = 0;
             foreach ($products as $product){
-                $productDB = Product::find($product);
+                $productArr = explode('#', $product);
+                $productID = $productArr[0];
+                $productDB = Product::find($productID);
                 $totalPrice = $quantity[$ct] * $productDB->price;
-                $description = "Text: ".$texts[$ct]."<br>".
+                $description = "";
+                if($texts[$ct] != "-"){
+                    $description = "Text: ".$texts[$ct]."<br>".
 //                        "Font: ".$request->input('custom-font')."<br>".
-                    "Position: ".$positions[$ct]."<br>".
-                    "Color: ".$colors[$ct]."<br>".
-                    "Size: ".$sizes[$ct]."<br>";
+                        "Position: ".$positions[$ct]."<br>".
+                        "Color: ".$colors[$ct]."<br>".
+                        "Size: ".$sizes[$ct]."<br>";
+                }
 
                 $newOrderProduct = OrderProduct::create([
                     'order_id' => $newOrder->id,
-                    'product_id' => $product,
+                    'product_id' => $productID,
                     'qty' => $quantity[$ct],
                     'price' => $productDB->price,
                     'grand_total' => $totalPrice,
                     'product_info' => $description,
-                    'created_at' => Carbon::now('Asia/Jakarta')->toDateTimeString(),
-                    'updated_at' => Carbon::now('Asia/Jakarta')->toDateTimeString()
+                    'created_at' => Carbon::parse($request->input('order_date'))->toDateTimeString(),
+                    'updated_at' => Carbon::parse($request->input('order_date'))->toDateTimeString()
                 ]);
                 $subTotal += $totalPrice;
                 $ct++;
@@ -259,7 +265,7 @@ class OrderController extends Controller
                 'address_province'      => $request->input('address_province'),
                 'address_city'          => $cityId,
                 'address_postal_code'   => $request->input('address_postal_code'),
-                'shipping_date'         => Carbon::parse($request->input('shipping_date'))
+                'shipping_date'         => Carbon::parse($request->input('shipping_date'))->toDateTimeString()
             ]);
 
             // Create ZOHO Sales Order

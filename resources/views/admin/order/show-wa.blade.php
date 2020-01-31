@@ -89,7 +89,7 @@
                                         <div class="form-line">
                                             <label class="form-label" for="customer_province">Province</label>
                                             <input id="customer_province" type="text" class="form-control"
-                                                   name="customer_province" value="{{ $province->name }}" readonly>
+                                                   name="customer_province" value="{{ $otherData->address_province }}" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -99,7 +99,7 @@
                                         <div class="form-line">
                                             <label class="form-label" for="customer_city">City</label>
                                             <input id="customer_city" type="text" class="form-control"
-                                                      name="customer_city" value="{{ $city->name }}" readonly>
+                                                      name="customer_city" value="{{ $otherData->address_city }}" readonly>
                                         </div>
                                     </div>
                                 </div>

@@ -563,6 +563,25 @@ class ProductController extends Controller
 
         return \Response::json($formatted_tags);
     }
+
+    public function getProductWithWeights(Request $request){
+        $term = trim($request->q);
+        $roles = Product::where('id', '!=', $request->id)
+            ->where('status', 1)
+            ->where(function ($q) use ($term) {
+                $q->where('name', 'LIKE', '%' . $term . '%');
+            })
+            ->get();
+
+        $formatted_tags = [];
+
+        foreach ($roles as $role) {
+            $weight = (int)$role->weight;
+            $formatted_tags[] = ['id' => $role->id."#".$weight, 'text' => $role->name." ".$role->colour];
+        }
+
+        return \Response::json($formatted_tags);
+    }
     public function getProductPositions(Request $request){
         $term = trim($request->q);
         $id = $request->input('id');

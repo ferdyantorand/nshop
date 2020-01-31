@@ -203,6 +203,7 @@ Route::get('/datatables-order-shipped', 'Admin\OrderController@getIndexShipped')
 Route::get('/select-roles', 'Admin\RoleController@getRoles')->name('select.roles');
 Route::get('/select-categories', 'Admin\CategoryController@getCategories')->name('select.categories');
 Route::get('/select-products', 'Admin\ProductController@getProducts')->name('select.products');
+Route::get('/select-product-weights', 'Admin\ProductController@getProductWithWeights')->name('select.product-weights');
 Route::get('/select-product-positions', 'Admin\ProductController@getProductPositions')->name('select.product-positions');
 
 // Third Party API
