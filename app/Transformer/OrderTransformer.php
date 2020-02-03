@@ -23,7 +23,11 @@ class OrderTransformer extends TransformerAbstract
             $createdDate = Carbon::parse($order->created_at)->format('d M Y');
 
             $url = route('admin.orders.detail', ['item'=>$order->id]);
+            $urlDelete = route('admin.orders.destroy', ['id'=>$order->id]);
             $action = "<a class='btn btn-xs btn-info' href='".$url."' data-toggle='tooltip' data-placement='top'><i class='icon-info'></i></a>";
+            if($order->user_id == 293){
+                $action .= "&nbsp;<a class='btn btn-xs btn-danger' href='".$urlDelete."' data-toggle='tooltip' data-placement='top'><i class='icon-delete'></i></a>";
+            }
 
             $tax = 0;
             if($order->tax_amount != null){

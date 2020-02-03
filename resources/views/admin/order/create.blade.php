@@ -60,9 +60,9 @@
                                     <div class="col-md-12">
                                         <div class="form-group form-float form-group-lg">
                                             <div class="form-line">
-                                                <label class="form-label" for="email">Buyer Email *</label>
+                                                <label class="form-label" for="email">Buyer Email</label>
                                                 <input id="email" type="text" class="form-control"
-                                                       name="email" value="{{ old('email') }}" required>
+                                                       name="email" value="{{ old('email') }}">
                                             </div>
                                         </div>
                                     </div>
@@ -131,9 +131,9 @@
                                     <div class="col-md-12">
                                         <div class="form-group form-float form-group-lg">
                                             <div class="form-line">
-                                                <label class="form-label" for="address_postal_code">Buyer Address Postal Code *</label>
+                                                <label class="form-label" for="address_postal_code">Buyer Address Postal Code</label>
                                                 <input id="address_postal_code" type="number" class="form-control"
-                                                       name="address_postal_code" value="{{ old('address_postal_code') }}" required>
+                                                       name="address_postal_code" value="{{ old('address_postal_code') }}">
                                             </div>
                                         </div>
                                     </div>

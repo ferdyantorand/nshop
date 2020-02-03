@@ -174,6 +174,7 @@ Route::prefix('admin')->group(function(){
     //create new transaction
     Route::get('/orders/create', 'Admin\OrderController@create')->name('admin.orders.create');
     Route::post('/orders/store', 'Admin\OrderController@store')->name('admin.orders.store');
+    Route::get('/orders/destroy/{id}', 'Admin\OrderController@destroy')->name('admin.orders.destroy');
 });
 
 Route::get('/verifyemail/{token}', 'Auth\RegisterController@verify');
