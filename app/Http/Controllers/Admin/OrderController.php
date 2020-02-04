@@ -278,7 +278,7 @@ class OrderController extends Controller
             Log::error("OrderController > store ".$ex);
             Session::flash('error', 'Something Went Wrong');
             dd($ex);
-            return redirect()->route('admin.orders.bank_transfer');
+            return redirect()->back()->withErrors('Internal Server Error')->withInput($request->all());
         }
     }
 
@@ -430,26 +430,32 @@ class OrderController extends Controller
     public function destroy($id)
     {
         //
-        $order = Order::find($id);
+        try{
+            $order = Order::find($id);
 
-        $orderWa = OrderWa::where('order_id', $order->id)->first();
-        if(!empty($orderWa)){
-            $orderWa->delete();
-        }
-
-        $orderProducts = OrderProduct::where('order_id', $order->id)->get();
-        if($orderProducts->count() > 1){
-            foreach($orderProducts as $orderProduct){
-                $product = Product::find($orderProduct->product_id);
-                $productQty = $product->qty + $orderProduct->qty;
-                $product->qty = $productQty;
-                $product->save();
-
-                $orderProduct->delete();
+            $orderWa = OrderWa::where('order_id', $order->id)->first();
+            if(!empty($orderWa)){
+                $orderWa->delete();
             }
-        }
-        $order->delete();
 
+            $orderProducts = OrderProduct::where('order_id', $order->id)->get();
+            if($orderProducts->count() > 1){
+                foreach($orderProducts as $orderProduct){
+                    $product = Product::find($orderProduct->product_id);
+                    $productQty = $product->qty + $orderProduct->qty;
+                    $product->qty = $productQty;
+                    $product->save();
+
+                    $orderProduct->delete();
+                }
+            }
+            $order->delete();
+        }
+        catch(\Exception $ex){
+            dd($ex);
+        }
+
+        Session::flash('success', 'Success Delete Order');
         return redirect()->route('admin.orders.index');
     }
 }
