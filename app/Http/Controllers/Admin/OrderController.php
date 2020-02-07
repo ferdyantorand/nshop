@@ -452,7 +452,9 @@ class OrderController extends Controller
             $order->delete();
         }
         catch(\Exception $ex){
-            dd($ex);
+            Log::error("OrderController > destroy ".$ex);
+            Session::flash('error', 'Internal Server Error');
+            return redirect()->route('admin.orders.index');
         }
 
         Session::flash('success', 'Success Delete Order');

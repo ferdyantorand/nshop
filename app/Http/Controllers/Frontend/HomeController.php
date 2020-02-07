@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\libs\Midtrans;
 use App\libs\Utilities;
+use App\libs\Zoho;
 use App\Mail\OrderConfirmation;
 use App\Models\Cart;
 use App\Models\City;
@@ -165,7 +166,7 @@ class HomeController extends Controller
         return $currency;
     }
     public function TestingPurpose(){
-        $type = 2;
+        $type = 10;
 //        dd($type);
         try{
             switch ($type){
@@ -347,6 +348,20 @@ class HomeController extends Controller
                     else{
                         dd("error");
                     }
+                    break;
+
+                //udpate produk ke zoho
+                case 10:
+                    $products = Product::where('id', '>', 152)
+                        ->where('zoho_id', 'TEMP')
+                        ->get();
+//                    dd($products, $products->count());
+                    $i=152;
+                    foreach ($products as $product){
+                        $tmp = Zoho::createProduct($product, $product->category->zoho_item_group_id);
+                        $i++;
+                    }
+                    return $i;
                     break;
             }
         }
