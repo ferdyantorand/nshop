@@ -185,12 +185,8 @@ class CheckoutController extends Controller
             $orderDB->save();
 
             $user = User::find($orderDB->user_id);
-            Log::info('Order #'. $orderDB->order_number. ' ('.$orderDB->id.'), Payment Credit Card success by '.$user->email.', order status '.$orderDB->order_status->name);
 
             $orderProducts = OrderProduct::where('order_id', $orderDB->id)->get();
-
-            // Create ZOHO Invoice
-            $zohoResult = Zoho::createInvoice($orderDB->zoho_sales_order_id);
 
             try{
                 if($orderDB->is_sent_email_processing == 0){
@@ -239,6 +235,11 @@ class CheckoutController extends Controller
             catch(\Exception $ex){
                 Log::error("CheckoutController > checkoutSuccess (send email) Error: ". $ex);
             }
+
+            Log::info('Order #'. $orderDB->order_number. ' ('.$orderDB->id.'), Payment Credit Card success by '.$user->email.', order status '.$orderDB->order_status->name);
+
+            // Create ZOHO Invoice
+            $zohoResult = Zoho::createInvoice($orderDB->zoho_sales_order_id);
 
             $data=([
                 'order' => $orderDB,

@@ -174,6 +174,8 @@ class Midtrans
                     'Authorization' => 'Basic '.$base64ServerKey
                 ],
             ]);
+            Log::info("base_uri = ". $serverSnapURL.", server Key = ".$serverKey);
+
             $request = $client->request('POST', $serverSnapURL, [
                 'json' => $transactionDataArr
             ]);
