@@ -17,6 +17,7 @@
 
 Auth::routes();
 
+Route::get('/aidanxnama', 'Frontend\HomeController@downlaodCatalog');
 Route::get('/dev/test', 'HomeController@test')->name('dev.test');
 Route::get('/login-register', 'Auth\RegisterController@loginRegister')->name('login.register');
 Route::get('/session', 'Auth\RegisterController@deleteSession');

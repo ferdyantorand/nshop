@@ -432,4 +432,13 @@ class HomeController extends Controller
         $cookieValue = Cookie::get('guest-cart');
         return $cookieValue;
     }
+
+    public function downloadCatalog(){
+        try{
+            return Redirect::to('/storage/aidan and ice _ nama-compressed.pdf');
+        }
+        catch(\Exception $ex){
+            return $ex;
+        }
+    }
 }
