@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Cookie;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 
 class HomeController extends Controller
 {
