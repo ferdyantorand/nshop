@@ -16,7 +16,6 @@ use App\Models\User;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
-use mysql_xdevapi\Collection;
 
 class Zoho
 {
@@ -358,15 +357,15 @@ class Zoho
                 $productData->zoho_id = $collect->item->item_id;
                 $productData->save();
 
-                return $collect;
+                return true;
             }
             else{
-                return "Error!";
+                return false;
             }
         }
         catch(\Exception $ex){
             Log::error("Zoho.php > createProduct ".$ex);
-            return $ex;
+            return false;
         }
     }
 
@@ -389,12 +388,14 @@ class Zoho
             $jsonData = [
                 'group_name'        => $zohoGroupName,
                 'attribute_name1'   => $product->colour,
-                'items'             => collect([
-                    'item_id'           => $product->zoho_id,
-                    'sku'               => $product->sku,
-                    'name'              => $product->name,
-                    'attribute_name1'   => $product->colour
-                ])
+                'items'             => [
+                    collect([
+                        'item_id'           => $product->zoho_id,
+                        'sku'               => $product->sku,
+                        'name'              => $product->name,
+                        'attribute_option_name1'   => $product->colour
+                    ])
+                ]
             ];
 
             $configuration = Configuration::where('configuration_key', 'zoho_token')->first();
@@ -414,7 +415,8 @@ class Zoho
                 return "Error!";
             }
         }
-        catch (\Exception $exception){
+        catch (\Exception $ex){
+            Log::error("Zoho.php > assignItemToGroup ".$ex);
             return false;
         }
     }

@@ -237,6 +237,10 @@ class ProductController extends Controller
 
                 // Create ZOHO Product
                 $tmp = Zoho::createProduct($newProduct, $newProduct->category->zoho_item_group_id);
+
+                if($tmp){
+                    $tmpGrup = Zoho::assignItemToGroup($newProduct, $newProduct->category->zoho_item_group_id, $newProduct->category->name);
+                }
 //            $tmp = Zoho::createProduct($newProduct, "1783013000000069095");
 //            dd($tmp);
 
@@ -529,6 +533,9 @@ class ProductController extends Controller
             // Create ZOHO Product
             if($product->zoho_id == "TEMP"){
                 $tmp = Zoho::createProduct($product, $product->category->zoho_item_group_id);
+                if($tmp){
+                    $tmpGrup = Zoho::assignItemToGroup($product, $product->category->zoho_item_group_id, $product->category->name);
+                }
             }
 
             // Update ZOHO Product

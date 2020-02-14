@@ -360,6 +360,9 @@ class HomeController extends Controller
                     $i=152;
                     foreach ($products as $product){
                         $tmp = Zoho::createProduct($product, $product->category->zoho_item_group_id);
+                        if($tmp){
+                            $test = Zoho::assignItemToGroup($product, $product->category->zoho_item_group_id, $product->category->name);
+                        }
                         $i++;
                     }
                     return $i;
