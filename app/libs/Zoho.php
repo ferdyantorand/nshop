@@ -16,6 +16,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
+use mysql_xdevapi\Collection;
 
 class Zoho
 {
@@ -325,7 +326,7 @@ class Zoho
             ]);
 
             $jsonData = [
-                'group_id'              => $zohoGroupId,
+                //'group_id'              => $zohoGroupId,
                 'unit'                  => 'pcs',
                 'item_type'             => 'inventory',
                 'description'           => $product->description,
@@ -366,6 +367,55 @@ class Zoho
         catch(\Exception $ex){
             Log::error("Zoho.php > createProduct ".$ex);
             return $ex;
+        }
+    }
+
+    /**
+     * Function to assign item to item Group
+     * @param Product $product
+     * @param $zohoGroupId
+     * @param $zohoGroupName
+     * @return bool|mixed|string
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public static function assignItemToGroup(Product $product, $zohoGroupId, $zohoGroupName){
+        try{
+            //another Api to Assign Item to Group
+            //https://inventory.zoho.com/api/v1/items/grouping/{group_id}?organization_id=XXXXX&authtoken=XXXXXXX
+            $client = new Client([
+                'base_uri' => env('ZOHO_BASE_URL')
+            ]);
+
+            $jsonData = [
+                'group_name'        => $zohoGroupName,
+                'attribute_name1'   => $product->colour,
+                'items'             => collect([
+                    'item_id'           => $product->zoho_id,
+                    'sku'               => $product->sku,
+                    'name'              => $product->name,
+                    'attribute_name1'   => $product->colour
+                ])
+            ];
+
+            $configuration = Configuration::where('configuration_key', 'zoho_token')->first();
+
+            $request = $client->request('PUT', env('ZOHO_BASE_URL') . 'items/grouping/' . $zohoGroupId . '?authtoken=' . $configuration->configuration_value . '&organization_id=' . env('ZOHO_ORGANIZATION_ID'), [
+                'form_params' => [
+                    'JSONString' => json_encode($jsonData)
+                ]
+            ]);
+
+            if($request->getStatusCode() == 200 || $request->getStatusCode() == 201){
+                $collect = json_decode($request->getBody());
+
+                return $collect;
+            }
+            else{
+                return "Error!";
+            }
+        }
+        catch (\Exception $exception){
+            return false;
         }
     }
 
