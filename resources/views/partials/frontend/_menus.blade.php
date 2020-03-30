@@ -8,7 +8,7 @@
         <a href="/product-list?category=5-11"><H4 class="header-menu">POUCHES</H4></a>
         <a href="/product-list?category=15-16-23"><H4 class="header-menu">CLEAR CASES</H4></a>
         <a href="/product-list?category=10"><H4 class="header-menu">PHONE CASES</H4></a>
-        <a href="/product-list?category=9-18-19-22-24"><H4 class="header-menu">ACCESSORIES</H4></a>
+        <a href="/product-list?category=9-18-19-22-24-26"><H4 class="header-menu">ACCESSORIES</H4></a>
         <a href="/product-list?category=17"><H4 class="header-menu">BAG ORGANIZERS</H4></a>
     </div><!-- .col-md-8 end -->
 </div><!-- .row end -->
