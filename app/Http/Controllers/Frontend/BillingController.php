@@ -385,6 +385,15 @@ class BillingController extends Controller
             if($selectedCourier[0] == "gojek"){
                 $shippingPrice = 0;
             }
+
+            else if($userAddress->city_id == 54 || $userAddress->city_id == 55 || $userAddress->city_id == 78
+                || $userAddress->city_id == 79 || $userAddress->city_id == 115 || $userAddress->city_id == 151
+                || $userAddress->city_id == 152 || $userAddress->city_id == 153 || $userAddress->city_id == 154
+                || $userAddress->city_id == 155 || $userAddress->city_id == 455 || $userAddress->city_id == 456 ||
+                $userAddress->city_id == 457)
+            {
+                $shippingPrice = 0;
+            }
             else{
 //            dd($totalWeight, $selectedCourier, $userAddress);
                 $data = array();

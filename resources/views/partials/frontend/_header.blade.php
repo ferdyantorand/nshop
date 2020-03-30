@@ -7,8 +7,8 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 top--contact center color-black">
                         <ul class="list-inline mb-0">
                             <li>
-{{--                                <span style="font-weight: bold">BLACK FRIDAY. 15% OFF EVERYTHING. </span>--}}
-{{--                                <span>use code: BLACKFRIDAY15</span>--}}
+                                <span style="font-weight: bold">Get 10% disc off and free shipping* </span>
+                                <span>with min purchase of IDR 500.000  </span>
                             </li>
                         </ul>
                     </div><!-- .col-md-6 end -->
