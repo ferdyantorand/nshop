@@ -143,6 +143,10 @@ class HomeController extends Controller
         else if($type == 'Term-Condition'){
             return view('frontend.others.term-condition');
         }
+        //covid-19
+        else if($type == 'Covid'){
+            return view('frontend.others.covid');
+        }
         //privacy policy
         else{
             return view('frontend.others.privacy-policy');

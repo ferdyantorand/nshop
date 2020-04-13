@@ -70,6 +70,26 @@
 
     </section>
     <a href="#testimonial1" class="down-button"><i class="fa fa-long-arrow-down"></i></a>
+    <!-- Info #5
+        ============================================= -->
+    <section id="cover5" class="section cover-5 mtop-100 pt-0 pb-0">
+        <div class="container-fluid">
+            <div class="row comm-height">
+                <div class="col-xs-12 col-sm-12 col-md-12 bg-pastel center" style="padding:7%">
+                    <h4>COVID-19 UPDATE</h4>
+                    <span class="font-16">
+                        Following the new regulation from the Governor of Jakarta,
+                        we are implementing large-scale social restrictions (PSBB) starting from April 10 to April 24.
+                        We understand these steps are taken to further flatten the curve and curb the spread....
+                    </span><br>
+                    <a href="{{route('others', ['type'=>'Covid'])}}" class="font-16" style="width: 220px;">See More</a>
+                </div>
+            </div>
+            <!-- .row end -->
+        </div>
+        <!-- .container end -->
+    </section>
+    <!-- #Info end -->
 
     <!-- Product #1
     ============================================= -->
@@ -236,23 +256,23 @@
 
 {{--        $( document ).ready( function() {--}}
 {{--            try {--}}
-{{--                $('body').flurry('destroy');--}}
+{{--                // $('body').flurry('destroy');--}}
 {{--            }--}}
 {{--            catch(err) {--}}
 {{--            }--}}
 {{--            finally {--}}
-{{--                // $('#first_modal').modal();--}}
+{{--                $('#second_modal').modal();--}}
 
-{{--                $('body').flurry({--}}
-{{--                    character: '❅❆',--}}
-{{--                    height: $( document ).height() + 600,--}}
-{{--                    speed: 40400,--}}
-{{--                    wind: 300,--}}
-{{--                    windVariance: 320,--}}
-{{--                    frequency: 40,--}}
-{{--                    large: 20,--}}
-{{--                    small: 2--}}
-{{--                });--}}
+{{--                // $('body').flurry({--}}
+{{--                //     character: '❅❆',--}}
+{{--                //     height: $( document ).height() + 600,--}}
+{{--                //     speed: 40400,--}}
+{{--                //     wind: 300,--}}
+{{--                //     windVariance: 320,--}}
+{{--                //     frequency: 40,--}}
+{{--                //     large: 20,--}}
+{{--                //     small: 2--}}
+{{--                // });--}}
 {{--            }--}}
 {{--        });--}}
 {{--    </script>--}}
