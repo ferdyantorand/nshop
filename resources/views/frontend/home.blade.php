@@ -75,13 +75,8 @@
     <section id="cover5" class="section cover-5 mtop-100 pt-0 pb-0">
         <div class="container-fluid">
             <div class="row comm-height">
-                <div class="col-xs-12 col-sm-12 col-md-12 bg-pastel center" style="padding:7%">
+                <div class="col-xs-12 col-sm-12 col-md-12 bg-pastel center" style="padding:5%">
                     <h4>COVID-19 UPDATE</h4>
-                    <span class="font-16">
-                        Following the new regulation from the Governor of Jakarta,
-                        we are implementing large-scale social restrictions (PSBB) starting from April 10 to April 24.
-                        We understand these steps are taken to further flatten the curve and curb the spread....
-                    </span><br>
                     <a href="{{route('others', ['type'=>'Covid'])}}" class="font-16" style="width: 220px;">See More</a>
                 </div>
             </div>
