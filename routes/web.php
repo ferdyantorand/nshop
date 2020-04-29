@@ -17,6 +17,10 @@
 
 Auth::routes();
 
+//Moka Start
+Route::get('/integration/moka/{code}', 'Frontend\MokaController@getCode');
+//Moka Finish
+
 Route::get('/aidanxnama', 'Frontend\HomeController@downloadCatalog');
 Route::get('/dev/test', 'HomeController@test')->name('dev.test');
 Route::get('/login-register', 'Auth\RegisterController@loginRegister')->name('login.register');
