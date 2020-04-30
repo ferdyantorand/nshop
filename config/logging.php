@@ -100,6 +100,21 @@ return [
             'driver' => 'errorlog',
             'level' => 'debug',
         ],
+
+        //Custom Log
+        'moka' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/moka/success/moka.log'),
+            'level' => 'debug',
+            'days' => 31,
+        ],
+
+        'moka_error' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/moka/error/moka.log'),
+            'level' => 'debug',
+            'days' => 31,
+        ],
     ],
 
 ];
