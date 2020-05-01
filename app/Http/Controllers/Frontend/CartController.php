@@ -271,6 +271,9 @@ class CartController extends Controller
             if(empty($voucherCheck)){
                 return Response::json(array('errors' => 'Voucher Not Found!'));
             }
+            if($voucherCheck->status_id == 2){
+                return Response::json(array('errors' => 'Voucher Not Found!'));
+            }
             // checking if free shipping voucher
             if($voucherCheck->is_shipping == 1){
                 $order = Order::find($request->input('order_id'));
@@ -291,6 +294,9 @@ class CartController extends Controller
                 //Check if User already used the Voucher
                 $order = Order::where('user_id', $user->id)->where('voucher_code', $voucher)->first();
                 if($order != null){
+                    if($voucherCheck->repeatable == 0){
+                        return Response::json(array('errors' => 'Voucher Already Used!'));
+                    }
                     return Response::json(array('errors' => 'Voucher Already Used!'));
                 }
 
