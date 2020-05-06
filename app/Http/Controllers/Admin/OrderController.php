@@ -329,7 +329,7 @@ class OrderController extends Controller
 
             // Create Moka Checkout
             $mokaToken = Configuration::where("configuration_key", "moka_token")->first();
-            $mokaResult = Moka::checkOut($orderDB, $mokaToken);
+            $mokaResult = Moka::checkOut($orderDB, $mokaToken->configuration_value);
 
             //send email confirmation
             $user = User::find($orderDB->user_id);

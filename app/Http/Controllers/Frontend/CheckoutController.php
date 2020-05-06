@@ -245,7 +245,7 @@ class CheckoutController extends Controller
 
             // Create Moka Checkout
             $mokaToken = Configuration::where("configuration_key", "moka_token")->first();
-            $mokaResult = Moka::checkOut($orderDB, $mokaToken);
+            $mokaResult = Moka::checkOut($orderDB, $mokaToken->configuration_value);
 
             $data=([
                 'order' => $orderDB,

@@ -9,6 +9,7 @@ use App\libs\Zoho;
 use App\Models\Address;
 use App\Models\Cart;
 use App\Models\City;
+use App\Models\Configuration;
 use App\Models\Country;
 use App\Models\Order;
 use App\Models\OrderProduct;
@@ -498,13 +499,10 @@ class BillingController extends Controller
             $totalPrice = $carts->sum('total_price');
 
             //checking moka stock, and update stock
-            $mokaValidation = true;
-            if(!$mokaValidation){
-                //update stock from MOKA
-//                    $stck = Moka::getItems();
+            $mokaToken = Configuration::where("configuration_key", "moka_token")->first();
+            $mokaStock = Moka::getItems($mokaToken->configuration_value);
+            $productSync = Moka::ItemSynchronize($mokaStock);
 
-                return 0;
-            }
 
             //validasi qty produk
             foreach ($carts as $cart){

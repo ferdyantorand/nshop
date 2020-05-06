@@ -2,7 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\libs\Moka;
+use App\Models\Configuration;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class MokaStock extends Command
 {
@@ -37,6 +40,21 @@ class MokaStock extends Command
      */
     public function handle()
     {
-        //moka stock synchronize
+        try{
+            //moka stock synchronize
+            //checking moka stock, and update stock
+            $mokaToken = Configuration::where("configuration_key", "moka_token")->first();
+            $mokaStock = Moka::getItems($mokaToken->configuration_value);
+            $productSync = Moka::ItemSynchronize($mokaStock);
+            if($productSync == "success"){
+                Log::channel('cronjob')->info("success synchronize");
+            }
+            else{
+                Log::channel('cronjob')->error("error while synchronize in Moka.php, error = ".$productSync);
+            }
+        }
+        catch (\Exception $ex){
+            Log::channel('cronjob')->error($ex);
+        }
     }
 }

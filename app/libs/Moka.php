@@ -3,6 +3,7 @@
 namespace App\libs;
 
 use App\Models\Configuration;
+use App\Models\Product;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
@@ -150,6 +151,25 @@ class Moka{
         catch (\Exception $ex){
             Log::channel('moka_error')->error($ex);
             return 'sorry something went wrong!';
+        }
+    }
+
+    public static function ItemSynchronize($mokaStocks){
+        try{
+            foreach($mokaStocks as $mokaStock){
+                $productDB = Product::where('moka_id', $mokaStock->id)->first();
+                // moka_id using item->id
+                if($productDB != null){
+                    // checking stock from item->item_variants[]->in_stock
+                    $productDB->qty = $mokaStock->item_variants[0]->in_stock;
+                    $productDB->save();
+                }
+            }
+            return "success";
+        }
+        catch (\Exception $ex){
+            Log::channel('moka_error')->error($ex);
+            return $ex;
         }
     }
 }

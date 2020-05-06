@@ -29,8 +29,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('moka_stock:cron')
             ->hourly();
 
-        $schedule->command('moka_transaction:cron')
-            ->hourly();
+//        $schedule->command('moka_transaction:cron')
+//            ->hourly();
     }
 
     /**

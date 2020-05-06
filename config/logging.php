@@ -102,6 +102,12 @@ return [
         ],
 
         //Custom Log
+        'cronjob' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/cronjob/cronjob.log'),
+            'level' => 'debug',
+            'days' => 31,
+        ],
         'moka' => [
             'driver' => 'daily',
             'path' => storage_path('logs/moka/success/moka.log'),
