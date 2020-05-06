@@ -2,6 +2,7 @@
 
 namespace App\libs;
 
+use App\Models\Configuration;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
@@ -29,7 +30,13 @@ class Moka{
                 //Save Token
                 $token = $collect->access_token;
                 $refreshToken = $collect->refresh_token;
+
                 //Save to DB
+                $configuration = Configuration::where('configuration_key', 'moka_token')->first();
+                $configuration->configuration_value = $token;
+                $configuration->configuration_value2 = $token;
+                $configuration->save();
+
                 //Token Active for 180 Days
                 $result = 'Success Getting Token!';
             }

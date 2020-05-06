@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\libs\Moka;
 use App\libs\Utilities;
 use App\libs\Zoho;
 use App\Mail\OrderConfirmation;
 use App\Models\City;
+use App\Models\Configuration;
 use App\Models\Order;
 use App\Models\OrderBankTransfer;
 use App\Models\OrderProduct;
@@ -323,7 +325,11 @@ class OrderController extends Controller
             $orderProducts = OrderProduct::where('order_id', $orderDB->id)->get();
 
             // Create ZOHO Invoice
-            Zoho::createInvoice($orderDB->zoho_sales_order_id);
+//            Zoho::createInvoice($orderDB->zoho_sales_order_id);
+
+            // Create Moka Checkout
+            $mokaToken = Configuration::where("configuration_key", "moka_token")->first();
+            $mokaResult = Moka::checkOut($orderDB, $mokaToken);
 
             //send email confirmation
             $user = User::find($orderDB->user_id);

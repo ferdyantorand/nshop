@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\libs\Midtrans;
+use App\libs\Moka;
 use App\libs\Zoho;
 use App\Mail\NewTransaction;
 use App\Mail\OrderConfirmation;
+use App\Models\Configuration;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\ProductImage;
@@ -239,7 +241,11 @@ class CheckoutController extends Controller
             Log::info('Order #'. $orderDB->order_number. ' ('.$orderDB->id.'), Payment Credit Card success by '.$user->email.', order status '.$orderDB->order_status->name);
 
             // Create ZOHO Invoice
-            $zohoResult = Zoho::createInvoice($orderDB->zoho_sales_order_id);
+//            $zohoResult = Zoho::createInvoice($orderDB->zoho_sales_order_id);
+
+            // Create Moka Checkout
+            $mokaToken = Configuration::where("configuration_key", "moka_token")->first();
+            $mokaResult = Moka::checkOut($orderDB, $mokaToken);
 
             $data=([
                 'order' => $orderDB,

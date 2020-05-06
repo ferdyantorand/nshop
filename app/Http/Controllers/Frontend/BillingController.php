@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\libs\Moka;
 use App\libs\Utilities;
 use App\libs\Zoho;
 use App\Models\Address;
@@ -495,6 +496,15 @@ class BillingController extends Controller
         try{
             $carts = Cart::where('user_id', $user->id)->get();
             $totalPrice = $carts->sum('total_price');
+
+            //checking moka stock, and update stock
+            $mokaValidation = true;
+            if(!$mokaValidation){
+                //update stock from MOKA
+//                    $stck = Moka::getItems();
+
+                return 0;
+            }
 
             //validasi qty produk
             foreach ($carts as $cart){
