@@ -136,7 +136,7 @@
     <section id="cover5" class="section cover-5 mtop-100 pt-0 pb-0">
         <div class="container-fluid">
             <div class="row comm-height" style="height:610px;">
-                <div class="col-xs-12 col-sm-12 col-md-6 pr-0 pl-0">
+                <div class="col-xs-12 col-sm-12 col-md-6 pr-0 pl-0 height-custom">
                     <div class="bg-overlay">
                         <div class="bg-section">
                             <img src="{{asset('/images/Links/home-2-nov.jpg')}}" alt="Background"/>
@@ -144,7 +144,7 @@
                     </div>
                 </div><!-- .col-md-6 end-->
                 <div class="col-xs-12 col-sm-12 col-md-6 col-content bg-pastel center">
-                    <h3 style="font-size: 32px;">Customize For A Tailored & Timeless Accessory</h3>
+                    <h3 class="marg-top-min" style="font-size: 32px;">Customize For A Tailored & Timeless Accessory</h3>
                     <a class="btn btn--secondary btn--bordered" href="{{route('product.list')}}" style="width: 220px;">LET'S GO SHOPPING</a>
                 </div>
             </div>
@@ -229,6 +229,12 @@
         }
 
         @media (min-width: 768px) {
+            .height-custom{
+                height:300px !important;
+            }
+            .marg-top-min{
+                margin-top:-125px;
+            }
 
         }
 
@@ -240,6 +246,12 @@
 
         @media (min-width: 1369px) {
 
+        }
+
+        @media (min-width: 1900px){
+            .marg-top-min{
+                margin-top:-85px;
+            }
         }
     </style>
 @endsection
