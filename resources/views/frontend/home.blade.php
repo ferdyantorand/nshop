@@ -149,7 +149,7 @@
                         </div>
                     </div>
                 </div><!-- .col-md-6 end-->
-                <div class="col-xs-12 col-sm-12 col-md-6 col-content bg-pastel center">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-content bg-pastel center height-custom">
                     <h3 class="marg-top-min" style="font-size: 32px;">Customize For A Tailored & Timeless Accessory</h3>
                     <a class="btn btn--secondary btn--bordered" href="{{route('product.list')}}" style="width: 220px;">LET'S GO SHOPPING</a>
                 </div>
@@ -236,10 +236,10 @@
 
         @media (min-width: 768px) {
             .height-custom{
-                height:300px !important;
+                height:600px !important;
             }
             .marg-top-min{
-                margin-top:-125px;
+                /*margin-top:-125px;*/
             }
             sup{
                 top:-1.0em;
@@ -260,7 +260,7 @@
 
         @media (min-width: 1900px){
             .marg-top-min{
-                margin-top:-85px;
+                margin-top:45px;
             }
         }
     </style>
