@@ -15,13 +15,13 @@
             {{--</div>--}}
             <div class="pos-vertical-center">
                 <div class="col-xs-12 col-sm-12 col-md-6">
-                    <div class="slide--headline center">
-                        all items <br> <span style="font-size:60px!important;">20% OFF</span>
+                    <div class="slide--headline center"><span style="text-transform: lowercase !important;">
+                            all items</span> <br> <span style="font-size:60px!important;">20%<sup>OFF</sup></span>
                         <p class="font-16" style="margin-top:10px;margin-bottom:8px;">
-                            With code<br>
+                            With code
                         </p>
                         <p class="font-16" style="margin-top:7px;">
-                            <span style="font-weight: bold;">#backoffice</span>
+                            <span style="font-weight: bold;text-transform: lowercase !important;">#backtooffice</span>
                         </p>
                         <a class="btn btn--secondary btn--bordered" href="{{route('product.list')}}" style="width: 220px;">SHOP COLLECTION</a>
                     </div>
@@ -240,6 +240,10 @@
             }
             .marg-top-min{
                 margin-top:-125px;
+            }
+            sup{
+                top:-1.0em;
+                font-size:40%;
             }
 
         }
