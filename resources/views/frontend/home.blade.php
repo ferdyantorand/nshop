@@ -20,7 +20,7 @@
                         <a class="btn btn--secondary btn--bordered" href="{{route('product.list')}}" style="width: 220px;">SHOP COLLECTION</a>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-6 slider-home" style="background-image: url('{{asset('images/Links/home-1-jan.jpg')}}')">
+                <div class="col-xs-12 col-sm-12 col-md-6 slider-home" style="background-image: url('{{asset('images/Links/home-1-jun-2020.jpg')}}')">
                     {{--<div class="bg-section">--}}
                     {{--<img src="{{ asset('images/sliders/slide-bg/banner-1.jpg') }}" alt="Background"/>--}}
                     {{--</div>--}}
