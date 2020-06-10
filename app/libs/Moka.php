@@ -53,6 +53,63 @@ class Moka{
     }
 
     /**
+     * Function to get Business ID
+     * @param $accessToken
+     * @return mixed|string
+     */
+    public static function getBusinessData($accessToken){
+        try{
+            $client = new Client([
+                'Authorization' => 'Bearer ' . $accessToken
+            ]);
+
+            $request = $client->get(env('MOKA_BASE_URL').'/v1/businesses');
+
+            if($request->getStatusCode() == 200) {
+                $collect = json_decode($request->getBody());
+                Log::channel('moka')->info($collect);
+                return $collect;
+            }
+            else{
+                return 'Failed getting item data!';
+            }
+        }
+        catch (\Exception $ex){
+            Log::channel('moka_error')->error($ex);
+            return 'sorry something went wrong!';
+        }
+    }
+
+    /**
+     * Function to get Outlet Id
+     * @param $accessToken
+     * @param $businessId
+     * @return mixed|string
+     */
+    public static function getOutlets($accessToken, $businessId){
+        try{
+            $client = new Client([
+                'Authorization' => 'Bearer ' . $accessToken
+            ]);
+
+            $request = $client->get(env('MOKA_BASE_URL').'/v1/businesses/'.$businessId.'/outlets');
+
+            if($request->getStatusCode() == 200) {
+                $collect = json_decode($request->getBody());
+                Log::channel('moka')->info($collect);
+                return $collect;
+            }
+            else{
+                return 'Failed getting item data!';
+            }
+        }
+        catch (\Exception $ex){
+            Log::channel('moka_error')->error($ex);
+            return 'sorry something went wrong!';
+        }
+    }
+
+    /**
      * Function to checkout Transaction.
      * @param $transaction
      * @param $accessToken
