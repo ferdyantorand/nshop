@@ -16,7 +16,13 @@
             <div class="pos-vertical-center">
                 <div class="col-xs-12 col-sm-12 col-md-6">
                     <div class="slide--headline center">
-                        Bespoke & <br> Personalized <br> Leather Goods<br><br>
+                        all items <br> <span style="font-size:60px!important;">20% OFF</span>
+                        <p class="font-16" style="margin-top:10px;margin-bottom:8px;">
+                            With code<br>
+                        </p>
+                        <p class="font-16" style="margin-top:7px;">
+                            <span style="font-weight: bold;">#backoffice</span>
+                        </p>
                         <a class="btn btn--secondary btn--bordered" href="{{route('product.list')}}" style="width: 220px;">SHOP COLLECTION</a>
                     </div>
                 </div>
