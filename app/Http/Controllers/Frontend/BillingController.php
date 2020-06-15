@@ -150,6 +150,7 @@ class BillingController extends Controller
         // Create Transaction
         // Check Delivery Fee from Rajaongkir or DHL
         // Clear Session
+
         try{
             $user = null;
             $userAddress = null;
@@ -388,14 +389,15 @@ class BillingController extends Controller
                 $shippingPrice = 0;
             }
 
-            else if($userAddress->city_id == 54 || $userAddress->city_id == 55 || $userAddress->city_id == 78
-                || $userAddress->city_id == 79 || $userAddress->city_id == 115 || $userAddress->city_id == 151
-                || $userAddress->city_id == 152 || $userAddress->city_id == 153 || $userAddress->city_id == 154
-                || $userAddress->city_id == 155 || $userAddress->city_id == 455 || $userAddress->city_id == 456 ||
-                $userAddress->city_id == 457)
-            {
-                $shippingPrice = 0;
-            }
+//promo free ongkir for jabodetabek
+//            else if($userAddress->city_id == 54 || $userAddress->city_id == 55 || $userAddress->city_id == 78
+//                || $userAddress->city_id == 79 || $userAddress->city_id == 115 || $userAddress->city_id == 151
+//                || $userAddress->city_id == 152 || $userAddress->city_id == 153 || $userAddress->city_id == 154
+//                || $userAddress->city_id == 155 || $userAddress->city_id == 455 || $userAddress->city_id == 456 ||
+//                $userAddress->city_id == 457)
+//            {
+//                $shippingPrice = 0;
+//            }
             else{
 //            dd($totalWeight, $selectedCourier, $userAddress);
                 $data = array();
@@ -499,9 +501,9 @@ class BillingController extends Controller
             $totalPrice = $carts->sum('total_price');
 
             //checking moka stock, and update stock
-            $mokaToken = Configuration::where("configuration_key", "moka_token")->first();
-            $mokaStock = Moka::getItems($mokaToken->configuration_value);
-            $productSync = Moka::ItemSynchronize($mokaStock);
+//            $mokaToken = Configuration::where("configuration_key", "moka_token")->first();
+//            $mokaStock = Moka::getItems($mokaToken->configuration_value);
+//            $productSync = Moka::ItemSynchronize($mokaStock);
 
 
             //validasi qty produk

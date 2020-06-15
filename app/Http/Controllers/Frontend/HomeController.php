@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\libs\Midtrans;
+use App\libs\Moka;
 use App\libs\Utilities;
 use App\libs\Zoho;
 use App\Mail\OrderConfirmation;
 use App\Models\Cart;
 use App\Models\City;
+use App\Models\Configuration;
 use App\Models\ContactMessage;
 use App\Models\Order;
 use App\Models\OrderProduct;
@@ -171,7 +173,7 @@ class HomeController extends Controller
         return $currency;
     }
     public function TestingPurpose(){
-        $type = 10;
+        $type = 11;
 //        dd($type);
         try{
             switch ($type){
@@ -370,6 +372,13 @@ class HomeController extends Controller
                         $i++;
                     }
                     return $i;
+                    break;
+
+                case 11:
+                    $refreshToken = Moka::requestToken();
+                    $mokaToken = Configuration::where("configuration_key", "moka_token")->first();
+                    $mokaResult = Moka::getItems($mokaToken->configuration_value);
+                    return $mokaResult;
                     break;
             }
         }

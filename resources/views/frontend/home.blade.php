@@ -15,14 +15,18 @@
             {{--</div>--}}
             <div class="pos-vertical-center">
                 <div class="col-xs-12 col-sm-12 col-md-6">
-                    <div class="slide--headline center"><span style="text-transform: lowercase !important;">
-                            all items</span> <br> <span style="font-size:60px!important;">20% OFF</span>
-                        <p class="font-16" style="margin-top:20px;margin-bottom:-2px;">
-                            With Code
-                        </p>
-                        <p class="font-16">
-                            <span style="font-weight: bold;text-transform: lowercase !important;">#Backtooffice</span>
-                        </p>
+{{--                    <div class="slide--headline center"><span style="text-transform: lowercase !important;">--}}
+{{--                            all items</span> <br> <span style="font-size:60px!important;">20% OFF</span>--}}
+{{--                        <p class="font-16" style="margin-top:20px;margin-bottom:-2px;">--}}
+{{--                            With Code--}}
+{{--                        </p>--}}
+{{--                        <p class="font-16">--}}
+{{--                            <span style="font-weight: bold;text-transform: lowercase !important;">#Backtooffice</span>--}}
+{{--                        </p>--}}
+{{--                        <a class="btn btn--secondary btn--bordered" href="{{route('product.list')}}" style="width: 220px;">SHOP COLLECTION</a>--}}
+{{--                    </div>--}}
+                    <div class="slide--headline center">
+                            Bespoke & <br> Personalized <br> Leather Goods<br><br>
                         <a class="btn btn--secondary btn--bordered" href="{{route('product.list')}}" style="width: 220px;">SHOP COLLECTION</a>
                     </div>
                 </div>

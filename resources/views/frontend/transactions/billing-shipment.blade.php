@@ -336,7 +336,7 @@
                                 BACK TO CART
                             </button>
                         </a>
-                        <button type="submit" class="btn btn--secondary btn--bordered submitBtn" style="font-size: 11px; height: 31.5px; width: 120px;line-height: 0px; border: 1px solid #282828;">CONTINUE</button>
+                        <button type="submit" class="btn btn--secondary btn--bordered submitBtn" style="font-size: 11px; height: 31.5px; width: 120px;line-height: 0px; border: 1px solid #282828;" disabled>CONTINUE</button>
                     </div>
                 </div>
             </div>
@@ -354,6 +354,7 @@
        }
        .padding-bottom-10{
            padding-bottom: 10px !important;
+       }
         .bg-white{
             padding-bottom:0;
         }
@@ -412,15 +413,16 @@
             // alert(tmpCourier);
             if(tmpCourier[0] === "gojek"){
                 $('#delivery-fee').html("Rp 0");
+                $(".submitBtn").attr("disabled", false);
             }
 
-            else if(tmpCityId === 54 || tmpCityId === 55 || tmpCityId === 78 || tmpCityId === 79 ||
-                    tmpCityId === 115 || tmpCityId === 151 || tmpCityId === 152 || tmpCityId === 153 ||
-                    tmpCityId === 154 || tmpCityId === 155 || tmpCityId === 455 || tmpCityId === 456 ||
-                    tmpCityId === 457)
-            {
-                $('#delivery-fee').html("Rp 0");
-            }
+            // else if(tmpCityId === 54 || tmpCityId === 55 || tmpCityId === 78 || tmpCityId === 79 ||
+            //         tmpCityId === 115 || tmpCityId === 151 || tmpCityId === 152 || tmpCityId === 153 ||
+            //         tmpCityId === 154 || tmpCityId === 155 || tmpCityId === 455 || tmpCityId === 456 ||
+            //         tmpCityId === 457)
+            // {
+            //     $('#delivery-fee').html("Rp 0");
+            // }
             else{
                 $.ajax({
                     url: '{{ route('ajax.rajaongkir.cost') }}',
@@ -435,9 +437,11 @@
                         if(data.code === 200){
                             let feeStr = rupiahFormat(data.fee);
                             $('#delivery-fee').html("Rp " + feeStr);
+                            $(".submitBtn").attr("disabled", false);
                         }
                         else{
                             $('#delivery-fee').html("Shipping Service Not Available");
+                            $(".submitBtn").attr("disabled", true);
                         }
                     },
                     error: function(response){

@@ -328,8 +328,8 @@ class OrderController extends Controller
 //            Zoho::createInvoice($orderDB->zoho_sales_order_id);
 
             // Create Moka Checkout
-            $mokaToken = Configuration::where("configuration_key", "moka_token")->first();
-            $mokaResult = Moka::checkOut($orderDB, $mokaToken->configuration_value);
+//            $mokaToken = Configuration::where("configuration_key", "moka_token")->first();
+//            $mokaResult = Moka::checkOut($orderDB, $mokaToken->configuration_value);
 
             //send email confirmation
             $user = User::find($orderDB->user_id);

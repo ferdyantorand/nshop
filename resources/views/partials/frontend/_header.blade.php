@@ -9,8 +9,8 @@
                             <li>
 {{--                                <span style="font-weight: bold">Use code: rayasale </span>--}}
 {{--                                <span>and get 20% for every purchases </span>--}}
-                                <span style="font-weight: bold">use code: #backtooffice </span>
-                                <span>and get 20% disc off for all products  </span>
+{{--                                <span style="font-weight: bold">use code: #backtooffice </span>--}}
+{{--                                <span>and get 20% disc off for all products  </span>--}}
                             </li>
                         </ul>
                     </div><!-- .col-md-6 end -->
