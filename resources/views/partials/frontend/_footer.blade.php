@@ -51,7 +51,7 @@
                         </div>
                         <div class="clearfix"></div>
                         <p>
-                            COPYRIGHT 2019 NAMA-OFFICIAL <br>
+                            COPYRIGHT 2020 NAMA-OFFICIAL <br>
                             SITE DESIGNED BY <span style="font-weight: bold;">MADE SOMEWHERE</span>
                         </p>
                     </div>

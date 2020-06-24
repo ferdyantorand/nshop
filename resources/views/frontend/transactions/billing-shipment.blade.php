@@ -416,6 +416,7 @@
                 $(".submitBtn").attr("disabled", false);
             }
 
+            //promo free ongkir for jabodetabek
             // else if(tmpCityId === 54 || tmpCityId === 55 || tmpCityId === 78 || tmpCityId === 79 ||
             //         tmpCityId === 115 || tmpCityId === 151 || tmpCityId === 152 || tmpCityId === 153 ||
             //         tmpCityId === 154 || tmpCityId === 155 || tmpCityId === 455 || tmpCityId === 456 ||
@@ -440,7 +441,7 @@
                             $(".submitBtn").attr("disabled", false);
                         }
                         else{
-                            $('#delivery-fee').html("Shipping Service Not Available");
+                            $('#delivery-fee').html("Shipping service is currently unavailable, please try again in a few minutes");
                             $(".submitBtn").attr("disabled", true);
                         }
                     },

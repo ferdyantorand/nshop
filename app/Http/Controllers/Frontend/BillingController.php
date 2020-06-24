@@ -404,7 +404,8 @@ class BillingController extends Controller
                 $data = $this->getRajaongkirData($totalWeight, $selectedCourier, $userAddress);
 //            dd($data);
                 if(empty($data)){
-                    return redirect()->back()->withErrors("Shipping Service Not Available")->withInput($request->all());
+                    return redirect()->back()->withErrors("Shipping service is currently unavailable, please try again in a few minutes")
+                        ->withInput($request->all());
                 }
 
                 $results = array();
