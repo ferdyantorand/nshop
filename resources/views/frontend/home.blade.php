@@ -30,7 +30,7 @@
                         <a class="btn btn--secondary btn--bordered" href="{{route('product.list')}}" style="width: 220px;text-transform: lowercase !important;">shop collection</a>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-6 slider-home" style="background-image: url('{{asset('images/Links/nama-home-16-jun-2020-1-rev-conv.png')}}')">
+                <div class="col-xs-12 col-sm-12 col-md-6 slider-home slider-home-banner" style="background-image: url('{{asset('images/Links/nama-home-16-jun-2020-1-rev-conv.png')}}'); margin-top: -100px;">
                     {{--<div class="bg-section">--}}
                     {{--<img src="{{ asset('images/sliders/slide-bg/banner-1.jpg') }}" alt="Background"/>--}}
                     {{--</div>--}}
