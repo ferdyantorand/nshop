@@ -235,6 +235,11 @@
                                                                 <img src="{{asset('images/icons/Gold.PNG')}}" style="width: 35px; height: 35px;"> GOLD
                                                             </a>
                                                         </li>
+                                                        <li style="height: 40px;width: 40px;cursor:pointer;">
+                                                            <a onclick="ChangeCustom('Rose Gold-CF9FA6', 2)">
+                                                                <img src="{{asset('images/icons/Gold.PNG')}}" style="width: 35px; height: 35px;"> ROSEGOLD
+                                                            </a>
+                                                        </li>
                                                         {{--<li style="height: 40px;width: 40px;cursor:pointer;">--}}
                                                             {{--<a onclick="ChangeCustom('Blind-ffffff', 2)">--}}
                                                                 {{--<img src="{{asset('images/icons/Blind.PNG')}}" style="width: 35px; height: 35px;"> BLIND--}}
