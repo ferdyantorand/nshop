@@ -236,8 +236,8 @@
                                                             </a>
                                                         </li>
                                                         <li style="height: 40px;width: 40px;cursor:pointer;">
-                                                            <a onclick="ChangeCustom('Rose Gold-CF9FA6', 2)">
-                                                                <img src="{{asset('images/icons/Gold.PNG')}}" style="width: 35px; height: 35px;"> ROSEGOLD
+                                                            <a onclick="ChangeCustom('Rosegold-B76E8B', 2)">
+                                                                <img src="{{asset('images/icons/RoseGold.PNG')}}" style="width: 35px; height: 35px;"> ROSEGOLD
                                                             </a>
                                                         </li>
                                                         {{--<li style="height: 40px;width: 40px;cursor:pointer;">--}}
