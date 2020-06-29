@@ -82,18 +82,18 @@
     <a href="#testimonial1" class="down-button"><i class="fa fa-long-arrow-down"></i></a>
     <!-- Info #5
         ============================================= -->
-    <section id="cover5" class="section cover-5 mtop-100 pt-0 pb-0">
-        <div class="container-fluid">
-            <div class="row comm-height">
-                <div class="col-xs-12 col-sm-12 col-md-12 bg-pastel center" style="padding:5%">
-                    <h4>COVID-19 UPDATE</h4>
-                    <a href="{{route('others', ['type'=>'Covid'])}}" class="font-16" style="width: 220px;">See More</a>
-                </div>
-            </div>
-            <!-- .row end -->
-        </div>
-        <!-- .container end -->
-    </section>
+{{--    <section id="cover5" class="section cover-5 mtop-100 pt-0 pb-0">--}}
+{{--        <div class="container-fluid">--}}
+{{--            <div class="row comm-height">--}}
+{{--                <div class="col-xs-12 col-sm-12 col-md-12 bg-pastel center" style="padding:5%">--}}
+{{--                    <h4>COVID-19 UPDATE</h4>--}}
+{{--                    <a href="{{route('others', ['type'=>'Covid'])}}" class="font-16" style="width: 220px;">See More</a>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <!-- .row end -->--}}
+{{--        </div>--}}
+{{--        <!-- .container end -->--}}
+{{--    </section>--}}
     <!-- #Info end -->
 
     <!-- Product #1
