@@ -81,7 +81,7 @@ class ProductController extends Controller
             $slug = $productArr[0];
         }
 
-        $productDB = Product::where('slug', $product)->first();
+        $productDB = Product::where('slug', $product)->where('status', 1)->first();
         $otherProductColour = Product::where('slug','like', '%'.$slug.'--%')
             ->where('status', 1)->get();
 
@@ -92,7 +92,7 @@ class ProductController extends Controller
             'thumbnailColour'      => $productDB->colour,
             'otherProductColour'      => $otherProductColour
         ];
-//        dd($data);
+//        dd($productDB, $product, $productDB->product_images, $productDB->product_positions, $productDB->colour);
         return view('frontend.products.show')->with($data);
     }
 
