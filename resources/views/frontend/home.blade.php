@@ -30,7 +30,8 @@
                         <a class="btn btn--secondary btn--bordered" href="{{route('product.list')}}" style="width: 220px;text-transform: lowercase !important;">shop collection</a>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-6 slider-home slider-home-banner" style="background-image: url('{{asset('images/Links/nama-home-16-jun-2020-1-rev-conv.png')}}'); margin-top: -100px;">
+                <div class="col-xs-12 col-sm-12 col-md-6 slider-home slider-home-banner"
+                     style="background-image: url('{{asset('images/Links/nama-home-16-jun-2020-1-rev-conv.jpg')}}'); margin-top: -100px;">
                     {{--<div class="bg-section">--}}
                     {{--<img src="{{ asset('images/sliders/slide-bg/banner-1.jpg') }}" alt="Background"/>--}}
                     {{--</div>--}}
@@ -116,7 +117,7 @@
                             @php($productImage = $product->product_images->where('is_main_image', 1)->first())
                             <div class="testimonial-panel product-item" style="padding:0 !important;">
                                 <div class="product--img">
-                                    <img class="product-img-home" src="{{ asset('storage/products/'.$productImage->path) }}" alt="Product" style="max-height: 300px; width: 100%;"/>
+                                    <img class="product-img-home" src="{{ asset('storage/products/'.$productImage->path) }}" loading="lazy" alt="Product" style="max-height: 300px; width: 100%;"/>
                                     <div class="product--hover">
                                         <div class="product--action">
                                             <a class="btn btn--secondary btn--bordered" href="{{$link}}">VIEW</a>
@@ -149,7 +150,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-6 pr-0 pl-0 height-custom">
                     <div class="bg-overlay">
                         <div class="bg-section">
-                            <img src="{{asset('/images/Links/home-2-nov.jpg')}}" alt="Background"/>
+                            <img src="{{asset('/images/Links/home-2-nov.jpg')}}" loading="lazy" alt="Background"/>
                         </div>
                     </div>
                 </div><!-- .col-md-6 end-->

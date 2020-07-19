@@ -15,7 +15,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-6 pr-0 pl-0">
                     <div class="bg-overlay">
                         <div class="bg-section">
-                            <img src="{{asset('/images/Links/AHA12.jpg')}}" alt="Background"/>
+                            <img src="{{asset('/images/Links/AHA12.jpg')}}" alt="Background" loading="lazy"/>
                         </div>
                     </div>
                 </div><!-- .col-md-6 end-->
@@ -74,7 +74,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-6 pr-0 pl-0">
                     <div class="bg-overlay">
                         <div class="bg-section">
-                            <img src="{{asset('/images/Links/home-3.jpg')}}" alt="Background"/>
+                            <img src="{{asset('/images/Links/home-3.jpg')}}" alt="Background" loading="lazy"/>
                         </div>
                     </div>
                 </div><!-- .col-md-6 end-->
@@ -129,7 +129,7 @@
                             @php($productImage = $product->product_images->where('is_main_image', 1)->first())
                             <div class="testimonial-panel product-item">
                                 <div class="product--img">
-                                    <img src="{{ asset('storage/products/'.$productImage->path) }}" alt="Product" style="max-height: 300px; width: 100%"/>
+                                    <img src="{{ asset('storage/products/'.$productImage->path) }}" alt="Product" loading="lazy" style="max-height: 300px; width: 100%"/>
                                 </div><!-- .product-img end -->
                             </div>
                         @endforeach
