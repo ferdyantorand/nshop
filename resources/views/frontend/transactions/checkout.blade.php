@@ -278,9 +278,15 @@
                                     // console.log('success');console.log(result2);
                                     window.location = url;
                                 },
-                                onPending: function(result) { console.log('pending');console.log(result); },
-                                onError: function(result2) { console.log('error');console.log(result2); },
-                                onClose: function() { console.log('customer closed the popup without finishing the payment'); }
+                                onPending: function(result) {
+                                    console.log('pending');console.log(result);
+                                },
+                                onError: function(result2) {
+                                    console.log('error');console.log(result2);
+                                },
+                                onClose: function() {
+                                    $('#pay-button').attr("disabled", false);
+                                }
                             });
                         } else {
                             snap.hide();

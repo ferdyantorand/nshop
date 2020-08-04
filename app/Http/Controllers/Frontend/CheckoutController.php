@@ -263,10 +263,12 @@ class CheckoutController extends Controller
     public function checkoutFailed($order){
         $orderDB = Order::find($order);
         if($orderDB->payment_option == "Credit Card"){
-            $orderDB->order_status_id = 6;
-            $orderDB->save();
+            if($orderDB->order_status_id != 3){
+                $orderDB->order_status_id = 6;
+                $orderDB->save();
 
-            Log::info('Order #'. $orderDB->order_number. ' ('.$orderDB->id.'), Payment Credit Card failed');
+                Log::info('Order #'. $orderDB->order_number. ' ('.$orderDB->id.'), Payment Credit Card failed');
+            }
         }
 
         return Redirect::route('orders');
