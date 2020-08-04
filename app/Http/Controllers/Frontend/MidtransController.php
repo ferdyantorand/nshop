@@ -36,7 +36,8 @@ class MidtransController extends Controller
                     $orderDB->save();
 
                     $user = User::find($orderDB->user_id);
-                    Log::info('Order #'. $orderDB->order_number. ' ('.$orderDB->id.'), Payment Credit Card success by '.$user->email.', order status '.$orderDB->order_status->name);
+                    Log::info('Order #'. $orderDB->order_number. ' ('.$orderDB->id.'), Status Code = '. $json->status_code .', Transaction Status = '. $json->transaction_status . ', Fraud Status = '.$json->fraud_status);
+                    Log::info('Order #'. $orderDB->order_number. ' ('.$orderDB->id.'), Payment Credit Card success by '.$user->email.', order status '.$orderDB->order_status->name. ' (from Notification)');
 
                     return Response::json("success", 200);
                 }
@@ -44,12 +45,14 @@ class MidtransController extends Controller
             else if($json->status_code == "202"){
                 $orderDB->order_status_id = 6;
                 $orderDB->save();
-                Log::info('Order #'. $orderDB->order_number. ' ('.$orderDB->id.'), Payment Credit Card failed');
+                Log::info('Order #'. $orderDB->order_number. ' ('.$orderDB->id.'), Status Code = '. $json->status_code .', Transaction Status = '. $json->transaction_status . ', Fraud Status = '.$json->fraud_status);
+                Log::info('Order #'. $orderDB->order_number. ' ('.$orderDB->id.'), Payment Credit Card failed (from Notification)');
                 return Response::json("status code 202", 500);
             }
             else{
                 // Log error exception here
-                Log::error("MidtransController > notification Error: status code either 200 or 202, order ID = ".$orderid);
+                Log::info('Order #'. $orderDB->order_number. ' ('.$orderDB->id.'), Status Code = '. $json->status_code .', Transaction Status = '. $json->transaction_status . ', Fraud Status = '.$json->fraud_status);
+                Log::error("MidtransController > notification Error: status code either 200 or 202, order ID = ".$orderid. ' (from Notification)');
                 return Response::json("status code either 200 or 202", 500);
             }
 //            DB::transaction(function() use ($orderid, $json){
